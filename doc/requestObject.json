@@ -1,0 +1,66 @@
+{
+"utenteUpdate":"Diego Capone",
+	"cliente" :{
+		"codiceCliente":"1234567895",
+		"societa":"soc3",
+		"ragioneSociale":"rag soc3",
+		"codiceFiscale":"pfyynf65d33j876p",
+		"partitaIva":"123456789541",
+		"nazionalita":"IT",
+		"sedeLegale":"Milano",
+		"appartieneGruppoIva":"X",
+		"codiceDestinatarioFatturazione":"125874",
+		"modalitaPagamento":"30 gg",
+		"condizioniPagamento":"ass"
+	}
+}
+
+
+
+{
+"utenteUpdate":"Diego Capone",
+	"societa" :{
+		"codiceSocieta":"soc4",
+		"descrizione":"soc4 srl"
+	}
+}
+
+
+{
+
+"utenteUpdate":"Diego Capone",
+	"articolo" :{
+		"codiceArticolo":"227",
+		"descrizione":"articolo 227",
+		"dataValidita":"2022-12-27T00:00:00.000+00:00"
+	}
+}
+
+
+{
+    "utenteUpdate":"Diego Capone",
+	"tipologiaCorrispettivi" :{
+		"codiceCorrispettivo":"126",
+		"descrizione":"corrispettivo 126",
+		"dataValidita":"2022-12-27T00:00:00.000+00:00"
+	}
+}
+
+
+
+{
+ "utenteUpdate":"Diego Capone",
+ 
+    "fattura":{
+        "societa":"soc1",
+        "dataFattura":"2022-06-27T00:00:00.000+00:00",
+        "tipologiaFattura":"FA",
+        "codiceCliente":"1234567892",
+        "importo":1500.34,
+        "statoFattura":null,
+        "esitoInvio":null,
+        "dataInvioFlusso":null
+    }
+	
+
+}
