@@ -1,0 +1,908 @@
+{
+	"info": {
+		"_postman_id": "c0656faf-9589-458e-86aa-abc4b4d7d50c",
+		"name": "Cruscotto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Societa",
+			"item": [
+				{
+					"name": "getSocietaList",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/societa/getSocietaList",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"societa",
+								"getSocietaList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSocietaById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTYyNTU1MTQsImlhdCI6MTY1NjIyNTUxNCwidXNlcm5hbWUiOiJzLmJlcnRhcmVsbGlAd2ViZWFyaXQuY29tIn0.0saNMoxXivEbmWMqRWMmyrAqCikLN7olO9YxUP4K_M0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "3",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/societa/getSocietaById",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"societa",
+								"getSocietaById"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "saveSocieta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTYzMzgxNDksImlhdCI6MTY1NjMwODE0OSwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.c8cErj2Q8ddS4Ss6I0wpnt36d6lqLDsJK9U7IWoFhzY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"societa\" :{\r\n\t\t\"codiceSocieta\":\"soc4\",\r\n\t\t\"descrizione\":\"soc4 srl\"\r\n\t}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/societa/saveSocieta",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"societa",
+								"saveSocieta"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clienti",
+			"item": [
+				{
+					"name": "getClientiList",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTYzMzcyMTksImlhdCI6MTY1NjMwNzIxOSwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.l8BGWBvDvVqJB3Yye2-4Z9lQmNcSxzhWkuDLcQp0kZ8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/cliente/getClientiList",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"cliente",
+								"getClientiList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getClienteById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTYyNTUyMTMsImlhdCI6MTY1NjIyNTIxMywidXNlcm5hbWUiOiJzLmJlcnRhcmVsbGlAd2ViZWFyaXQuY29tIn0.-JqJxGPN2BLR_AwCjXBM0Ck5efPgg4eJzVvj2MdUwmk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "3",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/cliente/getClienteById",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"cliente",
+								"getClienteById"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "saveCliente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTYzMzcyMTksImlhdCI6MTY1NjMwNzIxOSwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.l8BGWBvDvVqJB3Yye2-4Z9lQmNcSxzhWkuDLcQp0kZ8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"cliente\" :{\r\n\t\t\"codiceCliente\":\"1234567890\",\r\n\t\t\"societa\":\"soc3\",\r\n\t\t\"ragioneSociale\":\"rag soc3\",\r\n\t\t\"codiceFiscale\":\"ffyynf65d33j876p\",\r\n\t\t\"partitaIva\":\"12345678951\",\r\n\t\t\"nazionalita\":\"IT\",\r\n\t\t\"sedeLegale\":\"Milano\",\r\n\t\t\"appartieneGruppoIva\":\"X\",\r\n\t\t\"codiceDestinatarioFatturazione\":\"225874\",\r\n\t\t\"modalitaPagamento\":\"30 gg\",\r\n\t\t\"condizioniPagamento\":\"ass\"\r\n\t}\r\n}\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/cliente/saveCliente",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"cliente",
+								"saveCliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCliente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"idEntity\" :3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/cliente/deleteCliente",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"cliente",
+								"deleteCliente"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Articolo",
+			"item": [
+				{
+					"name": "getArticoliList",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/articolo/getArticoliList",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"articolo",
+								"getArticoliList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getArticoloById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "5",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/articolo/getArticoloById",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"articolo",
+								"getArticoloById"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "saveArticolo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"utenteUpdate\":\"Diego Capone\",\r\n\t\"articolo\" :{\r\n\t\t\"codiceArticolo\":\"227\",\r\n\t\t\"descrizione\":\"articolo 227\",\r\n\t\t\"dataValidita\":\"2022-12-27T00:00:00.000+00:00\"\r\n\t}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/articolo/saveArticolo",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"articolo",
+								"saveArticolo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteArticolo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"idEntity\" :1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/articolo/deleteArticolo",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"articolo",
+								"deleteArticolo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TipologiaCorrispettivi",
+			"item": [
+				{
+					"name": "getTipologiaCorrispettiviList",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/tipologiaCorrispettivi/getTipologiaCorrispettiviList",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"tipologiaCorrispettivi",
+								"getTipologiaCorrispettiviList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTipologiaCorrispettiviById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "4",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/tipologiaCorrispettivi/getTipologiaCorrispettiviById",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"tipologiaCorrispettivi",
+								"getTipologiaCorrispettiviById"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "saveTipologiaCorrispettivi",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"utenteUpdate\":\"Diego Capone\",\r\n\t\"tipologiaCorrispettivi\" :{\r\n\t\t\"codiceCorrispettivo\":\"227\",\r\n\t\t\"descrizione\":\"corrispettivo 227\",\r\n\t\t\"dataValidita\":\"2022-12-27T00:00:00.000+00:00\"\r\n\t}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/tipologiaCorrispettivi/saveTipologiaCorrispettivi",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"tipologiaCorrispettivi",
+								"saveTipologiaCorrispettivi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteTipologiaCorrispettivi",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"idEntity\" :3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/tipologiaCorrispettivi/deleteTipologiaCorrispettivi",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"tipologiaCorrispettivi",
+								"deleteTipologiaCorrispettivi"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fattura",
+			"item": [
+				{
+					"name": "getFatturaList",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/fattura/getFattureList",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"fattura",
+								"getFattureList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFatturaById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "9",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/fattura/getFatturaById",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"fattura",
+								"getFatturaById"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "saveFattura",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \r\n    \"fattura\":{\r\n        \"id\": 9,\r\n        \"societa\":\"soc1\",\r\n        \"dataFattura\":\"2022-06-27T00:00:00.000+00:00\",\r\n        \"tipologiaFattura\":\"FA\",\r\n        \"codiceCliente\":\"1234567892\",\r\n        \"importo\":1500.11,\r\n        \"statoFattura\":\"V\",\r\n        \"esitoInvio\":null,\r\n        \"dataInvioFlusso\":null\r\n    }\r\n\t\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/fattura/saveFattura",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"fattura",
+								"saveFattura"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DettaglioFattura",
+			"item": [
+				{
+					"name": "getDettaglioFatturaList",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/dettaglioFattura/getDettaglioFattureList",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"dettaglioFattura",
+								"getDettaglioFattureList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDettaglioFatturaById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "7",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/dettaglioFattura/getDettaglioFatturaById",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"dettaglioFattura",
+								"getDettaglioFatturaById"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDettaglioFatturaByFatturaId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "2",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/dettaglioFattura/getDettaglioFatturaByFatturaId",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"dettaglioFattura",
+								"getDettaglioFatturaByFatturaId"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "saveDettaglioFattura",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \r\n    \"dettaglioFattura\":\r\n      {\r\n        \"id\": 7,\r\n        \"idFattura\": 2,\r\n        \"progressivoRiga\": 4,\r\n        \"codiceArticolo\": \"125\",\r\n        \"codiceCorrispettivo\": \"1\",\r\n        \"importo\": 300.34,\r\n        \"note\": \"test\",\r\n        \"idMessaggio\": null,\r\n        \"descrizioneMessaggio\": null\r\n      }\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/dettaglioFattura/saveDettaglioFattura",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"dettaglioFattura",
+								"saveDettaglioFattura"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Utenti",
+			"item": [
+				{
+					"name": "getUserList",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/user/getUserList",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"user",
+								"getUserList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"d.capone.ext@webearit.com\",\r\n  \"password\": \"lottomatica\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTYzNzc5MTUsImlhdCI6MTY1NjM0NzkxNSwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.cYZ7F4mLIf9_VB3jbVLBIi_Pv108clPGNOuyk5Z03-k"
+		}
+	]
+}
