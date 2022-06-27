@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb" if-exists="true" version="2.1">
+      
+    <!--
+
+Questo file è stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.3.0 
+Vedere <a href="https://javaee.github.io/jaxb-v2/">https://javaee.github.io/jaxb-v2/</a> 
+Qualsiasi modifica a questo file andrà persa durante la ricompilazione dello schema di origine. 
+Generato il: 2022.06.27 alle 07:43:54 PM CEST 
+
+  -->
+      
+    <bindings xmlns:tns="http://www.tibco.com/xmlns/sap/SAPECCConnectionResource/ZINT_PC01_CREDITO" if-exists="true" scd="x-schema::tns">
+            
+        <schemaBindings map="false">
+                  
+            <package name="com.gamenet.portalecredito.models.SOAP.ProspectRequest"/>
+                
+        </schemaBindings>
+            
+        <bindings if-exists="true" scd="~tns:ZINT_PC01_CREDITO_RequestParam">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.ZINTPC01CREDITORequestParam"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:ZINT_PC01_CREDITO_ResponseParam">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.ZINTPC01CREDITOResponseParam"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:ZINT_PC01_CREDITO_FaultParam">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.ZINTPC01CREDITOFaultParam"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:sequence_lsqb_ZPC01_CLI_rsqb_">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.SequenceLsqbZPC01CLIRsqb"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:ZPC01_CLI">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.ZPC01CLI"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:ZPC01_TEL">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.ZPC01TEL"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:sequence_lsqb_ZPC01_TEL_rsqb_">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.SequenceLsqbZPC01TELRsqb"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:ZPC01_MAIL">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.ZPC01MAIL"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:sequence_lsqb_ZPC01_MAIL_rsqb_">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.SequenceLsqbZPC01MAILRsqb"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:ZPC01_BUSINESS">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.ZPC01BUSINESS"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:sequence_lsqb_ZPC01_BUSINESS_rsqb_">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.SequenceLsqbZPC01BUSINESSRsqb"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:ZPC01_GARANZIE">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.ZPC01GARANZIE"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:sequence_lsqb_ZPC01_GARANZIE_rsqb_">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.SequenceLsqbZPC01GARANZIERsqb"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:ZPC01_SALE">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.ZPC01SALE"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:sequence_lsqb_ZPC01_SALE_rsqb_">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.SequenceLsqbZPC01SALERsqb"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:ZPC01_TIR">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.ZPC01TIR"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:sequence_lsqb_ZPC01_TIR_rsqb_">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.SequenceLsqbZPC01TIRRsqb"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:BAPIRETURN">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.BAPIRETURN"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="~tns:RFCException">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.RFCException"/>
+                
+        </bindings>
+          
+    </bindings>
+      
+    <bindings xmlns:tns="http://www.example.org/schema/1642098275426" if-exists="true" scd="x-schema::tns">
+            
+        <schemaBindings map="false">
+                  
+            <package name="com.gamenet.portalecredito.models.SOAP.ProspectRequest"/>
+                
+        </schemaBindings>
+            
+        <bindings if-exists="true" scd="tns:anagraficheRequest">
+                  
+            <class ref="com.gamenet.portalecredito.models.SOAP.ProspectRequest.AnagraficheRequest"/>
+                
+        </bindings>
+          
+    </bindings>
+    
+</bindings>
