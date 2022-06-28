@@ -102,7 +102,7 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
 			    		{
 			    			Integer idUser = userFind.getId();
 			    			Boolean isAdmin = mod_role.getIsAdmin();			    			
-			    			mod_user.setAvaiableBusiness(businessRepo.getAvaiableBusinessByUser(idUser, isAdmin));
+			    			//mod_user.setAvaiableBusiness(businessRepo.getAvaiableBusinessByUser(idUser, isAdmin));
 
 			    			Integer idRole = mod_user.getRuoloUtente().getId();
 			    			mod_user.setVociUtente(userService.getVociMenuByRoleId(idRole, isAdmin));

@@ -33,8 +33,4 @@ public class GruppoUtenti {
 	private Date create_date;
 	private String last_mod_user;
 	private Date last_mod_date;
-	
-	@OneToMany(mappedBy = "gruppo", fetch = FetchType.LAZY)	
-	@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
-	private Set<NotificaGruppo> notificheGruppo;
 }

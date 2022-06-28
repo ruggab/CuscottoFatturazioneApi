@@ -45,7 +45,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTYyNTU1MTQsImlhdCI6MTY1NjIyNTUxNCwidXNlcm5hbWUiOiJzLmJlcnRhcmVsbGlAd2ViZWFyaXQuY29tIn0.0saNMoxXivEbmWMqRWMmyrAqCikLN7olO9YxUP4K_M0",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -83,7 +83,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTYzMzgxNDksImlhdCI6MTY1NjMwODE0OSwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.c8cErj2Q8ddS4Ss6I0wpnt36d6lqLDsJK9U7IWoFhzY",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -92,7 +92,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"societa\" :{\r\n\t\t\"codiceSocieta\":\"soc4\",\r\n\t\t\"descrizione\":\"soc4 srl\"\r\n\t}\r\n}",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"societa\" :{\r\n\t\t\"codiceSocieta\":\"soc3\",\r\n\t\t\"descrizione\":\"soc3 srl\"\r\n\t}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -126,7 +126,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTYzMzcyMTksImlhdCI6MTY1NjMwNzIxOSwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.l8BGWBvDvVqJB3Yye2-4Z9lQmNcSxzhWkuDLcQp0kZ8",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -155,7 +155,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTYyNTUyMTMsImlhdCI6MTY1NjIyNTIxMywidXNlcm5hbWUiOiJzLmJlcnRhcmVsbGlAd2ViZWFyaXQuY29tIn0.-JqJxGPN2BLR_AwCjXBM0Ck5efPgg4eJzVvj2MdUwmk",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -164,7 +164,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "3",
+							"raw": "1",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -193,7 +193,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTYzMzcyMTksImlhdCI6MTY1NjMwNzIxOSwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.l8BGWBvDvVqJB3Yye2-4Z9lQmNcSxzhWkuDLcQp0kZ8",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -202,7 +202,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"cliente\" :{\r\n\t\t\"codiceCliente\":\"1234567890\",\r\n\t\t\"societa\":\"soc3\",\r\n\t\t\"ragioneSociale\":\"rag soc3\",\r\n\t\t\"codiceFiscale\":\"ffyynf65d33j876p\",\r\n\t\t\"partitaIva\":\"12345678951\",\r\n\t\t\"nazionalita\":\"IT\",\r\n\t\t\"sedeLegale\":\"Milano\",\r\n\t\t\"appartieneGruppoIva\":\"X\",\r\n\t\t\"codiceDestinatarioFatturazione\":\"225874\",\r\n\t\t\"modalitaPagamento\":\"30 gg\",\r\n\t\t\"condizioniPagamento\":\"ass\"\r\n\t}\r\n}\r\n\r\n}",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"cliente\" :{\r\n\t\t\"codiceCliente\":\"1234567890\",\r\n\t\t\"societa\":\"soc2\",\r\n\t\t\"ragioneSociale\":\"rag soc2\",\r\n\t\t\"codiceFiscale\":\"ffyynf65d33j876p\",\r\n\t\t\"partitaIva\":\"12345678951\",\r\n\t\t\"nazionalita\":\"IT\",\r\n\t\t\"sedeLegale\":\"Milano\",\r\n\t\t\"appartieneGruppoIva\":\"X\",\r\n\t\t\"codiceDestinatarioFatturazione\":\"225874\",\r\n\t\t\"modalitaPagamento\":\"30 gg\",\r\n\t\t\"condizioniPagamento\":\"ass\"\r\n\t}\r\n}\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -564,6 +564,9 @@
 			"item": [
 				{
 					"name": "getFatturaList",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -577,6 +580,15 @@
 						},
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \r\n    \"fattura\":{\r\n        \"societa\":\"soc1\",\r\n        \"dataFattura\":\"2022-06-27T00:00:00.000+00:00\",\r\n        \"tipologiaFattura\":\"FA\",\r\n        \"codiceCliente\":\"1234567892\",\r\n        \"importo\":1500.34,\r\n        \"statoFattura\":\"V\",\r\n        \"esitoInvio\":null,\r\n        \"dataInvioFlusso\":null\r\n    }\r\n\t\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "localhost:8083/fattura/getFattureList",
 							"host": [
@@ -608,7 +620,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "9",
+							"raw": "1",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -718,7 +730,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "7",
+							"raw": "1",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -756,7 +768,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "2",
+							"raw": "1",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -794,7 +806,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \r\n    \"dettaglioFattura\":\r\n      {\r\n        \"id\": 7,\r\n        \"idFattura\": 2,\r\n        \"progressivoRiga\": 4,\r\n        \"codiceArticolo\": \"125\",\r\n        \"codiceCorrispettivo\": \"1\",\r\n        \"importo\": 300.34,\r\n        \"note\": \"test\",\r\n        \"idMessaggio\": null,\r\n        \"descrizioneMessaggio\": null\r\n      }\r\n\r\n}",
+							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \r\n    \"dettaglioFattura\":\r\n      {\r\n        \r\n        \"idFattura\": 1,\r\n        \"progressivoRiga\": 2,\r\n        \"codiceArticolo\": \"123\",\r\n        \"codiceCorrispettivo\": \"1\",\r\n        \"importo\": 340.64,\r\n        \"note\": \"test\",\r\n        \"idMessaggio\": null,\r\n        \"descrizioneMessaggio\": null\r\n      }\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -902,7 +914,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTYzNzc5MTUsImlhdCI6MTY1NjM0NzkxNSwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.cYZ7F4mLIf9_VB3jbVLBIi_Pv108clPGNOuyk5Z03-k"
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTY0NTM1NDYsImlhdCI6MTY1NjQyMzU0NiwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.mX3N01ve-2Gbb0yxO1x4JnyE2sDfNrYDJnnWv-XUY5I"
 		}
 	]
 }

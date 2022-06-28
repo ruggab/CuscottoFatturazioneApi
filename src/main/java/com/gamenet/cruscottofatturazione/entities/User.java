@@ -47,8 +47,4 @@ public class User {
 	@JoinColumn(name = "roleId")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 	private RoleUser ruoloUtente;
-	
-	@OneToMany(mappedBy = "utente", fetch = FetchType.LAZY)	
-	@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
-	private Set<NotificaUtente> notificaUtente;
 }

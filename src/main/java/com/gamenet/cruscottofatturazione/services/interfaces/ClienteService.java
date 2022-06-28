@@ -2,13 +2,13 @@ package com.gamenet.cruscottofatturazione.services.interfaces;
 
 import java.util.List;
 
-import com.gamenet.cruscottofatturazione.entities.ClienteCruscotto;
+import com.gamenet.cruscottofatturazione.entities.Cliente;
 
 public interface ClienteService {
 
-	List<ClienteCruscotto> getClienti();
-	ClienteCruscotto getClienteById(Integer clienteId);
-	Boolean saveCliente(ClienteCruscotto cliente, String utenteUpdate);
+	List<Cliente> getClienti();
+	Cliente getClienteById(Integer clienteId);
+	Boolean saveCliente(Cliente cliente, String utenteUpdate);
 	Boolean deleteCliente(Integer clienteId, String utenteUpdate);
 
 	

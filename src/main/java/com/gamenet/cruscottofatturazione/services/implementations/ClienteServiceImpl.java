@@ -10,7 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gamenet.cruscottofatturazione.entities.ClienteCruscotto;
+import com.gamenet.cruscottofatturazione.entities.Cliente;
 import com.gamenet.cruscottofatturazione.repositories.ClienteRepository;
 import com.gamenet.cruscottofatturazione.services.interfaces.ApplicationLogsService;
 import com.gamenet.cruscottofatturazione.services.interfaces.ClienteService;
@@ -29,17 +29,17 @@ public class ClienteServiceImpl implements ClienteService
     private ObjectMapper jsonMapper = new ObjectMapper();
     
 	@Override
-	public List<ClienteCruscotto> getClienti() {
+	public List<Cliente> getClienti() {
 		return clienteRepository.getClienti();
 	}
 
 	@Override
-	public ClienteCruscotto getClienteById(Integer clienteId) {
+	public Cliente getClienteById(Integer clienteId) {
 		return clienteRepository.findById(clienteId).orElse(null);
 	}
 
 	@Override
-	public Boolean saveCliente(ClienteCruscotto cliente, String utenteUpdate) {
+	public Boolean saveCliente(Cliente cliente, String utenteUpdate) {
     	this.log.info("ClienteService: saveCliente -> START");
     	appService.insertLog("info", "ClienteService", "saveCliente", "START", "", "saveCliente");
 
@@ -88,7 +88,7 @@ public class ClienteServiceImpl implements ClienteService
     	
     	try
 		{	
-    		 ClienteCruscotto cliente= clienteRepository.findById(clienteId).orElse(null);
+    		 Cliente cliente= clienteRepository.findById(clienteId).orElse(null);
     		 
     		 if(cliente!=null) {
     			 //TODO: verificare se ci sono fatture con cliente

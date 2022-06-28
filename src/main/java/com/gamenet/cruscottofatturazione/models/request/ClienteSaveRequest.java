@@ -1,6 +1,6 @@
 package com.gamenet.cruscottofatturazione.models.request;
 
-import com.gamenet.cruscottofatturazione.entities.ClienteCruscotto;
+import com.gamenet.cruscottofatturazione.entities.Cliente;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClienteSaveRequest {
-	private ClienteCruscotto cliente;
+	private Cliente cliente;
 	private String utenteUpdate;
 }

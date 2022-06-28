@@ -14,7 +14,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +21,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gamenet.cruscottofatturazione.context.MD5_Hash;
-import com.gamenet.cruscottofatturazione.context.QuerySpecification;
 import com.gamenet.cruscottofatturazione.context.SortUtils;
 import com.gamenet.cruscottofatturazione.models.Business;
 import com.gamenet.cruscottofatturazione.models.GruppoUtenti;
-import com.gamenet.cruscottofatturazione.models.ListFilter;
 import com.gamenet.cruscottofatturazione.models.ListSort;
 import com.gamenet.cruscottofatturazione.models.PagedListFilterAndSort;
 import com.gamenet.cruscottofatturazione.models.RoleUser;
@@ -924,10 +921,10 @@ public class UserServiceImpl implements UserService
 			if (model.getFilters() == null)
 				model.setFilters(new ArrayList<>());
 			
-			Specification<com.gamenet.cruscottofatturazione.entities.User> spec = new QuerySpecification<>();
-
-			for (ListFilter filter : model.getFilters())
-				spec = spec.and(new QuerySpecification<>(filter));
+//			Specification<com.gamenet.cruscottofatturazione.entities.User> spec = new QuerySpecification<>();
+//
+//			for (ListFilter filter : model.getFilters())
+//				spec = spec.and(new QuerySpecification<>(filter));
 
 			PageRequest request = null;
 			if (model.getSort() != null && !model.getSort().isEmpty()) {
@@ -959,17 +956,17 @@ public class UserServiceImpl implements UserService
 				}
 			}
 
-			Page<com.gamenet.cruscottofatturazione.entities.User> pages = userRepository.findAll(spec, request);
-			if (pages != null && pages.getTotalElements() > 0)
-			{
-				response.setTotalCount((int) pages.getTotalElements());
-				
-				for (com.gamenet.cruscottofatturazione.entities.User ent_user : pages.getContent()) {
-					com.gamenet.cruscottofatturazione.models.User mod_user = convertUserModel(ent_user);
-					
-					response.getLines().add(mod_user);
-				}		
-			}
+//			Page<com.gamenet.cruscottofatturazione.entities.User> pages = userRepository.findAll(spec, request);
+//			if (pages != null && pages.getTotalElements() > 0)
+//			{
+//				response.setTotalCount((int) pages.getTotalElements());
+//				
+//				for (com.gamenet.cruscottofatturazione.entities.User ent_user : pages.getContent()) {
+//					com.gamenet.cruscottofatturazione.models.User mod_user = convertUserModel(ent_user);
+//					
+//					response.getLines().add(mod_user);
+//				}		
+//			}
 	    	
 			if(env.getProperty("portalecredito.mode.debug").equals("true"))
 			{
@@ -1016,10 +1013,10 @@ public class UserServiceImpl implements UserService
 			if (model.getFilters() == null)
 				model.setFilters(new ArrayList<>());
 			
-			Specification<com.gamenet.cruscottofatturazione.entities.RoleUser> spec = new QuerySpecification<>();
-
-			for (ListFilter filter : model.getFilters())
-				spec = spec.and(new QuerySpecification<>(filter));
+//			Specification<com.gamenet.cruscottofatturazione.entities.RoleUser> spec = new QuerySpecification<>();
+//
+//			for (ListFilter filter : model.getFilters())
+//				spec = spec.and(new QuerySpecification<>(filter));
 
 			PageRequest request = null;
 			if (model.getSort() != null && !model.getSort().isEmpty()) {
@@ -1051,12 +1048,12 @@ public class UserServiceImpl implements UserService
 				}
 			}
 
-			Page<com.gamenet.cruscottofatturazione.entities.RoleUser> pages = roleRepo.findAll(spec, request);
-			if (pages != null && pages.getTotalElements() > 0)
-			{
-				response.setTotalCount((int) pages.getTotalElements());
-				response.setLines(convertRuoliModelList(pages.getContent()));
-			}
+//			Page<com.gamenet.cruscottofatturazione.entities.RoleUser> pages = roleRepo.findAll(spec, request);
+//			if (pages != null && pages.getTotalElements() > 0)
+//			{
+//				response.setTotalCount((int) pages.getTotalElements());
+//				response.setLines(convertRuoliModelList(pages.getContent()));
+//			}
 	    	
 			if(env.getProperty("portalecredito.mode.debug").equals("true"))
 			{
@@ -1103,11 +1100,11 @@ public class UserServiceImpl implements UserService
 
 			/// Escludo record eliminati logicamente
 			// model.getFilters().add(new ListFilter("deleted", "eqbool", "0", null));
-
-			Specification<com.gamenet.cruscottofatturazione.entities.RoleVoceMenu> spec = new QuerySpecification<>();
-
-			for (ListFilter filter : model.getFilters())
-				spec = spec.and(new QuerySpecification<>(filter));
+//
+//			Specification<com.gamenet.cruscottofatturazione.entities.RoleVoceMenu> spec = new QuerySpecification<>();
+//
+//			for (ListFilter filter : model.getFilters())
+//				spec = spec.and(new QuerySpecification<>(filter));
 
 			PageRequest request = null;
 			if (model.getSort() != null && !model.getSort().isEmpty()) {
@@ -1141,13 +1138,13 @@ public class UserServiceImpl implements UserService
 				}
 			}
 
-			Page<com.gamenet.cruscottofatturazione.entities.RoleVoceMenu> pages = roleVociMenuRepo.findAll(spec, request);
-			
-			if (pages != null && pages.getTotalElements() > 0)
-			{
-				response.setTotalCount((int) pages.getTotalElements());
-				response.setLines(convertRoleVoceMenuList(pages.getContent()));
-			}
+//			Page<com.gamenet.cruscottofatturazione.entities.RoleVoceMenu> pages = roleVociMenuRepo.findAll(spec, request);
+//			
+//			if (pages != null && pages.getTotalElements() > 0)
+//			{
+//				response.setTotalCount((int) pages.getTotalElements());
+//				response.setLines(convertRoleVoceMenuList(pages.getContent()));
+//			}
 
 			if (env.getProperty("portalecredito.mode.debug").equals("true"))
 			{

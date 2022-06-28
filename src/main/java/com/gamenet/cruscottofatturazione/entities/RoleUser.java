@@ -41,10 +41,6 @@ public class RoleUser {
 	@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 	private Set<User> listaUtenti;
 	
-	@OneToMany(mappedBy = "ruoloWorkflowStep", fetch = FetchType.LAZY)
-	@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
-	private Set<WorkflowStepRole> listaWorkflowStepRole;
-	
 	@OneToMany(mappedBy = "ruoloVoceMenu", fetch = FetchType.LAZY)
 	@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 	private Set<RoleVoceMenu> listaRuoloVoceMenu;

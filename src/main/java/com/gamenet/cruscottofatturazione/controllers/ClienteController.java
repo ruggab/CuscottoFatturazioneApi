@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gamenet.cruscottofatturazione.entities.ClienteCruscotto;
+import com.gamenet.cruscottofatturazione.entities.Cliente;
 import com.gamenet.cruscottofatturazione.models.request.ClienteSaveRequest;
 import com.gamenet.cruscottofatturazione.models.request.DeleteRequest;
 import com.gamenet.cruscottofatturazione.services.interfaces.ClienteService;
@@ -27,13 +27,13 @@ public class ClienteController {
 	
 	
 	@GetMapping("/getClientiList")
-	public List<ClienteCruscotto> getUserList() 
+	public List<Cliente> getUserList() 
 	{
 		return clienteService.getClienti();
 	}
 	
 	@PostMapping("/getClienteById")
-	public ClienteCruscotto getUserById(@RequestBody Integer clienteId) 
+	public Cliente getUserById(@RequestBody Integer clienteId) 
 	{
 		return clienteService.getClienteById(clienteId);
 	}

@@ -51,11 +51,11 @@ public interface UserRepository extends CrudRepository<User, Integer>, JpaSpecif
 	@Query(nativeQuery = true, value=" EXEC [Anagraphics].[SP_LogoutUser] :IdUtente")
 	public void logoutUser(@Param("IdUtente") Integer idUtente);
 	
-	@Query(value="EXEC [Logs].[SP_GetDestinatariNotificaRichiestaSLA] :RichiestaId",nativeQuery=true)
-	public List<User> getDestinatariNotificaRichiestaSLA(@Param("RichiestaId") Integer RichiestaId);
-	
-	@Query(value="EXEC [Logs].[SP_GetDestinatariNotificheByCodice] :CodiceNotifica, :TipologiaNotifica",nativeQuery=true)
-	public List<User> getDestinatariNotificheByCodice(@Param("CodiceNotifica") String codiceNotifica, @Param("TipologiaNotifica") String tipologiaNotifica);
+//	@Query(value="EXEC [Logs].[SP_GetDestinatariNotificaRichiestaSLA] :RichiestaId",nativeQuery=true)
+//	public List<User> getDestinatariNotificaRichiestaSLA(@Param("RichiestaId") Integer RichiestaId);
+//	
+//	@Query(value="EXEC [Logs].[SP_GetDestinatariNotificheByCodice] :CodiceNotifica, :TipologiaNotifica",nativeQuery=true)
+//	public List<User> getDestinatariNotificheByCodice(@Param("CodiceNotifica") String codiceNotifica, @Param("TipologiaNotifica") String tipologiaNotifica);
 
 	@Modifying(clearAutomatically = true)
 	@Transactional

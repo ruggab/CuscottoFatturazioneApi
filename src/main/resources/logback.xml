@@ -12,7 +12,7 @@
 
 	<appender name="FILE_AUDIT"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${DEV_HOME}/portalecredito-webapi.log</file>
+		<file>${DEV_HOME}/cruscotto-fatturazione-webapi.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>
 				%d{yyyy-MM-dd HH:mm:ss} - %msg%n
