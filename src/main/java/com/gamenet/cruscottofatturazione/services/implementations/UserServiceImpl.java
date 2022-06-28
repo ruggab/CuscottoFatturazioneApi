@@ -219,6 +219,7 @@ public class UserServiceImpl implements UserService
 			mod_user.setLastModUser(ent_user.getLastModUser());
 			mod_user.setLastModDate(ent_user.getLastModDate());
 			mod_user.setPassword("");
+			mod_user.setSocieta(ent_user.getSocieta());
 	
 			mod_user.setValidFrom(ent_user.getValidFrom());
 			mod_user.setValidTo(ent_user.getValidTo());

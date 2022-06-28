@@ -34,6 +34,7 @@ public class User {
 	private String email;
 	private String username;
 	private String password;
+	private String societa;
 	private String token;
 	private Boolean isNew;
 	private String createUser;
