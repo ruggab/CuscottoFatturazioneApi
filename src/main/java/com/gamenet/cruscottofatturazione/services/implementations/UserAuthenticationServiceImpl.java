@@ -94,7 +94,7 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
 			    		mod_user.setCreateDate(userFind.getCreateDate());
 			    		mod_user.setLastModUser(userFind.getLastModUser());
 			    		mod_user.setLastModDate(userFind.getLastModDate());
-		
+			    		mod_user.setSocieta(userFind.getSocieta());
 			    		mod_user.setValidFrom(userFind.getValidFrom());
 			    		mod_user.setValidTo(userFind.getValidTo());
 			    		
