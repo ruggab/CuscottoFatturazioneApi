@@ -240,7 +240,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"idEntity\" :3\r\n}",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"idEntity\" :2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -350,7 +350,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"utenteUpdate\":\"Diego Capone\",\r\n\t\"articolo\" :{\r\n\t\t\"codiceArticolo\":\"227\",\r\n\t\t\"descrizione\":\"articolo 227\",\r\n\t\t\"dataValidita\":\"2022-12-27T00:00:00.000+00:00\"\r\n\t}\r\n}",
+							"raw": "{\r\n    \"utenteUpdate\":\"Diego Capone\",\r\n\t\"articolo\" :{\r\n\t\t\"codiceArticolo\":\"225\",\r\n\t\t\"descrizione\":\"articolo 225\",\r\n\t\t\"dataValidita\":\"2022-12-27T00:00:00.000+00:00\"\r\n\t}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -388,7 +388,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"idEntity\" :1\r\n}",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"idEntity\" :5\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -536,7 +536,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"idEntity\" :3\r\n}",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"idEntity\" :1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -598,6 +598,53 @@
 							"path": [
 								"fattura",
 								"getFattureList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getLastTenFatturaBySocieta",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \r\n    \"fattura\":{\r\n        \"societa\":\"soc1\",\r\n        \"dataFattura\":\"2022-06-27T00:00:00.000+00:00\",\r\n        \"tipologiaFattura\":\"FA\",\r\n        \"codiceCliente\":\"1234567892\",\r\n        \"importo\":1500.34,\r\n        \"statoFattura\":\"V\",\r\n        \"esitoInvio\":null,\r\n        \"dataInvioFlusso\":null\r\n    }\r\n\t\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/fattura/getLastTenFatturaBySocieta?codiceSocieta=soc4",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"fattura",
+								"getLastTenFatturaBySocieta"
+							],
+							"query": [
+								{
+									"key": "codiceSocieta",
+									"value": "soc4"
+								}
 							]
 						}
 					},
@@ -889,6 +936,151 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "getDashboardTopSummary",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/dashboard/getDashboardTopSummary?codiceSocieta=soc4",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"dashboard",
+								"getDashboardTopSummary"
+							],
+							"query": [
+								{
+									"key": "codiceSocieta",
+									"value": "soc4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDashboardLastWeekChart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/dashboard/getDashboardLastWeekChart?codiceSocieta=soc4",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"dashboard",
+								"getDashboardLastWeekChart"
+							],
+							"query": [
+								{
+									"key": "codiceSocieta",
+									"value": "soc4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDashboardYearChart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/dashboard/getDashboardYearChart?codiceSocieta=soc4",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"dashboard",
+								"getDashboardYearChart"
+							],
+							"query": [
+								{
+									"key": "codiceSocieta",
+									"value": "soc4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDashboardMonthChart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/dashboard/getDashboardMonthChart?codiceSocieta=soc4",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"dashboard",
+								"getDashboardMonthChart"
+							],
+							"query": [
+								{
+									"key": "codiceSocieta",
+									"value": "soc4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -914,7 +1106,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTY0NTM1NDYsImlhdCI6MTY1NjQyMzU0NiwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.mX3N01ve-2Gbb0yxO1x4JnyE2sDfNrYDJnnWv-XUY5I"
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTY1NDQ3NjAsImlhdCI6MTY1NjUxNDc2MCwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.nTSMOFXY5_r6WOTS65gtNtDAXRrx-3djq_uI2ylBH9E"
 		}
 	]
 }
