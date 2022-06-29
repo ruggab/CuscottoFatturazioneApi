@@ -16,8 +16,7 @@ import lombok.Setter;
 public class VWDashboardLastWeek {
 	
 	@Id
-	private Integer giorno;
-	private String giornoSettimana;
+	private String giorno;
 	private Integer numero;
 	
 }

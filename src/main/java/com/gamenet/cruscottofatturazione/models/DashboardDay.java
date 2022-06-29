@@ -1,8 +1,6 @@
 package com.gamenet.cruscottofatturazione.models;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.LinkedList;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DashboardLastWeek implements Serializable
+public class DashboardDay implements Serializable
 {
 	
 	
@@ -22,10 +20,9 @@ public class DashboardLastWeek implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private LinkedList<DashboardDay> giorni;
-	private Date lastUpdate;
-	private Double incrementoSettimana;
-	
+	String giorno;
+	Integer numero;
+	String giornoSettimana;
 	
 
 }

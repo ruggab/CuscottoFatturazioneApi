@@ -1,5 +1,6 @@
 package com.gamenet.cruscottofatturazione.services.implementations;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -18,6 +19,7 @@ import com.gamenet.cruscottofatturazione.entities.VWDashboardLastWeek;
 import com.gamenet.cruscottofatturazione.entities.VWDashboardMonth;
 import com.gamenet.cruscottofatturazione.entities.VWDashboardTopSummary;
 import com.gamenet.cruscottofatturazione.entities.VWDashboardYear;
+import com.gamenet.cruscottofatturazione.models.DashboardDay;
 import com.gamenet.cruscottofatturazione.models.DashboardLastWeek;
 import com.gamenet.cruscottofatturazione.models.DashboardMonth;
 import com.gamenet.cruscottofatturazione.models.DashboardSettimana;
@@ -147,55 +149,43 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 
 		DashboardLastWeek result = new DashboardLastWeek();
 
-		Iterable<VWDashboardLastWeek> dashList;
-
-
-		dashList = dashboardLastWeekRepository.getVWDashboardLastWeekBySocieta(codiceSocieta);
-
 		try
 		{	
+			Iterable<VWDashboardLastWeek> dashList;
+			dashList = dashboardLastWeekRepository.getVWDashboardLastWeekBySocieta(codiceSocieta);
+
+			LinkedList<DashboardDay> giorni= new LinkedList<>();
+			
+			
+			Date date = new Date();
+			Calendar c= Calendar.getInstance();
+			c.setTime(date);
+			c.add(Calendar.DAY_OF_MONTH, -6);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			LinkedHashMap<String, Integer> ultimi7giorni = new LinkedHashMap<>();
+			
+			for(int i=0 ; i<7; i++) {
+				String currentDate=dateFormat.format(c.getTime());
+				ultimi7giorni.put(currentDate, 0);
+				c.add(Calendar.DAY_OF_MONTH, 1);
+				
+			}
+			
+			
 			for(VWDashboardLastWeek item: dashList)
 			{
-
-				switch (item.getGiornoSettimana()) {
-
-				case "lunedì":
-					result.setLunedi(item.getNumero());
-					break;
-
-				case "martedì":
-					result.setMartedi(item.getNumero());
-					break;
-
-				case "mercoledì":
-					result.setMercoledi(item.getNumero());
-					break;
-
-				case "giovedì":
-					result.setGiovedi(item.getNumero());
-					break;
-
-				case "venerdì":
-					result.setVenerdi(item.getNumero());
-					break;
-
-				case "sabato":
-					result.setSabato(item.getNumero());
-					break;
-
-				case "domenica":
-					result.setDomenica(item.getNumero());
-					break;
-
-				default:
-					break;
-				}
-
-
+				ultimi7giorni.put(item.getGiorno(),item.getNumero());
 			}
+			for (Iterator iterator = ultimi7giorni.keySet().iterator(); iterator.hasNext();) {
+				String day = (String) iterator.next();
+				Date currDate = dateFormat.parse(day);
+				giorni.add(new DashboardDay(day,ultimi7giorni.get(day),dateUtils.getDayNameOfDate(currDate)));
+				
+			}
+			
+			result.setGiorni(giorni);
 			result.setLastUpdate(new Date());
 			result.setIncrementoSettimana(null);//TODO
-
 
 			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
@@ -338,7 +328,7 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 			int numeroTotaliSettimaneMese= c.getActualMaximum(Calendar.WEEK_OF_MONTH);
 			int primaSettimanaMese=dateUtils.getFirstWeekOfDate(date);
 
-			
+
 			LinkedHashMap<Integer, Integer> settimaneResult= new LinkedHashMap<>();
 
 			//calcolo la lista delle settimane del mese
@@ -358,8 +348,8 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 			if(settimaneResult.keySet().size()>numeroTotaliSettimaneMese) {
 				settimaneResult.remove(primaSettimanaMese); //sicuro è vuota sqlserver potrebbe riportare una settimana avanti
 			}
-			
-			
+
+
 			LinkedList<DashboardSettimana> settimane= new LinkedList<>();
 
 			int numeroSettimanaMese=1;
@@ -368,13 +358,13 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 				settimane.add(new DashboardSettimana(numeroSettimanaMese, settimaneResult.get(settimana)));
 				numeroSettimanaMese++;
 			}
-			
-			
+
+
 			result.setSettimane(settimane);
 			result.setLastUpdate(new Date());
-			
-			
-			
+
+
+
 
 
 			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))

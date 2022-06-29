@@ -1,5 +1,6 @@
 package com.gamenet.cruscottofatturazione.utils;
 
+import java.text.SimpleDateFormat;
 import java.time.temporal.WeekFields;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,10 +26,14 @@ public class DateUtils {
 	}
 	
 	
-	public Calendar getISOCalendar() {
-	    Calendar calendar = Calendar.getInstance();
-	    calendar.setMinimalDaysInFirstWeek(4);
-	    calendar.setFirstDayOfWeek(Calendar.MONDAY);
-	    return calendar;
+	String[] giorniSettimana = {"domenica","lunedi", "martedi", "mercoledi", "giovedi","venerdi","sabato"};
+	
+	public String getDayNameOfDate(Date date) {
+		 Calendar c = Calendar.getInstance();
+		 	c.setTime(date);
+		 	int giornoSettimanaNumero= c.get(Calendar.DAY_OF_WEEK);
+		 	
+		 	return giorniSettimana[giornoSettimanaNumero-1];
 	}
+	
 }
