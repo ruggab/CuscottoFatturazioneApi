@@ -47,7 +47,7 @@ public class ArticoloServiceImpl implements ArticoloService
 
     	try
 		{	
-    		if(env.getProperty("portalecredito.mode.debug").equals("true"))
+    		if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(articolo);
 		    	this.log.debug("ProspectService: saveArticolo -> Object: " + requestPrint);

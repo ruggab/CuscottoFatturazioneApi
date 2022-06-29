@@ -50,7 +50,7 @@ public class DettaglioFatturaServiceImpl implements DettaglioFatturaService
 
     	try
 		{	
-    		if(env.getProperty("portalecredito.mode.debug").equals("true"))
+    		if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(dettaglioFattura);
 		    	this.log.debug("ProspectService: saveDettaglioFattura -> Object: " + requestPrint);

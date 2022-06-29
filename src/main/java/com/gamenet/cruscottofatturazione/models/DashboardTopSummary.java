@@ -13,18 +13,16 @@ import lombok.Setter;
 @AllArgsConstructor
 public class DashboardTopSummary
 {
-	private Integer firstBoxValue;
-	private Date firstBoxDetail;
+	private Integer fattureEmesse;
+	private Date dataFattureEmesse;
 
-	private Integer secondBoxValue;
-	private Integer secondBoxDetail;
+	private Integer fattureConvalidate;
+	private Date dataFattureConvalidate;
 
-	private Integer thirdBoxValue;
-	private Double thirdBoxDetail;
+	private Integer fattureRifiutate;
+	private Double importoFattureRifiutate;
 
-	private Integer fourthBoxValue;
-	private Date fourthBoxDetail;
+	private Double totaleImportoFatture;
+	private Date dataImportoFatture;
 
-	private Integer fifthBoxValue;
-	private Double fifthBoxDetail;
 }

@@ -119,7 +119,7 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
 				    		}
 			    		}*/
 	
-			    		if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			    		if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 						{
 					    	String requestPrint = jsonMapper.writeValueAsString(mod_user);
 					    	// String requestPrint = new Gson().toJson(userFind);

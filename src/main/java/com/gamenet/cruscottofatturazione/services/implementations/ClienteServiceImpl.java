@@ -45,7 +45,7 @@ public class ClienteServiceImpl implements ClienteService
 
     	try
 		{	
-    		if(env.getProperty("portalecredito.mode.debug").equals("true"))
+    		if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(cliente);
 		    	this.log.debug("ProspectService: saveCliente -> Object: " + requestPrint);

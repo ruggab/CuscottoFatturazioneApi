@@ -47,7 +47,7 @@ public class SocietaServiceImpl implements SocietaService
 
     	try
 		{	
-    		if(env.getProperty("portalecredito.mode.debug").equals("true"))
+    		if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(societa);
 		    	this.log.debug("ProspectService: saveSocieta -> Object: " + requestPrint);

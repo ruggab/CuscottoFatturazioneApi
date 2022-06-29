@@ -1,7 +1,10 @@
 package com.gamenet.cruscottofatturazione.services.implementations;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
@@ -46,7 +49,7 @@ public class FatturaServiceImpl implements FatturaService
 
     	try
 		{	
-    		if(env.getProperty("portalecredito.mode.debug").equals("true"))
+    		if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(fattura);
 		    	this.log.debug("ProspectService: saveFattura -> Object: " + requestPrint);
@@ -80,6 +83,18 @@ public class FatturaServiceImpl implements FatturaService
     	this.log.info("FatturaService: saveFattura -> SUCCESSFULLY END");
     	appService.insertLog("info", "FatturaService", "saveFattura", "SUCCESSFULLY END", "", "saveFattura");
     	return true;
+	}
+
+	@Override
+	public List<Fattura> getLastTenFatturaBySocieta(String codiceSocieta) {
+		List<Fattura> last10DayFattureBySocieta = fatturaRepository.getLast10DayFattureBySocieta(codiceSocieta);
+		
+//		Comparator<Fattura> reverseComparator = (c1, c2) -> { 
+//	        return c1.getDataFattura().compareTo(c2.getDataFattura()); 
+//		};
+//		
+//		Collections.sort(last10DayFattureBySocieta, reverseComparator);
+		return last10DayFattureBySocieta;
 	}
 	
 }

@@ -48,7 +48,7 @@ public class TipologiaCorrispettiviServiceImpl implements TipologiaCorrispettivi
 
     	try
 		{	
-    		if(env.getProperty("portalecredito.mode.debug").equals("true"))
+    		if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(tipologiaCorrispettivi);
 		    	this.log.debug("ProspectService: saveTipologiaCorrispettivi -> Object: " + requestPrint);

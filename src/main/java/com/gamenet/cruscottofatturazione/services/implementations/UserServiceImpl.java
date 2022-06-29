@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService
 				users.add(mod_user);
 			}
 	    	
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String responsePrint = jsonMapper.writeValueAsString(users);
 		    	this.log.debug("UserService: getUsers -> PROCESS END WITH: " + responsePrint);
@@ -151,7 +151,7 @@ public class UserServiceImpl implements UserService
 				mod_user = convertUserModel(ent_user);
 			}
 	    	
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String responsePrint = jsonMapper.writeValueAsString(mod_user);
 		    	this.log.debug("UserService: getUsers -> PROCESS END WITH: " + responsePrint);
@@ -193,7 +193,7 @@ public class UserServiceImpl implements UserService
 
 		try 
 		{
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(ent_user);
 		    	this.log.debug("UserService: convertUserModel -> Object: " + requestPrint);
@@ -224,7 +224,7 @@ public class UserServiceImpl implements UserService
 			mod_user.setValidFrom(ent_user.getValidFrom());
 			mod_user.setValidTo(ent_user.getValidTo());
 	    	
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String responsePrint = jsonMapper.writeValueAsString(mod_user);
 		    	this.log.debug("UserService: convertUserModel -> PROCESS END WITH: " + responsePrint);
@@ -258,7 +258,7 @@ public class UserServiceImpl implements UserService
 		
     	try
 		{	
-    		if(env.getProperty("portalecredito.mode.debug").equals("true"))
+    		if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(utente);
 		    	this.log.debug("ProspectService: saveUser -> Object: " + requestPrint);
@@ -386,7 +386,7 @@ public class UserServiceImpl implements UserService
 
 		try 
 		{
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(entity_rol);
 		    	this.log.debug("UserService: convertRuoliModelList -> Object: " + requestPrint);
@@ -405,7 +405,7 @@ public class UserServiceImpl implements UserService
 				}
 			}
 	    	
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String responsePrint = jsonMapper.writeValueAsString(ruoli);
 		    	this.log.debug("UserService: convertRuoliModelList -> PROCESS END WITH: " + responsePrint);
@@ -448,7 +448,7 @@ public class UserServiceImpl implements UserService
 
     	try
 		{	
-    		if(env.getProperty("portalecredito.mode.debug").equals("true"))
+    		if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(ruolo);
 		    	this.log.debug("UserService: saveRole -> Object: " + requestPrint);
@@ -500,7 +500,7 @@ public class UserServiceImpl implements UserService
 		{
 			Stream<com.gamenet.cruscottofatturazione.entities.VoceMenu> streamVoci = StreamSupport.stream(entityVoci.spliterator(), false);
 			
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(entityVoci);
 		    	this.log.debug("UserService: convertVociMenuModelList -> Object: " + requestPrint);
@@ -555,7 +555,7 @@ public class UserServiceImpl implements UserService
 				}
 			}
 	    	
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String responsePrint = jsonMapper.writeValueAsString(vociResult);
 		    	this.log.debug("UserService: convertVociMenuModelList -> PROCESS END WITH: " + responsePrint);
@@ -581,7 +581,7 @@ public class UserServiceImpl implements UserService
 
 		try 
 		{
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(entVoce);
 		    	this.log.debug("UserService: convertVociMenuModel -> Object: " + requestPrint);
@@ -606,7 +606,7 @@ public class UserServiceImpl implements UserService
 			modVoce.setLastModUser(entVoce.getLastModUser());
 			modVoce.setLastModDate(entVoce.getLastModDate());
 	    	
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String responsePrint = jsonMapper.writeValueAsString(modVoce);
 		    	this.log.debug("UserService: convertVociMenuModel -> PROCESS END WITH: " + responsePrint);
@@ -665,7 +665,7 @@ public class UserServiceImpl implements UserService
 
 		try 
 		{
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(entity_grp);
 		    	this.log.debug("UserService: convertGruppiModelList -> Object: " + requestPrint);
@@ -681,7 +681,7 @@ public class UserServiceImpl implements UserService
 				gruppi.add(mod_grp);
 			}
 	    	
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String responsePrint = jsonMapper.writeValueAsString(gruppi);
 		    	this.log.debug("UserService: convertGruppiModelList -> PROCESS END WITH: " + responsePrint);
@@ -714,7 +714,7 @@ public class UserServiceImpl implements UserService
 
 		try 
 		{
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(entities_bus);
 		    	this.log.debug("UserService: convertBusinessModelList -> Object: " + requestPrint);
@@ -730,7 +730,7 @@ public class UserServiceImpl implements UserService
 				bus_list.add(mod_bus);
 			}
 	    	
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String responsePrint = jsonMapper.writeValueAsString(bus_list);
 		    	this.log.debug("UserService: convertBusinessModelList -> PROCESS END WITH: " + responsePrint);
@@ -787,7 +787,7 @@ public class UserServiceImpl implements UserService
 		appService.insertLog("info", "UserService", "convertRoleVoceMenuList", "START", "","convertRoleVoceMenuList");
 
 		try {
-			if (env.getProperty("portalecredito.mode.debug").equals("true")) {
+			if (env.getProperty("cruscottofatturazione.mode.debug").equals("true")) {
 				String requestPrint = jsonMapper.writeValueAsString(entityRoleVoce);
 				this.log.debug("UserService: convertRoleVoceMenuList -> Object: " + requestPrint);
 				appService.insertLog("debug", "UserService", "convertRoleVoceMenuList", "Object: " + requestPrint, "", "convertRoleVoceMenuList");
@@ -800,7 +800,7 @@ public class UserServiceImpl implements UserService
 				roleMenuList.add(convertRoleVoceMenu(entRoleVoce));
 			}
 
-			if (env.getProperty("portalecredito.mode.debug").equals("true")) {
+			if (env.getProperty("cruscottofatturazione.mode.debug").equals("true")) {
 				String responsePrint = jsonMapper.writeValueAsString(roleMenuList);
 				this.log.debug("UserService: convertRoleVoceMenuList -> PROCESS END WITH: " + responsePrint);
 				appService.insertLog("debug", "UserService", "convertRoleVoceMenuList","PROCESS END WITH: " + responsePrint, "", "convertRoleVoceMenuList");
@@ -846,7 +846,7 @@ public class UserServiceImpl implements UserService
 
 		try
 		{
-			if (env.getProperty("portalecredito.mode.debug").equals("true"))
+			if (env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 				String requestPrint = jsonMapper.writeValueAsString(roleVoceMenu);
 				this.log.debug("UserService: saveRoleVoceMenu -> Object: " + requestPrint);
@@ -908,7 +908,7 @@ public class UserServiceImpl implements UserService
 		
 		try
 		{
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(payload);
 		    	this.log.debug("UserService: getUtentiDataTable -> Object: " + requestPrint);
@@ -969,7 +969,7 @@ public class UserServiceImpl implements UserService
 //				}		
 //			}
 	    	
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String responsePrint = jsonMapper.writeValueAsString(response);
 		    	this.log.debug("UserService: getUtentiDataTable -> PROCESS END WITH: " + responsePrint);
@@ -1000,7 +1000,7 @@ public class UserServiceImpl implements UserService
 		
 		try 
 		{
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String requestPrint = jsonMapper.writeValueAsString(payload);
 		    	this.log.debug("UserService: getRuoliDataTable -> Object: " + requestPrint);
@@ -1056,7 +1056,7 @@ public class UserServiceImpl implements UserService
 //				response.setLines(convertRuoliModelList(pages.getContent()));
 //			}
 	    	
-			if(env.getProperty("portalecredito.mode.debug").equals("true"))
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 		    	String responsePrint = jsonMapper.writeValueAsString(response);
 		    	this.log.debug("UserService: getRuoliDataTable -> PROCESS END WITH: " + responsePrint);
@@ -1085,7 +1085,7 @@ public class UserServiceImpl implements UserService
 		response.setLines(new ArrayList<RoleVoceMenu>());
 
 		try {
-			if (env.getProperty("portalecredito.mode.debug").equals("true"))
+			if (env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 				String requestPrint = jsonMapper.writeValueAsString(payload);
 				this.log.debug("UserService: getRoleVoceMenuDataTable -> Object: " + requestPrint);
@@ -1147,7 +1147,7 @@ public class UserServiceImpl implements UserService
 //				response.setLines(convertRoleVoceMenuList(pages.getContent()));
 //			}
 
-			if (env.getProperty("portalecredito.mode.debug").equals("true"))
+			if (env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 				String responsePrint = jsonMapper.writeValueAsString(response);
 				this.log.debug("UserService: getRoleVoceMenuDataTable -> PROCESS END WITH: " + responsePrint);

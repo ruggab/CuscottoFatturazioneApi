@@ -1,7 +1,5 @@
 package com.gamenet.cruscottofatturazione.models.request;
 
-import java.util.ArrayList;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DashboardProspectRequest {
+public class DashboardRequest {
 	private Integer idRole;
 	private Boolean isAdmin;
 	private Boolean adminView;
-	private ArrayList<String> selectedBusiness;
+	private String societa;
 }
