@@ -134,7 +134,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8083/cliente/getClientiList",
+							"raw": "localhost:8083/cliente/getClientiList?codiceSocieta=soc2",
 							"host": [
 								"localhost"
 							],
@@ -142,6 +142,12 @@
 							"path": [
 								"cliente",
 								"getClientiList"
+							],
+							"query": [
+								{
+									"key": "codiceSocieta",
+									"value": "soc2"
+								}
 							]
 						}
 					},
@@ -218,6 +224,44 @@
 							"path": [
 								"cliente",
 								"saveCliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ricercaCliente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\t\"codiceCliente\":\"1234567890\",\r\n\t\t\"ragioneSociale\":\"rag\",\r\n\t\t\"codiceFiscale\":\"ffyynf65d33j876p\",\r\n\t\t\"partitaIva\":\"12345678951\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/cliente/ricercaCliente",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"cliente",
+								"ricercaCliente"
 							]
 						}
 					},
@@ -563,7 +607,7 @@
 			"name": "Fattura",
 			"item": [
 				{
-					"name": "getFatturaList",
+					"name": "getFattureList",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -590,7 +634,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8083/fattura/getFattureList",
+							"raw": "localhost:8083/fattura/getFattureList?codiceSocieta=soc4",
 							"host": [
 								"localhost"
 							],
@@ -598,6 +642,12 @@
 							"path": [
 								"fattura",
 								"getFattureList"
+							],
+							"query": [
+								{
+									"key": "codiceSocieta",
+									"value": "soc4"
+								}
 							]
 						}
 					},
@@ -667,7 +717,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "1",
+							"raw": "31",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -705,7 +755,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \r\n    \"fattura\":{\r\n        \"id\": 9,\r\n        \"societa\":\"soc1\",\r\n        \"dataFattura\":\"2022-06-27T00:00:00.000+00:00\",\r\n        \"tipologiaFattura\":\"FA\",\r\n        \"codiceCliente\":\"1234567892\",\r\n        \"importo\":1500.11,\r\n        \"statoFattura\":\"V\",\r\n        \"esitoInvio\":null,\r\n        \"dataInvioFlusso\":null\r\n    }\r\n\t\r\n\r\n}",
+							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \r\n   \"fattura\":{\r\n    \"id\": 31,\r\n    \"societa\": \"soc4\",\r\n    \"dataFattura\": \"2022-06-30T00:00:00.000+00:00\",\r\n    \"tipologiaFattura\": \"FA\",\r\n    \"codiceCliente\": \"1234567892\",\r\n    \"importo\": 2392.3,\r\n    \"statoFattura\": \"R\",\r\n    \"esitoInvio\": null,\r\n    \"dataInvioFlusso\": null,\r\n    \"listaDettaglioFattura\": [\r\n        {\r\n            \"id\": 29,\r\n            \"idFattura\": 24,\r\n            \"progressivoRiga\": 3,\r\n            \"codiceArticolo\": \"126\",\r\n            \"codiceCorrispettivo\": \"1\",\r\n            \"importo\": 550.65,\r\n            \"note\": \"test\",\r\n            \"idMessaggio\": null,\r\n            \"descrizioneMessaggio\": null,\r\n            \"create_user\": \"Diego Capone\",\r\n            \"create_date\": \"2022-06-30T14:56:23.298+00:00\",\r\n            \"last_mod_user\": \"Diego Capone\",\r\n            \"last_mod_date\": \"2022-06-30T14:56:23.295+00:00\"\r\n        },\r\n        {\r\n            \"id\": 27,\r\n            \"idFattura\": 24,\r\n            \"progressivoRiga\": 1,\r\n            \"codiceArticolo\": \"125\",\r\n            \"codiceCorrispettivo\": \"1\",\r\n            \"importo\": 358.35,\r\n            \"note\": \"test\",\r\n            \"idMessaggio\": null,\r\n            \"descrizioneMessaggio\": null,\r\n            \"create_user\": \"Diego Capone\",\r\n            \"create_date\": \"2022-06-30T14:56:23.284+00:00\",\r\n            \"last_mod_user\": \"Diego Capone\",\r\n            \"last_mod_date\": \"2022-06-30T14:56:23.282+00:00\"\r\n        },\r\n        {\r\n            \"id\": 28,\r\n            \"idFattura\": 24,\r\n            \"progressivoRiga\": 2,\r\n            \"codiceArticolo\": \"123\",\r\n            \"codiceCorrispettivo\": \"1\",\r\n            \"importo\": 458.65,\r\n            \"note\": \"test\",\r\n            \"idMessaggio\": null,\r\n            \"descrizioneMessaggio\": null,\r\n            \"create_user\": \"Diego Capone\",\r\n            \"create_date\": \"2022-06-30T14:56:23.290+00:00\",\r\n            \"last_mod_user\": \"Diego Capone\",\r\n            \"last_mod_date\": \"2022-06-30T14:56:23.288+00:00\"\r\n        },\r\n        {\r\n            \"id\": 30,\r\n            \"idFattura\": 24,\r\n            \"progressivoRiga\": 4,\r\n            \"codiceArticolo\": \"127\",\r\n            \"codiceCorrispettivo\": \"1\",\r\n            \"importo\": 665.65,\r\n            \"note\": \"test\",\r\n            \"idMessaggio\": null,\r\n            \"descrizioneMessaggio\": null,\r\n            \"create_user\": \"Diego Capone\",\r\n            \"create_date\": \"2022-06-30T14:56:23.305+00:00\",\r\n            \"last_mod_user\": \"Diego Capone\",\r\n            \"last_mod_date\": \"2022-06-30T14:56:23.302+00:00\"\r\n        }\r\n    ],\r\n    \"create_user\": \"Diego Capone\",\r\n    \"create_date\": \"2022-06-28T13:52:15.947+00:00\",\r\n    \"last_mod_user\": \"Diego Capone\",\r\n    \"last_mod_date\": \"2022-06-30T14:56:23.310+00:00\"\r\n}\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -934,6 +984,44 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "ricercaUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\t\"attivo\":true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/user/ricercaUser",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"user",
+								"ricercaUser"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1106,7 +1194,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTY1NDQ3NjAsImlhdCI6MTY1NjUxNDc2MCwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.nTSMOFXY5_r6WOTS65gtNtDAXRrx-3djq_uI2ylBH9E"
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTY2MjcwNjYsImlhdCI6MTY1NjU5NzA2NiwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.GaAFbAx4dJuMMKfIwpTchydMZ37C56e_hMAhjaONLSw"
 		}
 	]
 }
