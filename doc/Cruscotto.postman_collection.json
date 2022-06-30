@@ -340,7 +340,45 @@
 					"response": []
 				},
 				{
-					"name": "getArticoloById",
+					"name": "getArticoliDataTable",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[],\"sort\":[]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/articolo/getArticoliDataTable",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"articolo",
+								"getArticoliDataTable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getArticoloById Copy",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1194,7 +1232,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTY2MjcwNjYsImlhdCI6MTY1NjU5NzA2NiwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.GaAFbAx4dJuMMKfIwpTchydMZ37C56e_hMAhjaONLSw"
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTY2NTM4MTYsImlhdCI6MTY1NjYyMzgxNiwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.nJtSEeVZrzsrsctzbJbReuFOU8lDIDmJCegQI0PMpy8"
 		}
 	]
 }

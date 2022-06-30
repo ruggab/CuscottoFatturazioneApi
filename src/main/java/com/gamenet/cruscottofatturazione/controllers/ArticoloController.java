@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.gamenet.cruscottofatturazione.entities.Articolo;
 import com.gamenet.cruscottofatturazione.models.request.ArticoloSaveRequest;
 import com.gamenet.cruscottofatturazione.models.request.DeleteRequest;
+import com.gamenet.cruscottofatturazione.models.response.ArticoliListOverview;
 import com.gamenet.cruscottofatturazione.services.interfaces.ArticoloService;
 
 import lombok.RequiredArgsConstructor;
@@ -49,6 +51,13 @@ public class ArticoloController {
 	public Boolean deleteArticolo(@RequestBody DeleteRequest articoloReq) 
 	{
 		return articoloService.deleteArticolo(articoloReq.getIdEntity(), articoloReq.getUtenteUpdate());
+	}
+	
+	/***** DATA TABLE LIST *****/
+	@PostMapping("/getArticoliDataTable")
+	public ArticoliListOverview getArticoliDataTable(@RequestBody JsonNode payload)
+	{
+		return articoloService.getArticoliDataTable(payload);
 	}
 	
 	

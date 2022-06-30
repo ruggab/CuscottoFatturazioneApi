@@ -96,7 +96,7 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
 			    		mod_user.setLastModDate(userFind.getLastModDate());
 			    		
 			    		
-			    		String[] elencoSocieta = userFind.getSocieta().split("|");
+			    		String[] elencoSocieta = userFind.getSocieta().split("\\|");
 						
 						mod_user.setSocieta(elencoSocieta);
 			    		
