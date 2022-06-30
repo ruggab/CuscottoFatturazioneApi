@@ -3,6 +3,8 @@ package com.gamenet.cruscottofatturazione.controllers;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,30 +28,41 @@ public class ClienteController {
 	private final ClienteService clienteService;
 	
 	
+//	@GetMapping("/getClientiList")
+//	public List<Cliente> getClientiList() 
+//	{
+//		return clienteService.getClienti();
+//	}
+	
 	@GetMapping("/getClientiList")
-	public List<Cliente> getUserList() 
+	public List<Cliente> getClientiListBySocieta(@PathParam(value ="codiceSocieta" ) String codiceSocieta) 
 	{
-		return clienteService.getClienti();
+		return clienteService.getClienti(codiceSocieta);
 	}
 	
 	@PostMapping("/getClienteById")
-	public Cliente getUserById(@RequestBody Integer clienteId) 
+	public Cliente getClienteById(@RequestBody Integer clienteId) 
 	{
 		return clienteService.getClienteById(clienteId);
 	}
 	
 	@PostMapping("/saveCliente")
-	public Boolean saveUser(@RequestBody ClienteSaveRequest clienteReq) 
+	public Boolean saveCliente(@RequestBody ClienteSaveRequest clienteReq) 
 	{
 		return clienteService.saveCliente(clienteReq.getCliente(), clienteReq.getUtenteUpdate());
 	}
 	
 	
 	@PostMapping("/deleteCliente")
-	public Boolean deleteUser(@RequestBody DeleteRequest clienteReq) 
+	public Boolean deleteCliente(@RequestBody DeleteRequest clienteReq) 
 	{
 		return clienteService.deleteCliente(clienteReq.getIdEntity(), clienteReq.getUtenteUpdate());
 	}
 	
+	@PostMapping("/ricercaCliente")
+	public List<Cliente> ricercaCliente(@RequestBody Cliente cliente) 
+	{
+		return clienteService.ricercaCliente(cliente);
+	}
 	
 }

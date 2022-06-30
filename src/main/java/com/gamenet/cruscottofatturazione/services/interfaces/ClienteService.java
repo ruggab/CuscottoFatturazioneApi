@@ -10,6 +10,8 @@ public interface ClienteService {
 	Cliente getClienteById(Integer clienteId);
 	Boolean saveCliente(Cliente cliente, String utenteUpdate);
 	Boolean deleteCliente(Integer clienteId, String utenteUpdate);
+	List<Cliente> getClienti(String codiceSocieta);
+	List<Cliente> ricercaCliente(Cliente cliente);
 
 	
 

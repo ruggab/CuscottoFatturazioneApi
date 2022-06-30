@@ -27,28 +27,38 @@ public class FatturaController {
 	private final FatturaService fatturaService;
 	
 	
+//	@GetMapping("/getFattureList")
+//	public List<Fattura> geFattureList() String codiceSocieta) 
+//	{
+//		return fatturaService.getFatture();
+//	}
+	
 	@GetMapping("/getFattureList")
-	public List<Fattura> getUserList() 
+	public List<com.gamenet.cruscottofatturazione.models.Fattura> geFattureList(@PathParam(value ="codiceSocieta" ) String codiceSocieta) 
 	{
-		return fatturaService.getFatture();
+		return fatturaService.getFatture(codiceSocieta);
 	}
 	
 	@PostMapping("/getFatturaById")
 	public Fattura getFatturaById(@RequestBody Integer fatturaId) 
 	{
-		return fatturaService.getFatturaById(fatturaId);
+		
+		Fattura fattura=fatturaService.getFatturaById(fatturaId);
+		
+		return fattura;
 	}
 	
 	@GetMapping("/getLastTenFatturaBySocieta")
-	public List<Fattura> getLastTenFatturaBySocieta(@PathParam(value ="codiceSocieta" ) String codiceSocieta) 
+	public List<com.gamenet.cruscottofatturazione.models.Fattura> getLastTenFatturaBySocieta(@PathParam(value ="codiceSocieta" ) String codiceSocieta) 
 	{
 		return fatturaService.getLastTenFatturaBySocieta(codiceSocieta);
 	}
 	
 	@PostMapping("/saveFattura")
-	public Boolean saveUser(@RequestBody FatturaSaveRequest fatturaReq) 
+	public com.gamenet.cruscottofatturazione.models.Fattura saveFattura(@RequestBody FatturaSaveRequest fatturaReq) 
 	{
-		return fatturaService.saveFattura(fatturaReq.getFattura(), fatturaReq.getUtenteUpdate());
+		com.gamenet.cruscottofatturazione.models.Fattura fattura= fatturaService.saveFatturaConDettagli(fatturaReq.getFattura(), fatturaReq.getUtenteUpdate());
+		return fattura;
 	}
 	
 	

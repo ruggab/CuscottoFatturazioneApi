@@ -1,6 +1,6 @@
 package com.gamenet.cruscottofatturazione.models.request;
 
-import com.gamenet.cruscottofatturazione.entities.Fattura;
+import com.gamenet.cruscottofatturazione.models.Fattura;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

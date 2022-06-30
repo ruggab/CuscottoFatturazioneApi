@@ -9,7 +9,7 @@ public interface DettaglioFatturaService {
 	List<DettaglioFattura> getDettaglioFatture();
 	DettaglioFattura getDettaglioFatturaById(Integer dettaglioFatturaId);
 	List<DettaglioFattura> getDettaglioFatturaByFatturaId(Integer fatturaId);
-	Boolean saveDettaglioFattura(DettaglioFattura dettaglioFattura, String utenteUpdate);
+	DettaglioFattura saveDettaglioFattura(DettaglioFattura dettaglioFattura, String utenteUpdate);
 	Boolean deleteDettaglioFattura(Integer dettaglioFatturaId, String utenteUpdate);
 	
 

@@ -21,3 +21,74 @@ WHERE        (data_fattura > DATEADD(day, - 7, GETDATE())) AND (data_fattura <= 
 GROUP BY cast(data_fattura as date)
 ORDER BY cast(data_fattura as date);
 GO
+
+
+
+ALTER PROCEDURE [Anagraphics].[SP_CreateUpdateUser]
+	@id INT = -1,
+	@role_id INT,
+	@name NVARCHAR(50) = '',
+	@societa NVARCHAR(300) = '',
+	@email NVARCHAR(250) = '',
+	@username NVARCHAR(250) = '',
+	@password NVARCHAR(250) = '',
+	@valid_from DATETIME,
+	@valid_to DATETIME,
+	@utenteUpdate NVARCHAR(50) = ''
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @DataAttuale DATETIME = GETDATE();
+
+    IF(@id > 0)
+		BEGIN
+			UPDATE [Anagraphics].[Users]
+			   SET [role_id] = @role_id
+				  ,[name] = @name
+				  ,[email] = @email
+				  ,[societa] = @societa
+				  ,[username] = @username
+				  ,[password] = CASE WHEN @password != '' THEN @password ELSE [password] END
+				  ,[last_mod_user] = @utenteUpdate
+				  ,[last_mod_date] = @DataAttuale
+				  ,[valid_from] = @valid_from
+				  ,[valid_to] = @valid_to
+			 WHERE [id] = @id
+		END
+	ELSE
+		BEGIN
+			INSERT INTO [Anagraphics].[Users]
+					   ([role_id]
+					   ,[name]
+					   ,[email]
+					   ,[societa]
+					   ,[username]
+					   ,[password]
+					   ,[token]
+					   ,[is_new]
+					   ,[create_user]
+					   ,[create_date]
+					   ,[valid_from]
+					   ,[valid_to])
+				 VALUES
+					   (@role_id
+					   ,@name
+					   ,@email
+					   ,@societa
+					   ,@username
+					   ,@password
+					   ,''
+					   ,1
+					   ,@utenteUpdate
+					   ,@DataAttuale
+					   ,@valid_from
+					   ,@valid_to)
+					   
+			SET @id = SCOPE_IDENTITY();
+		END
+
+		SELECT [return_id] = @id
+END

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamenet.cruscottofatturazione.entities.Cliente;
 import com.gamenet.cruscottofatturazione.models.GruppoUtenti;
 import com.gamenet.cruscottofatturazione.models.RoleUser;
 import com.gamenet.cruscottofatturazione.models.RoleVoceMenu;
@@ -23,6 +24,7 @@ import com.gamenet.cruscottofatturazione.models.request.RoleSaveRequest;
 import com.gamenet.cruscottofatturazione.models.request.RoleVoceMenuSaveRequest;
 import com.gamenet.cruscottofatturazione.models.request.UserBusinessRequest;
 import com.gamenet.cruscottofatturazione.models.request.UserSaveRequest;
+import com.gamenet.cruscottofatturazione.models.request.UserSearch;
 import com.gamenet.cruscottofatturazione.models.response.RoleVoceMenuOverview;
 import com.gamenet.cruscottofatturazione.models.response.RuoliListOverview;
 import com.gamenet.cruscottofatturazione.models.response.UpdateGenericResponse;
@@ -53,6 +55,13 @@ public class UserController {
 	{
 		return userService.getUserById(userId);
 	}
+	
+	@PostMapping("/ricercaUser")
+	public List<Cliente> ricercaUser(@RequestBody UserSearch userSearch) 
+	{
+		return userService.ricercaUtente(userSearch);
+	}
+	
 	
 	@PostMapping("/saveUser")
 	public Boolean saveUser(@RequestBody UserSaveRequest utenteReq) 

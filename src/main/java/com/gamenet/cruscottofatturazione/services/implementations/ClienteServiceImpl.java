@@ -2,11 +2,15 @@ package com.gamenet.cruscottofatturazione.services.implementations;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.hibernate.annotations.Where;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Example;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,6 +35,11 @@ public class ClienteServiceImpl implements ClienteService
 	@Override
 	public List<Cliente> getClienti() {
 		return clienteRepository.getClienti();
+	}
+	
+	@Override
+	public List<Cliente> getClienti(String codiceSocieta) {
+		return clienteRepository.getClientiBySocieta(codiceSocieta);
 	}
 
 	@Override
@@ -110,5 +119,13 @@ public class ClienteServiceImpl implements ClienteService
     	appService.insertLog("info", "ClienteService", "deleteCliente", "SUCCESSFULLY END", "", "deleteCliente");
     	return true;
 	}
+
+	@Override
+	public List<Cliente> ricercaCliente(Cliente cliente) {
+		List<Cliente> searchResult = clienteRepository.search(cliente.getCodiceCliente(),cliente.getRagioneSociale(),cliente.getPartitaIva(),cliente.getCodiceFiscale());
+		return searchResult;
+	}
+
+	
 	
 }

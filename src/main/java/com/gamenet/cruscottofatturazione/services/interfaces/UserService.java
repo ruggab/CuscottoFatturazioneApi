@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.security.authentication.BadCredentialsException;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamenet.cruscottofatturazione.entities.Cliente;
 import com.gamenet.cruscottofatturazione.models.GruppoUtenti;
 import com.gamenet.cruscottofatturazione.models.RoleUser;
 import com.gamenet.cruscottofatturazione.models.RoleVoceMenu;
 import com.gamenet.cruscottofatturazione.models.User;
 import com.gamenet.cruscottofatturazione.models.VoceMenu;
+import com.gamenet.cruscottofatturazione.models.request.UserSearch;
 import com.gamenet.cruscottofatturazione.models.response.RoleVoceMenuOverview;
 import com.gamenet.cruscottofatturazione.models.response.RuoliListOverview;
 import com.gamenet.cruscottofatturazione.models.response.UpdateGenericResponse;
@@ -68,5 +70,7 @@ public interface UserService {
 	public RuoliListOverview getRuoliDataTable(JsonNode payload);
 	
 	public RoleVoceMenuOverview getRoleVoceMenuDataTable(JsonNode payload);
+
+	public List<Cliente> ricercaUtente(UserSearch userSearch);
 
 }

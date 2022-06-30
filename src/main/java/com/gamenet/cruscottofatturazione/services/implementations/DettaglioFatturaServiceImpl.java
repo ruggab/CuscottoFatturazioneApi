@@ -44,10 +44,10 @@ public class DettaglioFatturaServiceImpl implements DettaglioFatturaService
 	}
 
 	@Override
-	public Boolean saveDettaglioFattura(DettaglioFattura dettaglioFattura, String utenteUpdate) {
+	public DettaglioFattura saveDettaglioFattura(DettaglioFattura dettaglioFattura, String utenteUpdate) {
 		this.log.info("DettaglioFatturaService: saveDettaglioFattura -> START");
     	appService.insertLog("info", "DettaglioFatturaService", "saveDettaglioFattura", "START", "", "saveDettaglioFattura");
-
+    	DettaglioFattura dettaglioFatturaSaved=null;
     	try
 		{	
     		if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
@@ -68,7 +68,7 @@ public class DettaglioFatturaServiceImpl implements DettaglioFatturaService
     			
     		}
     		
-    		dettaglioFatturaRepository.save(dettaglioFattura);
+    		dettaglioFatturaSaved = dettaglioFatturaRepository.save(dettaglioFattura);
     		
 		}
 		catch (Exception e)
@@ -78,12 +78,12 @@ public class DettaglioFatturaServiceImpl implements DettaglioFatturaService
 			appService.insertLog("error", "DettaglioFatturaService", "saveDettaglioFattura", "Exception", stackTrace, "saveDettaglioFattura");
 			
 	        e.printStackTrace();
-	        return false;
+	        return null;
 		}
     	
     	this.log.info("DettaglioFatturaService: saveDettaglioFattura -> SUCCESSFULLY END");
     	appService.insertLog("info", "DettaglioFatturaService", "saveDettaglioFattura", "SUCCESSFULLY END", "", "saveDettaglioFattura");
-    	return true;
+    	return dettaglioFatturaSaved;
 	}
 
 	@Override

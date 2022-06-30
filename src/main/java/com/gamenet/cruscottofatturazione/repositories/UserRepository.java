@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gamenet.cruscottofatturazione.entities.Cliente;
 import com.gamenet.cruscottofatturazione.entities.User;
 
 @Repository
@@ -27,11 +28,12 @@ public interface UserRepository extends CrudRepository<User, Integer>, JpaSpecif
 
 	@Modifying(clearAutomatically = true)
 	@Transactional
-	@Query(nativeQuery = true, value=" EXEC [Anagraphics].[SP_CreateUpdateUser] :id , :role_id , :name , :email , :username , :password , :valid_from, :valid_to, :utenteUpdate")
+	@Query(nativeQuery = true, value=" EXEC [Anagraphics].[SP_CreateUpdateUser] :id , :role_id , :name , :email ,:societa, :username , :password , :valid_from, :valid_to, :utenteUpdate")
 	public List<Integer> saveUser(@Param("id") Integer id,
 					   	 @Param("role_id") Integer role_id,
 						 @Param("name") String name,
 						 @Param("email") String email,
+						 @Param("societa") String societa,
 						 @Param("username") String username,
 						 @Param("password") String password,
 				   	     @Param("valid_from") Date valid_from,
@@ -65,6 +67,19 @@ public interface UserRepository extends CrudRepository<User, Integer>, JpaSpecif
 					   	   					@Param("passwordNuova") String passwordNuova,
 					   	   					@Param("utenteUpdate") String utenteUpdate
 				   	 	   				);
+	
+	
+	
+	
+	@Query(value="SELECT * FROM [Anagraphics].[Users] u inner join [Anagraphics].[Roles] r on u.role_id=r.id"
+			+ " where (:nome is null or u.name like %:nome%)"
+			+ " AND (:email is null or u.email like %:email%)"
+			+ " AND (:username is null or u.username like %:username%)"
+			+ " AND (:ruolo is null or r.name like %:ruolo%)"
+			+ " AND ( (:active= '0' AND u.valid_to > GETDATE()) OR (:active='1' AND u.valid_to < GETDATE()) )",nativeQuery=true)
+	public List<User> search(@Param("nome") String nome, @Param("email") String email, @Param("username") String username,@Param("ruolo")  String ruolo,@Param("active")  String active);
+
+	
 	
 
 }

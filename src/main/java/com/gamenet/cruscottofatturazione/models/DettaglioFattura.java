@@ -1,12 +1,6 @@
-package com.gamenet.cruscottofatturazione.entities;
+package com.gamenet.cruscottofatturazione.models;
 
 import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,19 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
-@Table(name = "dettaglio_fattura", schema = "dbo")
 public class DettaglioFattura {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Integer idFattura;
-	
-//	@ManyToOne
-//	@JoinColumn(name = "idFattura")
-//	@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
-//	private Fattura fattura;
-	
 	private Integer progressivoRiga;
 	private String codiceArticolo;
 	private String codiceCorrispettivo;
