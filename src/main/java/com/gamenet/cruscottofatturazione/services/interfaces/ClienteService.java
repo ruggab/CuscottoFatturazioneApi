@@ -2,7 +2,9 @@ package com.gamenet.cruscottofatturazione.services.interfaces;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.gamenet.cruscottofatturazione.entities.Cliente;
+import com.gamenet.cruscottofatturazione.models.response.ClientiListOverview;
 
 public interface ClienteService {
 
@@ -11,7 +13,7 @@ public interface ClienteService {
 	Boolean saveCliente(Cliente cliente, String utenteUpdate);
 	Boolean deleteCliente(Integer clienteId, String utenteUpdate);
 	List<Cliente> getClienti(String codiceSocieta);
-	List<Cliente> ricercaCliente(Cliente cliente);
+	ClientiListOverview getClientiDataTable(JsonNode payload);
 
 	
 

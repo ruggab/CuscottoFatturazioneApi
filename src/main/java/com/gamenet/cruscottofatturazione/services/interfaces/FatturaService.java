@@ -2,7 +2,9 @@ package com.gamenet.cruscottofatturazione.services.interfaces;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.gamenet.cruscottofatturazione.entities.Fattura;
+import com.gamenet.cruscottofatturazione.models.response.FattureListOverview;
 
 public interface FatturaService {
 
@@ -12,5 +14,6 @@ public interface FatturaService {
 	Fattura saveFattura(Fattura fattura, String utenteUpdate);
 	com.gamenet.cruscottofatturazione.models.Fattura saveFatturaConDettagli(com.gamenet.cruscottofatturazione.models.Fattura fattura, String utenteUpdate);
 	List<com.gamenet.cruscottofatturazione.models.Fattura> getFatture(String codiceSocieta);
+	FattureListOverview getFattureDataTable(JsonNode payload);
 
 }

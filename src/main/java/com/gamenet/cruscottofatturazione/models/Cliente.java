@@ -15,11 +15,19 @@ public class Cliente
 {
 	private Integer id;
 	private String codiceCliente;
-	private String nomeCliente;
-	private String business;
-	private String workflowStepId;
-	private String nomeStep;
-	private Integer sommaGaranzie;
-	private Date lastMod;
-	private Integer workUserId;
+	private String societa;
+	private String ragioneSociale;
+	private String codiceFiscale;
+	private String partitaIva;
+	private String nazionalita;
+	private String sedeLegale;
+	private String appartieneGruppoIva;
+	private String codiceDestinatarioFatturazione;
+	private String modalitaPagamento;
+	private String condizioniPagamento;
+	
+	private String create_user;
+	private Date create_date;
+	private String last_mod_user;
+	private Date last_mod_date;
 }

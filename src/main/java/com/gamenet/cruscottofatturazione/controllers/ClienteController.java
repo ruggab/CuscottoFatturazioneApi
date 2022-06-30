@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.gamenet.cruscottofatturazione.entities.Cliente;
 import com.gamenet.cruscottofatturazione.models.request.ClienteSaveRequest;
 import com.gamenet.cruscottofatturazione.models.request.DeleteRequest;
+import com.gamenet.cruscottofatturazione.models.response.ClientiListOverview;
+import com.gamenet.cruscottofatturazione.models.response.FattureListOverview;
 import com.gamenet.cruscottofatturazione.services.interfaces.ClienteService;
 
 import lombok.RequiredArgsConstructor;
@@ -59,10 +62,12 @@ public class ClienteController {
 		return clienteService.deleteCliente(clienteReq.getIdEntity(), clienteReq.getUtenteUpdate());
 	}
 	
-	@PostMapping("/ricercaCliente")
-	public List<Cliente> ricercaCliente(@RequestBody Cliente cliente) 
+	
+	/***** DATA TABLE LIST *****/
+	@PostMapping("/getClientiDataTable")
+	public ClientiListOverview getClientiDataTable(@RequestBody JsonNode payload,@PathParam(value ="codiceSocieta" ) String codiceSocieta)
 	{
-		return clienteService.ricercaCliente(cliente);
+		return clienteService.getClientiDataTable(payload);
 	}
 	
 }

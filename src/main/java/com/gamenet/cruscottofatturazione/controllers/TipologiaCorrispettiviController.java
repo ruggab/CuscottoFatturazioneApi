@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.gamenet.cruscottofatturazione.entities.TipologiaCorrispettivi;
 import com.gamenet.cruscottofatturazione.models.request.DeleteRequest;
 import com.gamenet.cruscottofatturazione.models.request.TipologiaCorrispettiviSaveRequest;
+import com.gamenet.cruscottofatturazione.models.response.TipologiaCorrispettiviListOverview;
 import com.gamenet.cruscottofatturazione.services.interfaces.TipologiaCorrispettiviService;
 
 import lombok.RequiredArgsConstructor;
@@ -48,6 +50,14 @@ public class TipologiaCorrispettiviController {
 	public Boolean deleteTipologiaCorrispettivi(@RequestBody DeleteRequest tipologiaCorrispettiviReq) 
 	{
 		return tipologiaCorrispettiviService.deleteTipologiaCorrispettivi(tipologiaCorrispettiviReq.getIdEntity(), tipologiaCorrispettiviReq.getUtenteUpdate());
+	}
+	
+	
+	/***** DATA TABLE LIST *****/
+	@PostMapping("/getTipologiaCorrispettiviDataTable")
+	public TipologiaCorrispettiviListOverview getTipologiaCorrispettiviDataTable(@RequestBody JsonNode payload)
+	{
+		return tipologiaCorrispettiviService.getTipologiaCorrispettiviDataTable(payload);
 	}
 	
 }

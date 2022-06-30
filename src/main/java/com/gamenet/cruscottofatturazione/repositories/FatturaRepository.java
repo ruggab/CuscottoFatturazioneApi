@@ -9,10 +9,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.gamenet.cruscottofatturazione.entities.Fattura;
-import com.gamenet.cruscottofatturazione.entities.User;
 
 @Repository
-public interface FatturaRepository extends CrudRepository<Fattura, Integer>, JpaSpecificationExecutor<User> {
+public interface FatturaRepository extends CrudRepository<Fattura, Integer>, JpaSpecificationExecutor<Fattura> {
 	
 	@Query(value="SELECT * FROM [dbo].[fattura]",nativeQuery=true)
 	public List<Fattura> getFatture();

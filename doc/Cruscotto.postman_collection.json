@@ -230,7 +230,7 @@
 					"response": []
 				},
 				{
-					"name": "ricercaCliente",
+					"name": "getClientiDataTable",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -246,7 +246,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\t\"codiceCliente\":\"1234567890\",\r\n\t\t\"ragioneSociale\":\"rag\",\r\n\t\t\"codiceFiscale\":\"ffyynf65d33j876p\",\r\n\t\t\"partitaIva\":\"12345678951\"\r\n}\r\n",
+							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[],\"sort\":[]}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -254,14 +254,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8083/cliente/ricercaCliente",
+							"raw": "localhost:8083/cliente/getClientiDataTable",
 							"host": [
 								"localhost"
 							],
 							"port": "8083",
 							"path": [
 								"cliente",
-								"ricercaCliente"
+								"getClientiDataTable"
 							]
 						}
 					},
@@ -356,7 +356,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[],\"sort\":[]}",
+							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[{\"name\":\"codiceArticolo\",\"operator\":\"lke\",\"value\":\"223\",\"valueList\":null}],\"sort\":[]}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -378,7 +378,7 @@
 					"response": []
 				},
 				{
-					"name": "getArticoloById Copy",
+					"name": "getArticoloById",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -558,6 +558,44 @@
 							"path": [
 								"tipologiaCorrispettivi",
 								"getTipologiaCorrispettiviById"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTipologiaCorrispettiviDataTable",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[],\"sort\":[]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/tipologiaCorrispettivi/getTipologiaCorrispettiviDataTable",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"tipologiaCorrispettivi",
+								"getTipologiaCorrispettiviDataTable"
 							]
 						}
 					},
@@ -771,6 +809,51 @@
 							"path": [
 								"fattura",
 								"getFatturaById"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFattureDataTable",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[{\"name\":\"societa\",\"operator\":\"lke\",\"value\":\"soc4\",\"valueList\":null}],\"sort\":[]}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/fattura/getFattureDataTable",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"fattura",
+								"getFattureDataTable"
+							],
+							"query": [
+								{
+									"key": "codice_societa",
+									"value": "soc4",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -1232,7 +1315,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTY2NTM4MTYsImlhdCI6MTY1NjYyMzgxNiwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.nJtSEeVZrzsrsctzbJbReuFOU8lDIDmJCegQI0PMpy8"
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTY2NTU2MDIsImlhdCI6MTY1NjYyNTYwMiwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.zLMaxqgyWmBFwGO_a2DqK_4gTqIcQtyPNgZ9GoM8zTk"
 		}
 	]
 }

@@ -1,16 +1,31 @@
 package com.gamenet.cruscottofatturazione.services.implementations;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gamenet.cruscottofatturazione.context.QuerySpecification;
+import com.gamenet.cruscottofatturazione.context.SortUtils;
 import com.gamenet.cruscottofatturazione.entities.TipologiaCorrispettivi;
+import com.gamenet.cruscottofatturazione.models.ListFilter;
+import com.gamenet.cruscottofatturazione.models.ListSort;
+import com.gamenet.cruscottofatturazione.models.PagedListFilterAndSort;
+import com.gamenet.cruscottofatturazione.models.response.ArticoliListOverview;
+import com.gamenet.cruscottofatturazione.models.response.TipologiaCorrispettiviListOverview;
 import com.gamenet.cruscottofatturazione.repositories.TipologiaCorrispettiviRepository;
 import com.gamenet.cruscottofatturazione.services.interfaces.ApplicationLogsService;
 import com.gamenet.cruscottofatturazione.services.interfaces.TipologiaCorrispettiviService;
@@ -118,7 +133,99 @@ public class TipologiaCorrispettiviServiceImpl implements TipologiaCorrispettivi
 	}
 	
 	
-	
+	/***** DATA TABLE LIST *****/
+    @Override
+    public TipologiaCorrispettiviListOverview getTipologiaCorrispettiviDataTable(JsonNode payload)
+    {
+    	this.log.info("TipologiaCorrispettiviService: getTipologiaCorrispettiviDataTable -> START");
+    	appService.insertLog("info", "TipologiaCorrispettiviService", "getTipologiaCorrispettiviDataTable", "START", "", "getTipologiaCorrispettiviDataTable");
+
+    	TipologiaCorrispettiviListOverview response = new TipologiaCorrispettiviListOverview();
+		response.setTotalCount(0);
+		response.setLines(new ArrayList<com.gamenet.cruscottofatturazione.models.TipologiaCorrispettivi>());
+		
+		try
+		{
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
+			{
+		    	String requestPrint = jsonMapper.writeValueAsString(payload);
+		    	this.log.debug("TipologiaCorrispettiviService: getUtentiDataTable -> Object: " + requestPrint);
+		    	appService.insertLog("debug", "TipologiaCorrispettiviService", "getTipologiaCorrispettiviDataTable", "Object: " + requestPrint, "", "getTipologiaCorrispettiviDataTable");
+			}
+
+			jsonMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
+
+			PagedListFilterAndSort model = jsonMapper.treeToValue(payload, PagedListFilterAndSort.class);
+
+			if (model.getFilters() == null)
+				model.setFilters(new ArrayList<>());
+			
+			Specification<com.gamenet.cruscottofatturazione.entities.TipologiaCorrispettivi> spec = new QuerySpecification<>();
+
+			for (ListFilter filter : model.getFilters())
+				spec = spec.and(new QuerySpecification<>(filter));
+
+			PageRequest request = null;
+			if (model.getSort() != null && !model.getSort().isEmpty()) {
+				int index = 0;
+				Sort sort = null;
+				for (ListSort srt : model.getSort()) {
+					if (index++ == 0)
+						sort = Sort.by(SortUtils.translateSort(srt.getType()), srt.getName());
+					else
+						sort = sort.and(Sort.by(SortUtils.translateSort(srt.getType()), srt.getName()));
+				}
+
+				if(model.getPagesize() == 0)
+				{
+					request = PageRequest.of(0, Integer.MAX_VALUE, sort);
+				}
+				else
+				{
+					request = PageRequest.of(model.getIndex(), model.getPagesize(), sort);
+				}
+			} else {
+				if(model.getPagesize() == 0)
+				{
+					request = PageRequest.of(0, Integer.MAX_VALUE);
+				}
+				else
+				{
+					request = PageRequest.of(model.getIndex(), model.getPagesize());
+				}
+			}
+
+			Page<com.gamenet.cruscottofatturazione.entities.TipologiaCorrispettivi> pages = tipologiaCorrispettiviRepository.findAll(spec, request);
+			if (pages != null && pages.getTotalElements() > 0)
+			{
+				response.setTotalCount((int) pages.getTotalElements());
+				
+				for (com.gamenet.cruscottofatturazione.entities.TipologiaCorrispettivi ent_tip : pages.getContent()) {
+					com.gamenet.cruscottofatturazione.models.TipologiaCorrispettivi mod_tip = new com.gamenet.cruscottofatturazione.models.TipologiaCorrispettivi();
+					BeanUtils.copyProperties(ent_tip, mod_tip);
+					
+					response.getLines().add(mod_tip);
+				}		
+			}
+	    	
+			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
+			{
+		    	String responsePrint = jsonMapper.writeValueAsString(response);
+		    	this.log.debug("TipologiaCorrispettiviService: getTipologiaCorrispettiviDataTable -> PROCESS END WITH: " + responsePrint);
+		    	appService.insertLog("debug", "TipologiaCorrispettiviService", "getTipologiaCorrispettiviDataTable", "PROCESS END WITH: " + responsePrint, "", "getTipologiaCorrispettiviDataTable");
+			}
+		}
+		catch (Exception e)
+		{
+    		String stackTrace = ExceptionUtils.getStackTrace(e);
+    		this.log.error("TipologiaCorrispettiviService: getTipologiaCorrispettiviDataTable -> " + stackTrace);
+			appService.insertLog("error", "TipologiaCorrispettiviService", "getTipologiaCorrispettiviDataTable", "Exception", stackTrace, "getTipologiaCorrispettiviDataTable");
+			
+			throw new RuntimeException(e);
+		}
+   
+		return response;
+    }
 	
 	
 	
