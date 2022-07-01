@@ -45,9 +45,10 @@ public class DettaglioFatturaController {
 	}
 	
 	@PostMapping("/saveDettaglioFattura")
-	public DettaglioFattura saveDettaglioFattura(@RequestBody DettaglioFatturaSaveRequest dettaglioFatturaReq) 
+	public Boolean saveDettaglioFattura(@RequestBody DettaglioFatturaSaveRequest dettaglioFatturaReq) 
 	{
-		return dettaglioFatturaService.saveDettaglioFattura(dettaglioFatturaReq.getDettaglioFattura(), dettaglioFatturaReq.getUtenteUpdate());
+		DettaglioFattura saveDettaglioFattura = dettaglioFatturaService.saveDettaglioFattura(dettaglioFatturaReq.getDettaglioFattura(), dettaglioFatturaReq.getUtenteUpdate());
+		return (saveDettaglioFattura!=null && saveDettaglioFattura.getId()!=null);
 	}
 	
 	
