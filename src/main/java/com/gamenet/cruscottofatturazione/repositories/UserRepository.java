@@ -28,12 +28,12 @@ public interface UserRepository extends CrudRepository<User, Integer>, JpaSpecif
 
 	@Modifying(clearAutomatically = true)
 	@Transactional
-	@Query(nativeQuery = true, value=" EXEC [Anagraphics].[SP_CreateUpdateUser] :id , :role_id , :name , :email ,:societa, :username , :password , :valid_from, :valid_to, :utenteUpdate")
+	@Query(nativeQuery = true, value=" EXEC [Anagraphics].[SP_CreateUpdateUser] :id , :role_id , :name, :email, :societa, :username, :password, :valid_from, :valid_to, :utenteUpdate")
 	public List<Integer> saveUser(@Param("id") Integer id,
 					   	 @Param("role_id") Integer role_id,
 						 @Param("name") String name,
-						 @Param("email") String email,
 						 @Param("societa") String societa,
+						 @Param("email") String email,
 						 @Param("username") String username,
 						 @Param("password") String password,
 				   	     @Param("valid_from") Date valid_from,
