@@ -41,7 +41,7 @@ public class ArticoloController {
 	}
 	
 	@PostMapping("/saveArticolo")
-	public Boolean saveUser(@RequestBody ArticoloSaveRequest articoloReq) 
+	public Boolean saveArticolo(@RequestBody ArticoloSaveRequest articoloReq) 
 	{
 		return articoloService.saveArticolo(articoloReq.getArticolo(), articoloReq.getUtenteUpdate());
 	}

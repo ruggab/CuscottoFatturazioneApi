@@ -17,7 +17,6 @@ import com.gamenet.cruscottofatturazione.entities.Cliente;
 import com.gamenet.cruscottofatturazione.models.request.ClienteSaveRequest;
 import com.gamenet.cruscottofatturazione.models.request.DeleteRequest;
 import com.gamenet.cruscottofatturazione.models.response.ClientiListOverview;
-import com.gamenet.cruscottofatturazione.models.response.FattureListOverview;
 import com.gamenet.cruscottofatturazione.services.interfaces.ClienteService;
 
 import lombok.RequiredArgsConstructor;

@@ -74,10 +74,10 @@ public class FatturaServiceImpl implements FatturaService
 
 
 	@Override
-	public Fattura saveFattura(Fattura fattura, String utenteUpdate) {
+	public Boolean saveFattura(Fattura fattura, String utenteUpdate) {
 		this.log.info("FatturaService: saveFattura -> START");
 		appService.insertLog("info", "FatturaService", "saveFattura", "START", "", "saveFattura");
-		Fattura fatturaSaved=null;
+		//Fattura fatturaSaved=null;
 		try
 		{	
 			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
@@ -98,8 +98,8 @@ public class FatturaServiceImpl implements FatturaService
 
 			}
 
-			fatturaSaved=fatturaRepository.save(fattura);
-
+			//fatturaSaved=fatturaRepository.save(fattura);
+			fatturaRepository.save(fattura);
 		}
 		catch (Exception e)
 		{
@@ -108,22 +108,22 @@ public class FatturaServiceImpl implements FatturaService
 			appService.insertLog("error", "FatturaService", "saveFattura", "Exception", stackTrace, "saveFattura");
 
 			e.printStackTrace();
-			return null;
+			return false;
 		}
 
 		this.log.info("FatturaService: saveFattura -> SUCCESSFULLY END");
 		appService.insertLog("info", "FatturaService", "saveFattura", "SUCCESSFULLY END", "", "saveFattura");
-		return fatturaSaved;
+		return true;
 	}
 
 	@Override
-	public com.gamenet.cruscottofatturazione.models.Fattura saveFatturaConDettagli(com.gamenet.cruscottofatturazione.models.Fattura fattura, String utenteUpdate) {
+	public Boolean saveFatturaConDettagli(com.gamenet.cruscottofatturazione.models.Fattura fattura, String utenteUpdate) {
 		this.log.info("FatturaService: saveFatturaConDettagli -> START");
 		appService.insertLog("info", "FatturaService", "saveFatturaConDettagli", "START", "", "saveFatturaConDettagli");
 
 		//inizializzo i models di ritorno
-		com.gamenet.cruscottofatturazione.models.Fattura fatturaReturn= new com.gamenet.cruscottofatturazione.models.Fattura();
-		List<com.gamenet.cruscottofatturazione.models.DettaglioFattura> dettagliFatturaReturn = new ArrayList<>();
+		//com.gamenet.cruscottofatturazione.models.Fattura fatturaReturn= new com.gamenet.cruscottofatturazione.models.Fattura();
+		//List<com.gamenet.cruscottofatturazione.models.DettaglioFattura> dettagliFatturaReturn = new ArrayList<>();
 	
 		//inizializzo un oggetto Fattura entity
 		Fattura fatturaSaved=new Fattura();
@@ -176,7 +176,7 @@ public class FatturaServiceImpl implements FatturaService
 				//imposto il model del dettaglio di ritorno e l'aggiungo alla lista
 				com.gamenet.cruscottofatturazione.models.DettaglioFattura dettaglioFatturaRet= new com.gamenet.cruscottofatturazione.models.DettaglioFattura();
 				BeanUtils.copyProperties(detFattura, dettaglioFatturaRet);
-				dettagliFatturaReturn.add(dettaglioFatturaRet);
+				//dettagliFatturaReturn.add(dettaglioFatturaRet);
 				fatturaSaved.getListaDettaglioFattura().add(detFattura);
 				progressivo++;
 			}
@@ -187,9 +187,9 @@ public class FatturaServiceImpl implements FatturaService
 			fatturaSaved=fatturaRepository.save(fatturaSaved);
 			
 			//imposto i model in risposta
-			BeanUtils.copyProperties(fatturaSaved, fatturaReturn);
-			fatturaReturn.setImporto((double) Math.round(importoFattura * 100) / 100);// fix per model
-			fatturaReturn.setListaDettaglioFattura(dettagliFatturaReturn);//setto lista dettagli in model
+			//BeanUtils.copyProperties(fatturaSaved, fatturaReturn);
+			//fatturaReturn.setImporto((double) Math.round(importoFattura * 100) / 100);// fix per model
+			//fatturaReturn.setListaDettaglioFattura(dettagliFatturaReturn);//setto lista dettagli in model
 			
 		}
 		catch (Exception e)
@@ -199,12 +199,12 @@ public class FatturaServiceImpl implements FatturaService
 			appService.insertLog("error", "FatturaService", "saveFatturaConDettagli", "Exception", stackTrace, "saveFatturaConDettagli");
 
 			e.printStackTrace();
-			return null;
+			return false;
 		}
 
 		this.log.info("FatturaService: saveFatturaConDettagli -> SUCCESSFULLY END");
 		appService.insertLog("info", "FatturaService", "saveFatturaConDettagli", "SUCCESSFULLY END", "", "saveFatturaConDettagli");
-		return fatturaReturn;
+		return true;
 	}
 
 	@Override
