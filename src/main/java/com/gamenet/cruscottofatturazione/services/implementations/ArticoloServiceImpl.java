@@ -114,7 +114,7 @@ public class ArticoloServiceImpl implements ArticoloService
     			 articolo.setDataValidita(dateUtils.getCurrentDateWithoutTime());
     			 articolo.setLast_mod_user(utenteUpdate);
     			 articolo.setLast_mod_date(new Date());
-    			 articoloRepository.save(articolo);
+    			 articoloRepository.delete(articolo);
     		 }
 		}
 		catch (Exception e)
