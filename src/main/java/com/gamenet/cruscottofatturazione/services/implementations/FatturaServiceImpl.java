@@ -133,6 +133,7 @@ public class FatturaServiceImpl implements FatturaService
 		Fattura fatturaSaved=new Fattura();
 		try
 		{	
+			boolean isNew=false;
 			//se sono in update 
 			if(fattura.getId()!=null) {
 				//recupero la fattura dal db
@@ -143,16 +144,25 @@ public class FatturaServiceImpl implements FatturaService
 						dettaglioFatturaService.deleteDettaglioFattura(dettaglioFatturaSaved.getId(), utenteUpdate);
 					}
 				}
+			}else
+			{
+				isNew=true;
 			}
 
 			//aggiorn0 i dati dell'entity con i dati del modello in input
 			BeanUtils.copyProperties(fattura, fatturaSaved);
+//			if(isNew) //TODO:solo FE?
+//				fatturaSaved.setStatoFattura(StatoFattura.IN_COMPILAZIONE.getKey());
+			
 			//inizializzo l'array dei dettagli qualora fosse una nuova fattura
 			fatturaSaved.setListaDettaglioFattura(new HashSet<DettaglioFattura>());
 
 			//salvo la testata della fattura per farmi restituire l'id da impostare nei dettagli
-			fatturaSaved=fatturaRepository.save(fatturaSaved);
 
+			fatturaSaved=fatturaRepository.save(fatturaSaved);
+			if(isNew) {
+				insertLogStatoFattura(fatturaSaved.getId(), utenteUpdate, StatoFattura.IN_COMPILAZIONE.getKey());
+			}
 			//ricalcolo progressivi e importo 
 			int progressivo=1;
 			Double importoFattura=0.0;
