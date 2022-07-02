@@ -111,10 +111,10 @@ public class ArticoloServiceImpl implements ArticoloService
     		 
     		 if(articolo!=null) {
     			 //TODO: verificare se ci sono fatture con Articolo
-    			 articolo.setDataValidita(dateUtils.getCurrentDateWithoutTime());
-    			 articolo.setLast_mod_user(utenteUpdate);
-    			 articolo.setLast_mod_date(new Date());
-    			 articoloRepository.save(articolo);
+    			// articolo.setDataValidita(dateUtils.getCurrentDateWithoutTime());
+    			// articolo.setLast_mod_user(utenteUpdate);
+    			// articolo.setLast_mod_date(new Date());
+    			 articoloRepository.delete(articolo);
     		 }
 		}
 		catch (Exception e)
