@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamenet.cruscottofatturazione.entities.Fattura;
+import com.gamenet.cruscottofatturazione.entities.StatoFatturaLog;
+import com.gamenet.cruscottofatturazione.models.request.FatturaActionRequest;
 import com.gamenet.cruscottofatturazione.models.request.FatturaSaveRequest;
 import com.gamenet.cruscottofatturazione.models.response.FattureListOverview;
-import com.gamenet.cruscottofatturazione.models.response.TipologiaCorrispettiviListOverview;
 import com.gamenet.cruscottofatturazione.services.interfaces.FatturaService;
 
 import lombok.RequiredArgsConstructor;
@@ -61,6 +62,30 @@ public class FatturaController {
 	public Boolean saveFattura(@RequestBody FatturaSaveRequest fatturaReq) 
 	{
 		return fatturaService.saveFatturaConDettagli(fatturaReq.getFattura(), fatturaReq.getUtenteUpdate());
+	}
+	
+	@PostMapping("/rifiutaFattura")
+	public Boolean rifiutaFattura(@RequestBody FatturaActionRequest fatturaActionReq) 
+	{
+		return fatturaService.rifiutaFattura(fatturaActionReq.getIdFattura(), fatturaActionReq.getUtenteUpdate());
+	}
+	
+	@PostMapping("/validaFattura")
+	public Boolean validaFattura(@RequestBody FatturaActionRequest fatturaActionReq) 
+	{
+		return fatturaService.validaFattura(fatturaActionReq.getIdFattura(), fatturaActionReq.getUtenteUpdate());
+	}
+	
+	@PostMapping("/inoltraFattura")
+	public Boolean inoltraFattura(@RequestBody FatturaActionRequest fatturaActionReq) 
+	{
+		return fatturaService.inoltraFattura(fatturaActionReq.getIdFattura(), fatturaActionReq.getUtenteUpdate());
+	}
+	
+	@GetMapping("/getLogStatoFattura")
+	public List<StatoFatturaLog> geFattureList(@PathParam(value ="idFattura" ) Integer idFattura) 
+	{
+		return fatturaService.getLogStatoFattura(idFattura);
 	}
 	
 	

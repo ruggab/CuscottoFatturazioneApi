@@ -19,15 +19,18 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gamenet.cruscottofatturazione.Enum.StatoFattura;
 import com.gamenet.cruscottofatturazione.context.QuerySpecification;
 import com.gamenet.cruscottofatturazione.context.SortUtils;
 import com.gamenet.cruscottofatturazione.entities.DettaglioFattura;
 import com.gamenet.cruscottofatturazione.entities.Fattura;
+import com.gamenet.cruscottofatturazione.entities.StatoFatturaLog;
 import com.gamenet.cruscottofatturazione.models.ListFilter;
 import com.gamenet.cruscottofatturazione.models.ListSort;
 import com.gamenet.cruscottofatturazione.models.PagedListFilterAndSort;
 import com.gamenet.cruscottofatturazione.models.response.FattureListOverview;
 import com.gamenet.cruscottofatturazione.repositories.FatturaRepository;
+import com.gamenet.cruscottofatturazione.repositories.StatoFatturaLogRepository;
 import com.gamenet.cruscottofatturazione.services.interfaces.ApplicationLogsService;
 import com.gamenet.cruscottofatturazione.services.interfaces.DettaglioFatturaService;
 import com.gamenet.cruscottofatturazione.services.interfaces.FatturaService;
@@ -40,6 +43,7 @@ public class FatturaServiceImpl implements FatturaService
 {
 
 	private final FatturaRepository fatturaRepository;
+	private final StatoFatturaLogRepository statoFatturaLogRepository;
 	private Logger log = LoggerFactory.getLogger(getClass());
 	private final ApplicationLogsService appService;
 	private final Environment env;
@@ -51,21 +55,21 @@ public class FatturaServiceImpl implements FatturaService
 	public List<Fattura> getFatture() {
 		return fatturaRepository.getFatture();
 	}
-	
+
 	@Override
 	public List<com.gamenet.cruscottofatturazione.models.Fattura> getFatture(String societa) {
 		List<Fattura> fatture = fatturaRepository.getFattureBySocieta(societa);
-		
+
 		List<com.gamenet.cruscottofatturazione.models.Fattura> fattureRet= new ArrayList<>();
 		for (Fattura fattura : fatture) {
 			com.gamenet.cruscottofatturazione.models.Fattura fatRet= new com.gamenet.cruscottofatturazione.models.Fattura();
 			BeanUtils.copyProperties(fattura, fatRet);
 			fattureRet.add(fatRet);
 		}
-		
+
 		return fattureRet;
 	}
-	
+
 
 	@Override
 	public Fattura getFatturaById(Integer fatturaId) {
@@ -124,7 +128,7 @@ public class FatturaServiceImpl implements FatturaService
 		//inizializzo i models di ritorno
 		//com.gamenet.cruscottofatturazione.models.Fattura fatturaReturn= new com.gamenet.cruscottofatturazione.models.Fattura();
 		//List<com.gamenet.cruscottofatturazione.models.DettaglioFattura> dettagliFatturaReturn = new ArrayList<>();
-	
+
 		//inizializzo un oggetto Fattura entity
 		Fattura fatturaSaved=new Fattura();
 		try
@@ -154,7 +158,7 @@ public class FatturaServiceImpl implements FatturaService
 			Double importoFattura=0.0;
 			//leggo i dettagli dal model
 			for(com.gamenet.cruscottofatturazione.models.DettaglioFattura dettaglioFattura:fattura.getListaDettaglioFattura()) {
-				
+
 				//creo un entity per ogni dettaglio
 				DettaglioFattura detFattura= new DettaglioFattura();
 				//aggiorno i dati dal model
@@ -172,7 +176,7 @@ public class FatturaServiceImpl implements FatturaService
 				importoFattura+=dettaglioFattura.getImporto();
 				//salvo l'entity del dettaglio 
 				detFattura=dettaglioFatturaService.saveDettaglioFattura(detFattura, utenteUpdate);
-				
+
 				//imposto il model del dettaglio di ritorno e l'aggiungo alla lista
 				com.gamenet.cruscottofatturazione.models.DettaglioFattura dettaglioFatturaRet= new com.gamenet.cruscottofatturazione.models.DettaglioFattura();
 				BeanUtils.copyProperties(detFattura, dettaglioFatturaRet);
@@ -185,12 +189,12 @@ public class FatturaServiceImpl implements FatturaService
 			fatturaSaved.setLast_mod_user(utenteUpdate);
 			// risalvo la fattura con l'importo corretto
 			fatturaSaved=fatturaRepository.save(fatturaSaved);
-			
+
 			//imposto i model in risposta
 			//BeanUtils.copyProperties(fatturaSaved, fatturaReturn);
 			//fatturaReturn.setImporto((double) Math.round(importoFattura * 100) / 100);// fix per model
 			//fatturaReturn.setListaDettaglioFattura(dettagliFatturaReturn);//setto lista dettagli in model
-			
+
 		}
 		catch (Exception e)
 		{
@@ -212,12 +216,12 @@ public class FatturaServiceImpl implements FatturaService
 		List<Fattura> last10DayFattureBySocieta = fatturaRepository.getLast10DayFattureBySocieta(codiceSocieta);
 
 		List<com.gamenet.cruscottofatturazione.models.Fattura> last10DayFattureBySocietaReturn= new ArrayList<>();
-		
+
 		for (Fattura fattura : last10DayFattureBySocieta) {
 			com.gamenet.cruscottofatturazione.models.Fattura fattRet= new com.gamenet.cruscottofatturazione.models.Fattura();
 			BeanUtils.copyProperties(fattura, fattRet);
 			last10DayFattureBySocietaReturn.add(fattRet);
-			
+
 		}
 		//		Comparator<Fattura> reverseComparator = (c1, c2) -> { 
 		//	        return c1.getDataFattura().compareTo(c2.getDataFattura()); 
@@ -226,25 +230,25 @@ public class FatturaServiceImpl implements FatturaService
 		//		Collections.sort(last10DayFattureBySocieta, reverseComparator);
 		return last10DayFattureBySocietaReturn;
 	}
-	
-	/***** DATA TABLE LIST *****/
-    @Override
-    public FattureListOverview getFattureDataTable(JsonNode payload)
-    {
-    	this.log.info("FattureService: getFattureDataTable -> START");
-    	appService.insertLog("info", "FattureService", "getFattureDataTable", "START", "", "getFattureDataTable");
 
-    	FattureListOverview response = new FattureListOverview();
+	/***** DATA TABLE LIST *****/
+	@Override
+	public FattureListOverview getFattureDataTable(JsonNode payload)
+	{
+		this.log.info("FattureService: getFattureDataTable -> START");
+		appService.insertLog("info", "FattureService", "getFattureDataTable", "START", "", "getFattureDataTable");
+
+		FattureListOverview response = new FattureListOverview();
 		response.setTotalCount(0);
 		response.setLines(new ArrayList<com.gamenet.cruscottofatturazione.models.Fattura>());
-		
+
 		try
 		{
 			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
-		    	String requestPrint = jsonMapper.writeValueAsString(payload);
-		    	this.log.debug("FattureService: getUtentiDataTable -> Object: " + requestPrint);
-		    	appService.insertLog("debug", "FattureService", "getFattureDataTable", "Object: " + requestPrint, "", "getFattureDataTable");
+				String requestPrint = jsonMapper.writeValueAsString(payload);
+				this.log.debug("FattureService: getUtentiDataTable -> Object: " + requestPrint);
+				appService.insertLog("debug", "FattureService", "getFattureDataTable", "Object: " + requestPrint, "", "getFattureDataTable");
 			}
 
 			jsonMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
@@ -253,7 +257,7 @@ public class FatturaServiceImpl implements FatturaService
 
 			if (model.getFilters() == null)
 				model.setFilters(new ArrayList<>());
-			
+
 			Specification<com.gamenet.cruscottofatturazione.entities.Fattura> spec = new QuerySpecification<>();
 
 			for (ListFilter filter : model.getFilters())
@@ -293,33 +297,165 @@ public class FatturaServiceImpl implements FatturaService
 			if (pages != null && pages.getTotalElements() > 0)
 			{
 				response.setTotalCount((int) pages.getTotalElements());
-				
+
 				for (com.gamenet.cruscottofatturazione.entities.Fattura ent_fatt : pages.getContent()) {
 					com.gamenet.cruscottofatturazione.models.Fattura mod_fat = new com.gamenet.cruscottofatturazione.models.Fattura();
 					BeanUtils.copyProperties(ent_fatt, mod_fat);
-					
+
 					response.getLines().add(mod_fat);
 				}		
 			}
-	    	
+
 			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
-		    	String responsePrint = jsonMapper.writeValueAsString(response);
-		    	this.log.debug("FattureService: getFattureDataTable -> PROCESS END WITH: " + responsePrint);
-		    	appService.insertLog("debug", "FattureService", "getFattureDataTable", "PROCESS END WITH: " + responsePrint, "", "getFattureDataTable");
+				String responsePrint = jsonMapper.writeValueAsString(response);
+				this.log.debug("FattureService: getFattureDataTable -> PROCESS END WITH: " + responsePrint);
+				appService.insertLog("debug", "FattureService", "getFattureDataTable", "PROCESS END WITH: " + responsePrint, "", "getFattureDataTable");
 			}
 		}
 		catch (Exception e)
 		{
-    		String stackTrace = ExceptionUtils.getStackTrace(e);
-    		this.log.error("FattureService: getFattureDataTable -> " + stackTrace);
+			String stackTrace = ExceptionUtils.getStackTrace(e);
+			this.log.error("FattureService: getFattureDataTable -> " + stackTrace);
 			appService.insertLog("error", "FattureService", "getFattureDataTable", "Exception", stackTrace, "getFattureDataTable");
-			
+
 			throw new RuntimeException(e);
 		}
-   
+
 		return response;
-    }
-	
+	}
+
+	@Override
+	public Boolean rifiutaFattura(Integer idFattura, String utenteUpdate) {
+		try {
+
+
+			this.log.info("FattureService: rifiutaFattura -> START");
+			appService.insertLog("info", "FattureService", "rifiutaFattura", "START", "", "rifiutaFattura");
+
+			Fattura fattura=fatturaRepository.findById(idFattura).orElse(null);
+			if(fattura!=null) {
+
+				fattura.setStatoFattura(StatoFattura.RIFIUTATA.getKey());
+				fatturaRepository.save(fattura);
+				insertLogStatoFattura(fattura.getId(),utenteUpdate,StatoFattura.RIFIUTATA.getKey());
+				return true;
+			}
+			else
+				return false;
+		} catch (Exception e) {
+			String stackTrace = ExceptionUtils.getStackTrace(e);
+			this.log.error("FattureService: rifiutaFattura -> " + stackTrace);
+			appService.insertLog("error", "FattureService", "rifiutaFattura", "Exception", stackTrace, "rifiutaFattura");
+
+			return false;
+		}
+	}
+
+	@Override
+	public Boolean inoltraFattura(Integer idFattura, String utenteUpdate) {
+		try {
+
+
+			this.log.info("FattureService: inoltraFattura -> START");
+			appService.insertLog("info", "FattureService", "inoltraFattura", "START", "", "inoltraFattura");
+
+			Fattura fattura=fatturaRepository.findById(idFattura).orElse(null);
+			if(fattura!=null) {
+
+				fattura.setStatoFattura(StatoFattura.DA_APPROVARE.getKey());
+				fatturaRepository.save(fattura);
+				insertLogStatoFattura(fattura.getId(),utenteUpdate,StatoFattura.DA_APPROVARE.getKey());
+				return true;
+			}
+			else
+				return false;
+		} catch (Exception e) {
+			String stackTrace = ExceptionUtils.getStackTrace(e);
+			this.log.error("FattureService: inoltraFattura -> " + stackTrace);
+			appService.insertLog("error", "FattureService", "inoltraFattura", "Exception", stackTrace, "inoltraFattura");
+
+			return false;
+		}
+	}
+
+	@Override
+	public Boolean validaFattura(Integer idFattura, String utenteUpdate) {
+		try {
+
+
+			this.log.info("FattureService: validaFattura -> START");
+			appService.insertLog("info", "FattureService", "validaFattura", "START", "", "validaFattura");
+
+			Fattura fattura=fatturaRepository.findById(idFattura).orElse(null);
+			if(fattura!=null) {
+
+				fattura.setStatoFattura(StatoFattura.VALIDATA.getKey());
+				fatturaRepository.save(fattura);
+				insertLogStatoFattura(fattura.getId(),utenteUpdate,StatoFattura.VALIDATA.getKey());
+				return true;
+			}
+			else
+				return false;
+		} catch (Exception e) {
+			String stackTrace = ExceptionUtils.getStackTrace(e);
+			this.log.error("FattureService: validaFattura -> " + stackTrace);
+			appService.insertLog("error", "FattureService", "validaFattura", "Exception", stackTrace, "validaFattura");
+
+			return false;
+		}
+	}
+
+	private boolean insertLogStatoFattura(Integer idFattura,String utenteUpdate,String statofattura) {
+
+		try {
+
+
+			this.log.info("FattureService: insertLogStatoFattura -> START");
+			appService.insertLog("info", "FattureService", "insertLogStatoFattura", "START", "", "insertLogStatoFattura");
+
+			StatoFatturaLog statoFatturaLog = new StatoFatturaLog();
+			statoFatturaLog.setCreateDate(new Date());
+			statoFatturaLog.setCreateUser(utenteUpdate);
+			statoFatturaLog.setIdFattura(idFattura);
+			statoFatturaLog.setStatoFattura(statofattura);
+			statoFatturaLogRepository.save(statoFatturaLog);
+			return true;
+
+
+		} catch (Exception e) {
+			String stackTrace = ExceptionUtils.getStackTrace(e);
+			this.log.error("FattureService: insertLogStatoFattura -> " + stackTrace);
+			appService.insertLog("error", "FattureService", "insertLogStatoFattura", "Exception", stackTrace, "insertLogStatoFattura");
+
+			return false;
+		}
+
+	}
+
+	@Override
+	public List<StatoFatturaLog> getLogStatoFattura(Integer idFattura) {
+		this.log.info("FatturaService: getLogStatoFattura -> START");
+		appService.insertLog("info", "FatturaService", "getLogStatoFattura", "START", "", "getLogStatoFattura");
+		List<StatoFatturaLog> result= new ArrayList<>();
+		try {
+
+			result=statoFatturaLogRepository.getStatofatturaLogByIdFattura(idFattura);
+
+		}
+		catch (Exception e)
+		{
+			String stackTrace = ExceptionUtils.getStackTrace(e);
+			this.log.error("FatturaService: getLogStatoFattura -> " + stackTrace);
+			appService.insertLog("error", "FatturaService", "getLogStatoFattura", "Exception", stackTrace, "getLogStatoFattura");
+
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+		this.log.info("FatturaService: getLogStatoFattura -> SUCCESSFULLY END");
+		appService.insertLog("info", "FatturaService", "getLogStatoFattura", "SUCCESSFULLY END", "", "getLogStatoFattura");
+		return result;
+	}
 
 }

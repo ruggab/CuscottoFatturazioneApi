@@ -10,6 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gamenet.cruscottofatturazione.Enum.StatoFattura;
 import com.gamenet.cruscottofatturazione.entities.DettaglioFattura;
 import com.gamenet.cruscottofatturazione.repositories.DettaglioFatturaRepository;
 import com.gamenet.cruscottofatturazione.services.interfaces.ApplicationLogsService;
@@ -112,6 +113,12 @@ public class DettaglioFatturaServiceImpl implements DettaglioFatturaService
     	this.log.info("DettaglioFatturaService: deleteDettaglioFattura -> SUCCESSFULLY END");
     	appService.insertLog("info", "DettaglioFatturaService", "deleteDettaglioFattura", "SUCCESSFULLY END", "", "deleteDettaglioFattura");
     	return true;
+	}
+
+	@Override
+	public Integer getCountDettaglioFatturaByArticoloValidateSap(String codiceArticolo) {
+		
+		return dettaglioFatturaRepository.getCountDettaglioFatturaByArticoloAndStatoFattura(codiceArticolo,StatoFattura.VALIDATA_DA_SAP.getKey());
 	}
 		
 }

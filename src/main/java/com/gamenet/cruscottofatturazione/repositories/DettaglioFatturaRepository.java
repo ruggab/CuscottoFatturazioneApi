@@ -19,6 +19,9 @@ public interface DettaglioFatturaRepository extends CrudRepository<DettaglioFatt
 	//@Query(value="SELECT * FROM [dbo].[dettaglio_fattura] where id_fattura=:fatturaId",nativeQuery=true)
 	public  List<DettaglioFattura> findByIdFattura(@Param("fatturaId")Integer fatturaId);
 	
+	@Query(value="SELECT count(*) FROM [dbo].[dettaglio_fattura] d inner join [dbo].[fattura] f on  d.id_fattura=f.id WHERE d.codice_articolo=:codiceArticolo AND f.stato_fattura =:statoFattura",nativeQuery=true)
+	public Integer getCountDettaglioFatturaByArticoloAndStatoFattura(@Param("codiceArticolo")String codiceArticolo,@Param("statoFattura")String statoFattura);
+	
 	
 
 }

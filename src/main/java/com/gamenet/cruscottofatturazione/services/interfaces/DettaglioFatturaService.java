@@ -11,6 +11,7 @@ public interface DettaglioFatturaService {
 	List<DettaglioFattura> getDettaglioFatturaByFatturaId(Integer fatturaId);
 	DettaglioFattura saveDettaglioFattura(DettaglioFattura dettaglioFattura, String utenteUpdate);
 	Boolean deleteDettaglioFattura(Integer dettaglioFatturaId, String utenteUpdate);
+	Integer getCountDettaglioFatturaByArticoloValidateSap(String codiceArticolo);
 	
 
 }
