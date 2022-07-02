@@ -757,7 +757,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8083/fattura/getLogStatoFattura?idFattura=31",
+							"raw": "localhost:8083/fattura/getLogStatoFattura?idFattura=36",
 							"host": [
 								"localhost"
 							],
@@ -769,7 +769,7 @@
 							"query": [
 								{
 									"key": "idFattura",
-									"value": "31"
+									"value": "36"
 								}
 							]
 						}
@@ -961,7 +961,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \"idFattura\":31\r\n}",
+							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \"idFattura\":36\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -999,7 +999,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \"idFattura\":31\r\n}",
+							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \"idFattura\":36\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1037,7 +1037,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \"idFattura\":31\r\n}",
+							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \"idFattura\":36\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
