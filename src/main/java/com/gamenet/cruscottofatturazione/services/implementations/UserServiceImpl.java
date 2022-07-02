@@ -282,8 +282,8 @@ public class UserServiceImpl implements UserService
     		userRepository.saveUser(utente.getId(),
     								utente.getRuoloUtente().getId(),
     								utente.getName(),
-    								utente.getEmail(),
     								societa,
+    								utente.getEmail(),
     								utente.getUsername(),
     								passOut,
     								utente.getValidFrom(),
@@ -1179,11 +1179,5 @@ public class UserServiceImpl implements UserService
 		}
 
 		return response;
-	}
-
-	@Override
-	public List<Cliente> ricercaUtente(UserSearch userSearch) {
-		userRepository.search(userSearch.getName(), userSearch.getEmail(), userSearch.getUsername(), userSearch.getRuolo(), userSearch.isAttivo()?"1":"0");
-		return null;
 	}
 }

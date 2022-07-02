@@ -56,13 +56,6 @@ public class UserController {
 		return userService.getUserById(userId);
 	}
 	
-	@PostMapping("/ricercaUser")
-	public List<Cliente> ricercaUser(@RequestBody UserSearch userSearch) 
-	{
-		return userService.ricercaUtente(userSearch);
-	}
-	
-	
 	@PostMapping("/saveUser")
 	public Boolean saveUser(@RequestBody UserSaveRequest utenteReq) 
 	{

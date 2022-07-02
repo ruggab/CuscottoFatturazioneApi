@@ -71,6 +71,4 @@ public interface UserService {
 	
 	public RoleVoceMenuOverview getRoleVoceMenuDataTable(JsonNode payload);
 
-	public List<Cliente> ricercaUtente(UserSearch userSearch);
-
 }
