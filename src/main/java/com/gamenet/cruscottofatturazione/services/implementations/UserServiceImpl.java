@@ -24,9 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gamenet.cruscottofatturazione.context.MD5_Hash;
 import com.gamenet.cruscottofatturazione.context.QuerySpecification;
 import com.gamenet.cruscottofatturazione.context.SortUtils;
-import com.gamenet.cruscottofatturazione.entities.Cliente;
 import com.gamenet.cruscottofatturazione.models.Business;
-import com.gamenet.cruscottofatturazione.models.GruppoUtenti;
 import com.gamenet.cruscottofatturazione.models.ListFilter;
 import com.gamenet.cruscottofatturazione.models.ListSort;
 import com.gamenet.cruscottofatturazione.models.PagedListFilterAndSort;
@@ -34,13 +32,11 @@ import com.gamenet.cruscottofatturazione.models.RoleUser;
 import com.gamenet.cruscottofatturazione.models.RoleVoceMenu;
 import com.gamenet.cruscottofatturazione.models.User;
 import com.gamenet.cruscottofatturazione.models.VoceMenu;
-import com.gamenet.cruscottofatturazione.models.request.UserSearch;
 import com.gamenet.cruscottofatturazione.models.response.RoleVoceMenuOverview;
 import com.gamenet.cruscottofatturazione.models.response.RuoliListOverview;
 import com.gamenet.cruscottofatturazione.models.response.UpdateGenericResponse;
 import com.gamenet.cruscottofatturazione.models.response.UtentiListOverview;
 import com.gamenet.cruscottofatturazione.repositories.BusinessRepository;
-import com.gamenet.cruscottofatturazione.repositories.GruppiRepository;
 import com.gamenet.cruscottofatturazione.repositories.RoleRepository;
 import com.gamenet.cruscottofatturazione.repositories.RoleVoceMenuRepository;
 import com.gamenet.cruscottofatturazione.repositories.UserRepository;
@@ -59,9 +55,7 @@ public class UserServiceImpl implements UserService
 	private final RoleRepository roleRepo;
 	
 	private final BusinessRepository businessRepo;
-    
-    private final GruppiRepository gruppoRepo;
-    
+       
     private final VociMenuRepository vociMenuRepo;
     
     private final RoleVoceMenuRepository roleVociMenuRepo;
@@ -666,54 +660,9 @@ public class UserServiceImpl implements UserService
     	return true;
 	}
 	
-	/***** GRUPPI *****/
-	@Override
-	public List<GruppoUtenti> getGruppiUtente()
-	{
-		return convertGruppiModelList(gruppoRepo.findAll());
-	}
+	
 
-	private List<GruppoUtenti> convertGruppiModelList(Iterable<com.gamenet.cruscottofatturazione.entities.GruppoUtenti> entity_grp)
-	{
-    	this.log.info("UserService: convertGruppiModelList -> START");
-    	appService.insertLog("info", "UserService", "convertGruppiModelList", "START", "", "convertGruppiModelList");
 
-		try 
-		{
-			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
-			{
-		    	String requestPrint = jsonMapper.writeValueAsString(entity_grp);
-		    	this.log.debug("UserService: convertGruppiModelList -> Object: " + requestPrint);
-		    	appService.insertLog("debug", "UserService", "convertGruppiModelList", "Object: " + requestPrint, "", "convertGruppiModelList");
-			}
-	    	
-			List<GruppoUtenti> gruppi = new ArrayList<com.gamenet.cruscottofatturazione.models.GruppoUtenti>();
-			
-			for (com.gamenet.cruscottofatturazione.entities.GruppoUtenti ent_grp : entity_grp) {
-				
-				com.gamenet.cruscottofatturazione.models.GruppoUtenti mod_grp = new com.gamenet.cruscottofatturazione.models.GruppoUtenti();
-				BeanUtils.copyProperties(ent_grp, mod_grp);
-				gruppi.add(mod_grp);
-			}
-	    	
-			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
-			{
-		    	String responsePrint = jsonMapper.writeValueAsString(gruppi);
-		    	this.log.debug("UserService: convertGruppiModelList -> PROCESS END WITH: " + responsePrint);
-		    	appService.insertLog("debug", "UserService", "convertGruppiModelList", "PROCESS END WITH: " + responsePrint, "", "convertGruppiModelList");
-			}
-		
-			return gruppi;
-		}
-		catch (Exception e) 
-		{
-    		String stackTrace = ExceptionUtils.getStackTrace(e);
-    		this.log.error("UserService: convertGruppiModelList -> " + stackTrace);
-			appService.insertLog("error", "UserService", "convertGruppiModelList", "Exception", stackTrace, "convertGruppiModelList");
-			
-			throw new RuntimeException(e);
-		}
-	}
 	
 	/***** BUSINESS *****/
 	public List<String> getAvaiableBusinessByUser(Integer idUser, Boolean isAdmin)
