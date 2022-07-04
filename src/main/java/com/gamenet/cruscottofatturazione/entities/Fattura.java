@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -32,7 +33,10 @@ public class Fattura {
 	private String societa;
 	private Date dataFattura;
 	private String tipologiaFattura;
-	private String codiceCliente;
+	//private String codiceCliente;
+	@ManyToOne
+	@JoinColumn(name = "codice_cliente")
+	private Cliente cliente;
 	private Double importo;
 	private String statoFattura;
 	private String esitoInvio;

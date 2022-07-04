@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamenet.cruscottofatturazione.entities.Cliente;
 import com.gamenet.cruscottofatturazione.models.request.ClienteSaveRequest;
-import com.gamenet.cruscottofatturazione.models.request.DeleteRequest;
+import com.gamenet.cruscottofatturazione.models.request.DeleteClienteRequest;
 import com.gamenet.cruscottofatturazione.models.response.ClientiListOverview;
 import com.gamenet.cruscottofatturazione.services.interfaces.ClienteService;
 
@@ -42,10 +42,10 @@ public class ClienteController {
 		return clienteService.getClienti(codiceSocieta);
 	}
 	
-	@PostMapping("/getClienteById")
-	public Cliente getClienteById(@RequestBody Integer clienteId) 
+	@PostMapping("/getClienteByCodiceCliente")
+	public Cliente getClienteById(@RequestBody String codiceCliente) 
 	{
-		return clienteService.getClienteById(clienteId);
+		return clienteService.getClienteById(codiceCliente);
 	}
 	
 	@PostMapping("/saveCliente")
@@ -56,9 +56,9 @@ public class ClienteController {
 	
 	
 	@PostMapping("/deleteCliente")
-	public Boolean deleteCliente(@RequestBody DeleteRequest clienteReq) 
+	public Boolean deleteCliente(@RequestBody DeleteClienteRequest clienteReq) 
 	{
-		return clienteService.deleteCliente(clienteReq.getIdEntity(), clienteReq.getUtenteUpdate());
+		return clienteService.deleteCliente(clienteReq.getCodiceCliente(), clienteReq.getUtenteUpdate());
 	}
 	
 	

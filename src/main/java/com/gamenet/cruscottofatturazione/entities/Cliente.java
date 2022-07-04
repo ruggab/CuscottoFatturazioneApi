@@ -18,9 +18,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "cliente", schema = "dbo")
 public class Cliente {
+	//@Id
+   // @GeneratedValue(strategy = GenerationType.IDENTITY)
+//	private Integer id;
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 	private String codiceCliente;
 	private String societa;
 	private String ragioneSociale;

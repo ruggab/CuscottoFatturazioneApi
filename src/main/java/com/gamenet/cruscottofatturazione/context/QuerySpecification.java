@@ -14,6 +14,8 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
+import com.gamenet.cruscottofatturazione.entities.Cliente;
+import com.gamenet.cruscottofatturazione.entities.Fattura;
 import com.gamenet.cruscottofatturazione.entities.RoleUser;
 import com.gamenet.cruscottofatturazione.entities.RoleVoceMenu;
 import com.gamenet.cruscottofatturazione.entities.User;
@@ -130,6 +132,92 @@ public class QuerySpecification<T> implements Specification<T> {
 				return builder.like(voceMenuJoin.<String>get(finalColumn), value + "%");
 			} else if (operator.equalsIgnoreCase("nlke")) {
 				return builder.notLike(voceMenuJoin.<String>get(finalColumn), "%" + value + "%");
+			}
+		}
+		
+		// CLIENTE
+		
+		if (name.equalsIgnoreCase("cliente.codiceCliente"))
+		{
+			Join<Fattura, Cliente> clienteJoin = root.join("cliente");
+			
+			String finalColumn = "codiceCliente";
+			
+			if (operator.equalsIgnoreCase("eq")) {
+				return builder.equal(clienteJoin.<String>get(finalColumn), value);
+			} else if (operator.equalsIgnoreCase("ne")) {
+				return builder.notEqual(clienteJoin.<String>get(finalColumn), value);
+			} else if (operator.equalsIgnoreCase("lke")) {
+				return builder.like(clienteJoin.<String>get(finalColumn), "%" + value + "%");
+			} else if (operator.equalsIgnoreCase("elke")) {
+				return builder.like(clienteJoin.<String>get(finalColumn), "%" + value);
+			} else if (operator.equalsIgnoreCase("slke")) {
+				return builder.like(clienteJoin.<String>get(finalColumn), value + "%");
+			} else if (operator.equalsIgnoreCase("nlke")) {
+				return builder.notLike(clienteJoin.<String>get(finalColumn), "%" + value + "%");
+			}
+		}
+		
+		if (name.equalsIgnoreCase("cliente.codiceFiscale"))
+		{
+			Join<Fattura, Cliente> clienteJoin = root.join("cliente");
+			
+			String finalColumn = "codiceFiscale";
+			
+			if (operator.equalsIgnoreCase("eq")) {
+				return builder.equal(clienteJoin.<String>get(finalColumn), value);
+			} else if (operator.equalsIgnoreCase("ne")) {
+				return builder.notEqual(clienteJoin.<String>get(finalColumn), value);
+			} else if (operator.equalsIgnoreCase("lke")) {
+				return builder.like(clienteJoin.<String>get(finalColumn), "%" + value + "%");
+			} else if (operator.equalsIgnoreCase("elke")) {
+				return builder.like(clienteJoin.<String>get(finalColumn), "%" + value);
+			} else if (operator.equalsIgnoreCase("slke")) {
+				return builder.like(clienteJoin.<String>get(finalColumn), value + "%");
+			} else if (operator.equalsIgnoreCase("nlke")) {
+				return builder.notLike(clienteJoin.<String>get(finalColumn), "%" + value + "%");
+			}
+		}
+		
+		if (name.equalsIgnoreCase("cliente.partitaIva"))
+		{
+			Join<Fattura, Cliente> clienteJoin = root.join("cliente");
+			
+			String finalColumn = "partitaIva";
+			
+			if (operator.equalsIgnoreCase("eq")) {
+				return builder.equal(clienteJoin.<String>get(finalColumn), value);
+			} else if (operator.equalsIgnoreCase("ne")) {
+				return builder.notEqual(clienteJoin.<String>get(finalColumn), value);
+			} else if (operator.equalsIgnoreCase("lke")) {
+				return builder.like(clienteJoin.<String>get(finalColumn), "%" + value + "%");
+			} else if (operator.equalsIgnoreCase("elke")) {
+				return builder.like(clienteJoin.<String>get(finalColumn), "%" + value);
+			} else if (operator.equalsIgnoreCase("slke")) {
+				return builder.like(clienteJoin.<String>get(finalColumn), value + "%");
+			} else if (operator.equalsIgnoreCase("nlke")) {
+				return builder.notLike(clienteJoin.<String>get(finalColumn), "%" + value + "%");
+			}
+		}
+		
+		if (name.equalsIgnoreCase("cliente.ragioneSociale"))
+		{
+			Join<Fattura, Cliente> clienteJoin = root.join("cliente");
+			
+			String finalColumn = "ragioneSociale";
+			
+			if (operator.equalsIgnoreCase("eq")) {
+				return builder.equal(clienteJoin.<String>get(finalColumn), value);
+			} else if (operator.equalsIgnoreCase("ne")) {
+				return builder.notEqual(clienteJoin.<String>get(finalColumn), value);
+			} else if (operator.equalsIgnoreCase("lke")) {
+				return builder.like(clienteJoin.<String>get(finalColumn), "%" + value + "%");
+			} else if (operator.equalsIgnoreCase("elke")) {
+				return builder.like(clienteJoin.<String>get(finalColumn), "%" + value);
+			} else if (operator.equalsIgnoreCase("slke")) {
+				return builder.like(clienteJoin.<String>get(finalColumn), value + "%");
+			} else if (operator.equalsIgnoreCase("nlke")) {
+				return builder.notLike(clienteJoin.<String>get(finalColumn), "%" + value + "%");
 			}
 		}
 		

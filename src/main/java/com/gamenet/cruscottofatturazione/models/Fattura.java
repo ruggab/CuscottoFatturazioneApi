@@ -15,11 +15,14 @@ public class Fattura {
 	private String societa;
 	private Date dataFattura;
 	private String tipologiaFattura;
-	private String codiceCliente;
+	//private String codiceCliente;
+	private Cliente cliente;
 	private Double importo;
 	private String statoFattura;
 	private String esitoInvio;
 	private Date dataInvioFlusso;
+	
+	
 	private List<DettaglioFattura> listaDettaglioFattura;
 	
 	private String create_user;

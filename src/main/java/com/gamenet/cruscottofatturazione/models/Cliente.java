@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Cliente
 {
-	private Integer id;
+	//private Integer id;
 	private String codiceCliente;
 	private String societa;
 	private String ragioneSociale;

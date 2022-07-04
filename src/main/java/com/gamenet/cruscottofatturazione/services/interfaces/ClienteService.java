@@ -9,9 +9,9 @@ import com.gamenet.cruscottofatturazione.models.response.ClientiListOverview;
 public interface ClienteService {
 
 	List<Cliente> getClienti();
-	Cliente getClienteById(Integer clienteId);
+	Cliente getClienteById(String codiceCliente);
 	Boolean saveCliente(Cliente cliente, String utenteUpdate);
-	Boolean deleteCliente(Integer clienteId, String utenteUpdate);
+	Boolean deleteCliente(String codiceCliente, String utenteUpdate);
 	List<Cliente> getClienti(String codiceSocieta);
 	ClientiListOverview getClientiDataTable(JsonNode payload);
 

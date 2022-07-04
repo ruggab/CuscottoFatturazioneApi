@@ -310,8 +310,10 @@ public class FatturaServiceImpl implements FatturaService
 
 				for (com.gamenet.cruscottofatturazione.entities.Fattura ent_fatt : pages.getContent()) {
 					com.gamenet.cruscottofatturazione.models.Fattura mod_fat = new com.gamenet.cruscottofatturazione.models.Fattura();
+					com.gamenet.cruscottofatturazione.models.Cliente mod_cli = new com.gamenet.cruscottofatturazione.models.Cliente();
+					BeanUtils.copyProperties(ent_fatt.getCliente(), mod_cli);
 					BeanUtils.copyProperties(ent_fatt, mod_fat);
-
+					mod_fat.setCliente(mod_cli);
 					response.getLines().add(mod_fat);
 				}		
 			}

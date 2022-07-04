@@ -3,20 +3,16 @@ package com.gamenet.cruscottofatturazione.services.implementations;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.hibernate.annotations.Where;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.env.Environment;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -28,7 +24,6 @@ import com.gamenet.cruscottofatturazione.entities.Cliente;
 import com.gamenet.cruscottofatturazione.models.ListFilter;
 import com.gamenet.cruscottofatturazione.models.ListSort;
 import com.gamenet.cruscottofatturazione.models.PagedListFilterAndSort;
-import com.gamenet.cruscottofatturazione.models.response.ClientiListOverview;
 import com.gamenet.cruscottofatturazione.models.response.ClientiListOverview;
 import com.gamenet.cruscottofatturazione.repositories.ClienteRepository;
 import com.gamenet.cruscottofatturazione.services.interfaces.ApplicationLogsService;
@@ -58,8 +53,8 @@ public class ClienteServiceImpl implements ClienteService
 	}
 
 	@Override
-	public Cliente getClienteById(Integer clienteId) {
-		return clienteRepository.findById(clienteId).orElse(null);
+	public Cliente getClienteById(String codiceCliente) {
+		return clienteRepository.findByCodiceCliente(codiceCliente);
 	}
 
 	@Override
@@ -75,8 +70,10 @@ public class ClienteServiceImpl implements ClienteService
 		    	this.log.debug("ProspectService: saveCliente -> Object: " + requestPrint);
 		    	appService.insertLog("debug", "ProspectService", "saveCliente", "Object: " + requestPrint, "", "saveCliente");
 			}
+    		
+    		Cliente clienteDb= clienteRepository.findById(cliente.getCodiceCliente()).orElse(null);
         	
-    		if(cliente.getId()==null) {
+    		if(clienteDb==null) {
     			cliente.setCreate_date(new Date());
     			cliente.setCreate_user(utenteUpdate);
     		}
@@ -106,16 +103,16 @@ public class ClienteServiceImpl implements ClienteService
 	}
 
 	@Override
-	public Boolean deleteCliente(Integer clienteId, String utenteUpdate) {
-		this.log.info("ClienteService: deleteCliente -> [clienteId: " + clienteId.toString() + "]");
-    	appService.insertLog("info", "ClienteService", "deleteCliente", "[clienteId: " + clienteId.toString() + "]", "", "deleteCliente");
+	public Boolean deleteCliente(String codiceCliente, String utenteUpdate) {
+		this.log.info("ClienteService: deleteCliente -> [codiceCliente: " + codiceCliente.toString() + "]");
+    	appService.insertLog("info", "ClienteService", "deleteCliente", "[codiceCliente: " + codiceCliente.toString() + "]", "", "deleteCliente");
     	
     	try
 		{	
-    		 Cliente cliente= clienteRepository.findById(clienteId).orElse(null);
+    		 Cliente cliente= clienteRepository.findById(codiceCliente).orElse(null);
     		 
     		 if(cliente!=null) {
-    			 //TODO: verificare se ci sono Clienti con cliente
+    			 //TODO: verificare se ci sono Fatture con cliente
     			// clienteRepository.deleteCliente(clienteId);
     			 clienteRepository.delete(cliente);
     		 }

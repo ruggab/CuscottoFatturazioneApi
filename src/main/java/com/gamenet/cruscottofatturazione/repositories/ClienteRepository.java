@@ -12,16 +12,19 @@ import org.springframework.stereotype.Repository;
 import com.gamenet.cruscottofatturazione.entities.Cliente;
 
 @Repository
-public interface ClienteRepository extends CrudRepository<Cliente, Integer> , JpaSpecificationExecutor<Cliente> {
+public interface ClienteRepository extends CrudRepository<Cliente, String> , JpaSpecificationExecutor<Cliente> {
 	
 	@Query(value="SELECT * FROM [dbo].[cliente]",nativeQuery=true)
 	public List<Cliente> getClienti();
 
-	@Query(value="DELETE FROM [dbo].[cliente] WHERE id=:clienteId",nativeQuery=true)
+	@Query(value="DELETE FROM [dbo].[cliente] WHERE codice_cliente= :codiceCliente",nativeQuery=true)
 	@Modifying
-	public void deleteCliente(@Param("clienteId") Integer  clienteId);
+	public void deleteCliente(@Param("codiceCliente") String  codiceCliente);
 
 	public List<Cliente> getClientiBySocieta(String codiceSocieta);
+	
+	@Query(value="SELECT * FROM [dbo].[cliente] where codice_cliente= :codiceCliente",nativeQuery=true)
+	public Cliente findByCodiceCliente(@Param("codiceCliente") String codiceCliente);
 	
 
 }
