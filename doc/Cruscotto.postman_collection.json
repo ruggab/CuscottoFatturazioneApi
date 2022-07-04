@@ -154,7 +154,7 @@
 					"response": []
 				},
 				{
-					"name": "getClienteById",
+					"name": "getClienteByCodiceCliente",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -170,7 +170,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "1",
+							"raw": "123321",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -178,14 +178,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8083/cliente/getClienteById",
+							"raw": "localhost:8083/cliente/getClienteByCodiceCliente",
 							"host": [
 								"localhost"
 							],
 							"port": "8083",
 							"path": [
 								"cliente",
-								"getClienteById"
+								"getClienteByCodiceCliente"
 							]
 						}
 					},
@@ -208,7 +208,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"cliente\" :{\r\n\t\t\"codiceCliente\":\"1234567890\",\r\n\t\t\"societa\":\"soc2\",\r\n\t\t\"ragioneSociale\":\"rag soc2\",\r\n\t\t\"codiceFiscale\":\"ffyynf65d33j876p\",\r\n\t\t\"partitaIva\":\"12345678951\",\r\n\t\t\"nazionalita\":\"IT\",\r\n\t\t\"sedeLegale\":\"Milano\",\r\n\t\t\"appartieneGruppoIva\":\"X\",\r\n\t\t\"codiceDestinatarioFatturazione\":\"225874\",\r\n\t\t\"modalitaPagamento\":\"30 gg\",\r\n\t\t\"condizioniPagamento\":\"ass\"\r\n\t}\r\n}\r\n\r\n}",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"cliente\" :{\r\n\t\t\"codiceCliente\":\"123321\",\r\n\t\t\"societa\":\"soc2\",\r\n\t\t\"ragioneSociale\":\"cliente 123321\",\r\n\t\t\"codiceFiscale\":\"pyhnh8876rte5\",\r\n\t\t\"partitaIva\":\"12345678951\",\r\n\t\t\"nazionalita\":\"IT\",\r\n\t\t\"sedeLegale\":\"Milano\",\r\n\t\t\"appartieneGruppoIva\":\"X\",\r\n\t\t\"codiceDestinatarioFatturazione\":\"225874\",\r\n\t\t\"modalitaPagamento\":\"30 gg\",\r\n\t\t\"condizioniPagamento\":\"ass\"\r\n\t}\r\n}\r\n\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -878,7 +878,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[{\"name\":\"societa\",\"operator\":\"lke\",\"value\":\"soc4\",\"valueList\":null}],\"sort\":[]}",
+							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[{\"name\":\"cliente.codiceFiscale\",\"operator\":\"lke\",\"value\":\"ffyynf65d33j876p\",\"valueList\":null}],\"sort\":[]}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1476,7 +1476,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTY3OTUzMzYsImlhdCI6MTY1Njc2NTMzNiwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.V071HRNxY1YGh0ugQ83hrUl9SxUQzNFbfw894Bnwo6E"
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTY5NDIwMzcsImlhdCI6MTY1NjkxMjAzNywidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.FdsecsxJaFR6YYV1GH3JJ1Xybu-4Tkw63M2PpwqTeK0"
 		}
 	]
 }
