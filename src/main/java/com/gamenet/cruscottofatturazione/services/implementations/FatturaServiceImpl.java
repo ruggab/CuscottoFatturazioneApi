@@ -151,12 +151,13 @@ public class FatturaServiceImpl implements FatturaService
 			}else
 			{
 				isNew=true;
+				if(fattura.getImporto()==null) // nel caso non mi venga passato l'importo
+					fattura.setImporto(0.0);
 			}
 			fatturaSaved.setCliente(clienteSaved);
 			//aggiorn0 i dati dell'entity con i dati del modello in input
 			BeanUtils.copyProperties(fattura, fatturaSaved);
-			if(fatturaSaved.getImporto()==null)
-				fatturaSaved.setImporto(0.0);
+			
 			
 			
 //			if(isNew) //TODO:solo FE?
