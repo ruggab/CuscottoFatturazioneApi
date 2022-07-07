@@ -25,10 +25,12 @@ import com.gamenet.cruscottofatturazione.context.SortUtils;
 import com.gamenet.cruscottofatturazione.entities.DettaglioFattura;
 import com.gamenet.cruscottofatturazione.entities.Fattura;
 import com.gamenet.cruscottofatturazione.entities.StatoFatturaLog;
+import com.gamenet.cruscottofatturazione.models.Cliente;
 import com.gamenet.cruscottofatturazione.models.ListFilter;
 import com.gamenet.cruscottofatturazione.models.ListSort;
 import com.gamenet.cruscottofatturazione.models.PagedListFilterAndSort;
 import com.gamenet.cruscottofatturazione.models.response.FattureListOverview;
+import com.gamenet.cruscottofatturazione.repositories.ClienteRepository;
 import com.gamenet.cruscottofatturazione.repositories.FatturaRepository;
 import com.gamenet.cruscottofatturazione.repositories.StatoFatturaLogRepository;
 import com.gamenet.cruscottofatturazione.services.interfaces.ApplicationLogsService;
@@ -44,6 +46,7 @@ public class FatturaServiceImpl implements FatturaService
 
 	private final FatturaRepository fatturaRepository;
 	private final StatoFatturaLogRepository statoFatturaLogRepository;
+	private final ClienteRepository clienteRepository;
 	private Logger log = LoggerFactory.getLogger(getClass());
 	private final ApplicationLogsService appService;
 	private final Environment env;
@@ -121,14 +124,15 @@ public class FatturaServiceImpl implements FatturaService
 	}
 
 	@Override
-	public Boolean saveFatturaConDettagli(com.gamenet.cruscottofatturazione.models.Fattura fattura, String utenteUpdate) {
+	public com.gamenet.cruscottofatturazione.models.Fattura saveFatturaConDettagli(com.gamenet.cruscottofatturazione.models.Fattura fattura, String utenteUpdate) {
 		this.log.info("FatturaService: saveFatturaConDettagli -> START");
 		appService.insertLog("info", "FatturaService", "saveFatturaConDettagli", "START", "", "saveFatturaConDettagli");
 
 		//inizializzo i models di ritorno
-		//com.gamenet.cruscottofatturazione.models.Fattura fatturaReturn= new com.gamenet.cruscottofatturazione.models.Fattura();
-		//List<com.gamenet.cruscottofatturazione.models.DettaglioFattura> dettagliFatturaReturn = new ArrayList<>();
-
+		com.gamenet.cruscottofatturazione.models.Fattura fatturaReturn= new com.gamenet.cruscottofatturazione.models.Fattura();
+		List<com.gamenet.cruscottofatturazione.models.DettaglioFattura> dettagliFatturaReturn = new ArrayList<>();
+		Cliente clienteReturn= new Cliente();
+		com.gamenet.cruscottofatturazione.entities.Cliente clienteSaved=clienteRepository.findByCodiceCliente(fattura.getCliente().getCodiceCliente());
 		//inizializzo un oggetto Fattura entity
 		Fattura fatturaSaved=new Fattura();
 		try
@@ -148,7 +152,7 @@ public class FatturaServiceImpl implements FatturaService
 			{
 				isNew=true;
 			}
-
+			fatturaSaved.setCliente(clienteSaved);
 			//aggiorn0 i dati dell'entity con i dati del modello in input
 			BeanUtils.copyProperties(fattura, fatturaSaved);
 //			if(isNew) //TODO:solo FE?
@@ -190,7 +194,7 @@ public class FatturaServiceImpl implements FatturaService
 				//imposto il model del dettaglio di ritorno e l'aggiungo alla lista
 				com.gamenet.cruscottofatturazione.models.DettaglioFattura dettaglioFatturaRet= new com.gamenet.cruscottofatturazione.models.DettaglioFattura();
 				BeanUtils.copyProperties(detFattura, dettaglioFatturaRet);
-				//dettagliFatturaReturn.add(dettaglioFatturaRet);
+				dettagliFatturaReturn.add(dettaglioFatturaRet);
 				fatturaSaved.getListaDettaglioFattura().add(detFattura);
 				progressivo++;
 			}
@@ -201,9 +205,11 @@ public class FatturaServiceImpl implements FatturaService
 			fatturaSaved=fatturaRepository.save(fatturaSaved);
 
 			//imposto i model in risposta
-			//BeanUtils.copyProperties(fatturaSaved, fatturaReturn);
-			//fatturaReturn.setImporto((double) Math.round(importoFattura * 100) / 100);// fix per model
-			//fatturaReturn.setListaDettaglioFattura(dettagliFatturaReturn);//setto lista dettagli in model
+			BeanUtils.copyProperties(fatturaSaved.getCliente(),clienteReturn);
+			BeanUtils.copyProperties(fatturaSaved, fatturaReturn);
+			fatturaReturn.setCliente(clienteReturn);
+			fatturaReturn.setImporto((double) Math.round(importoFattura * 100) / 100);// fix per model
+			fatturaReturn.setListaDettaglioFattura(dettagliFatturaReturn);//setto lista dettagli in model
 
 		}
 		catch (Exception e)
@@ -213,12 +219,12 @@ public class FatturaServiceImpl implements FatturaService
 			appService.insertLog("error", "FatturaService", "saveFatturaConDettagli", "Exception", stackTrace, "saveFatturaConDettagli");
 
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 
 		this.log.info("FatturaService: saveFatturaConDettagli -> SUCCESSFULLY END");
 		appService.insertLog("info", "FatturaService", "saveFatturaConDettagli", "SUCCESSFULLY END", "", "saveFatturaConDettagli");
-		return true;
+		return fatturaReturn;
 	}
 
 	@Override

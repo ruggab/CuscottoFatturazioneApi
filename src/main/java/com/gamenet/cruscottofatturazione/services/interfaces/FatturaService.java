@@ -13,7 +13,7 @@ public interface FatturaService {
 	List<com.gamenet.cruscottofatturazione.models.Fattura> getLastTenFatturaBySocieta(String codiceSocieta);
 	Fattura getFatturaById(Integer fatturaId);
 	Boolean saveFattura(Fattura fattura, String utenteUpdate);
-	Boolean saveFatturaConDettagli(com.gamenet.cruscottofatturazione.models.Fattura fattura, String utenteUpdate);
+	com.gamenet.cruscottofatturazione.models.Fattura saveFatturaConDettagli(com.gamenet.cruscottofatturazione.models.Fattura fattura, String utenteUpdate);
 	List<com.gamenet.cruscottofatturazione.models.Fattura> getFatture(String codiceSocieta);
 	FattureListOverview getFattureDataTable(JsonNode payload);
 	Boolean rifiutaFattura(Integer idFattura, String utenteUpdate);

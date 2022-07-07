@@ -59,7 +59,7 @@ public class FatturaController {
 	}
 	
 	@PostMapping("/saveFattura")
-	public Boolean saveFattura(@RequestBody FatturaSaveRequest fatturaReq) 
+	public com.gamenet.cruscottofatturazione.models.Fattura saveFattura(@RequestBody FatturaSaveRequest fatturaReq) 
 	{
 		return fatturaService.saveFatturaConDettagli(fatturaReq.getFattura(), fatturaReq.getUtenteUpdate());
 	}
