@@ -43,7 +43,8 @@ public class QuerySpecification<T> implements Specification<T> {
 			return builder.equal(builder.literal(1), 1);
 		}
 
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		//SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		String operator = this.filterCriteria.getOperator();
 		String value = this.filterCriteria.getValue();
@@ -439,7 +440,7 @@ public class QuerySpecification<T> implements Specification<T> {
 		if (operator.equalsIgnoreCase("lt")) {
 			Date result = null;
 			try {
-				result = df.parse(value);
+				result = df.parse(value+" 23:59:59");
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -448,7 +449,7 @@ public class QuerySpecification<T> implements Specification<T> {
 		} else if (operator.equalsIgnoreCase("lte")) {
 			Date result = null;
 			try {
-				result = df.parse(value);
+				result = df.parse(value+" 23:59:59");
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -457,7 +458,7 @@ public class QuerySpecification<T> implements Specification<T> {
 		} else if (operator.equalsIgnoreCase("gt")) {
 			Date result = null;
 			try {
-				result = df.parse(value);
+				result = df.parse(value+" 00:00:00");
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -466,7 +467,7 @@ public class QuerySpecification<T> implements Specification<T> {
 		} else if (operator.equalsIgnoreCase("gte")) {
 			Date result = null;
 			try {
-				result = df.parse(value);
+				result = df.parse(value+" 00:00:00");
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
