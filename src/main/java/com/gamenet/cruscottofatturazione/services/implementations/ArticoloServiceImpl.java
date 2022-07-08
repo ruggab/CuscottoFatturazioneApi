@@ -125,7 +125,7 @@ public class ArticoloServiceImpl implements ArticoloService
 				Integer countDettagliFatturaArticolo = dettaglioFatturaService.getCountDettaglioFatturaByArticoloValidateSap(articolo.getCodiceArticolo());
 
 				if(countDettagliFatturaArticolo==0) {
-					articolo.setDataValidita(dateUtils.getCurrentDateWithoutTime());
+					articolo.setDataValidita(new Date());
 					articolo.setLast_mod_user(utenteUpdate);
 					articolo.setLast_mod_date(new Date());
 					articoloRepository.save(articolo);

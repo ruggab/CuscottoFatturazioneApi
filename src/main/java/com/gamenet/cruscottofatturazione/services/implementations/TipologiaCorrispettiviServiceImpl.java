@@ -118,7 +118,7 @@ public class TipologiaCorrispettiviServiceImpl implements TipologiaCorrispettivi
     		 
     		 if(tipologiaCorrispettivi!=null) {
     			 //TODO: verificare se ci sono fatture con TipologiaCorrispettivi????
-    			 tipologiaCorrispettivi.setDataValidita(dateUtils.getCurrentDateWithoutTime());
+    			 tipologiaCorrispettivi.setDataValidita(new Date());
     			 tipologiaCorrispettivi.setLast_mod_user(utenteUpdate);
     			 tipologiaCorrispettivi.setLast_mod_date(new Date());
     			 tipologiaCorrispettiviRepository.save(tipologiaCorrispettivi);

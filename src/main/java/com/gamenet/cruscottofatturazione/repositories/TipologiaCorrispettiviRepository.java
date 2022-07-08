@@ -15,7 +15,7 @@ public interface TipologiaCorrispettiviRepository extends CrudRepository<Tipolog
 	@Query(value="SELECT * FROM [dbo].[tipologia_corrispettivi]",nativeQuery=true)
 	public List<TipologiaCorrispettivi> getTipologiaCorrispettivi();
 
-	@Query(value="SELECT * FROM [dbo].[tipologia_corrispettivi] t where DATEADD(day,1,t.data_validita) >= GETDATE()",nativeQuery=true)
+	@Query(value="SELECT * FROM [dbo].[tipologia_corrispettivi] t where t.data_validita >= GETDATE()",nativeQuery=true)
 	public List<TipologiaCorrispettivi> getActiveTipologiaCorrispettivi();
 	
 
