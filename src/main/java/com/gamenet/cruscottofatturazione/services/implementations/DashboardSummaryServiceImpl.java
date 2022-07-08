@@ -114,7 +114,7 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 
 			}
 
-			result.setTotaleImportoFatture(importoTotale);
+			result.setTotaleImportoFatture((double) Math.round(importoTotale * 100) / 100);
 			result.setDataImportoFatture(new Date());
 			result.setDataFattureEmesse(new Date());
 			result.setFattureEmesse(fattureEmesse);
@@ -152,40 +152,53 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 		try
 		{	
 			Iterable<VWDashboardLastWeek> dashList;
-			dashList = dashboardLastWeekRepository.getVWDashboardLastWeekBySocieta(codiceSocieta);
+			dashList = dashboardLastWeekRepository.getVWDashboardBySocieta(codiceSocieta, 14);
 
 			LinkedList<DashboardDay> giorni= new LinkedList<>();
-			
-			
+
+
 			Date date = new Date();
 			Calendar c= Calendar.getInstance();
 			c.setTime(date);
-			c.add(Calendar.DAY_OF_MONTH, -6);
+			c.add(Calendar.DAY_OF_MONTH, -13);
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			LinkedHashMap<String, Integer> ultimi7giorni = new LinkedHashMap<>();
-			
-			for(int i=0 ; i<7; i++) {
+			LinkedHashMap<String, Integer> ultimi14giorni = new LinkedHashMap<>();
+
+			for(int i=0 ; i<14; i++) {
 				String currentDate=dateFormat.format(c.getTime());
-				ultimi7giorni.put(currentDate, 0);
+				ultimi14giorni.put(currentDate, 0);
 				c.add(Calendar.DAY_OF_MONTH, 1);
-				
+
 			}
-			
-			
+
+
+			Integer sumPrevWeek=0;
+			Integer sumCurrentWeek=0;
+
 			for(VWDashboardLastWeek item: dashList)
 			{
-				ultimi7giorni.put(item.getGiorno(),item.getNumero());
+				ultimi14giorni.put(item.getGiorno(),item.getNumero());
 			}
-			for (Iterator iterator = ultimi7giorni.keySet().iterator(); iterator.hasNext();) {
+			int count=1;
+			for (Iterator iterator = ultimi14giorni.keySet().iterator(); iterator.hasNext();) {
+
 				String day = (String) iterator.next();
-				Date currDate = dateFormat.parse(day);
-				giorni.add(new DashboardDay(day,ultimi7giorni.get(day),dateUtils.getDayNameOfDate(currDate)));
-				
+				if(count<=7) {
+					sumPrevWeek+=ultimi14giorni.get(day);
+				}
+				else {
+
+					Date currDate = dateFormat.parse(day);
+					giorni.add(new DashboardDay(day,ultimi14giorni.get(day),dateUtils.getDayNameOfDate(currDate)));
+					sumCurrentWeek+=ultimi14giorni.get(day);
+				}
+				count++;
+
 			}
-			
+
 			result.setGiorni(giorni);
 			result.setLastUpdate(new Date());
-			result.setIncrementoSettimana(null);//TODO
+			result.setIncrementoSettimana(percent(sumPrevWeek,sumCurrentWeek));
 
 			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
@@ -208,6 +221,35 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 		return result;
 	}
 
+
+	//	public static void main(String[] args) {
+	//		DashboardSummaryServiceImpl dashboardSummaryServiceImpl= new DashboardSummaryServiceImpl(null, null, null, null, null, null);
+	//		
+	//		int a=0;
+	//		int b=10;
+	//		System.out.println(dashboardSummaryServiceImpl.percent(a, b));
+	//	}
+	//	
+	
+	
+	private double percent(double a, double b)
+	{
+		double result = 0;
+
+		if(b==0) {
+			result=(-100.0);
+		}
+		if(a==0) {
+			result=100.0;
+		}
+		
+		if(a!=0 || b!=0){
+			result =  (((b - a) * 100) / a);
+			result = Math.round(result * 100);
+			result = result/100;
+		}
+		return result;
+	}
 
 	@Override
 	public DashboardYear getDashboardYearChart(String codiceSocieta) {
@@ -305,6 +347,18 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 
 		return result;
 	}
+	
+	public static void main(String[] args) {
+		Calendar cal = Calendar.getInstance();
+        for(int i = 0 ; i < 11;i++){
+            cal.set(Calendar.YEAR, 2022);
+            cal.set(Calendar.DAY_OF_MONTH, 1);
+            cal.set(Calendar.MONTH, i);
+            int maxWeeknumber = cal.getActualMaximum(Calendar.WEEK_OF_MONTH);
+            // Month value starts from 0 to 11 for Jan to Dec
+           System.out.println("For Month : "+ i + " Num Week :: " + maxWeeknumber); 
+        }
+	}
 
 
 	@Override
@@ -322,11 +376,12 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 		{	
 			dashList = dashboardMonthRepository.getVWDashboardMonthBySocietaAndStato(codiceSocieta,stato);
 			Date date=new Date();
+
 			Calendar c=Calendar.getInstance(Locale.ITALIAN);
 			c.setTime(date);
 
 			int numeroTotaliSettimaneMese= c.getActualMaximum(Calendar.WEEK_OF_MONTH);
-			int primaSettimanaMese=dateUtils.getFirstWeekOfDate(date);
+			int primaSettimanaMese=dateUtils.getFirstWeekOfDate(c.getTime());
 
 
 			LinkedHashMap<Integer, Integer> settimaneResult= new LinkedHashMap<>();
@@ -362,9 +417,6 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 
 			result.setSettimane(settimane);
 			result.setLastUpdate(new Date());
-
-
-
 
 
 			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))

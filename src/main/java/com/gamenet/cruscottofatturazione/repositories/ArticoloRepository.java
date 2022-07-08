@@ -15,7 +15,8 @@ public interface ArticoloRepository extends CrudRepository<Articolo, Integer>, J
 	@Query(value="SELECT * FROM [dbo].[articolo]",nativeQuery=true)
 	public List<Articolo> getArticoli();
 	
-
+	@Query(value="SELECT * FROM [dbo].[articolo] a where DATEADD(day,1,a.data_validita) >= GETDATE() ",nativeQuery=true)
+	public List<Articolo> getActiveArticoli();
 	
 
 	

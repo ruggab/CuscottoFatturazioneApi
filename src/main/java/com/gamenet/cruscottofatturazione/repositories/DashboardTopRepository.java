@@ -13,7 +13,13 @@ import com.gamenet.cruscottofatturazione.entities.VWDashboardTopSummary;
 @Repository
 public interface DashboardTopRepository extends CrudRepository<VWDashboardTopSummary, String>
 {
-	@Query(nativeQuery = true, value="EXEC [dbo].[getTopSummary] :societa")
+	
+	@Query(nativeQuery = true, value=" "
+			+ " SELECT CASE WHEN stato_fattura  IS NULL THEN 'I' ELSE stato_fattura END as stato_fattura, "
+			+ " COUNT(id) AS numero, SUM(importo) AS importo "
+			+ "	FROM            dbo.fattura "
+			+ "	WHERE  societa=:societa "
+			+ "	GROUP BY stato_fattura")
 	public List<VWDashboardTopSummary> getVWDashboardTopSummaryBySocieta(@Param("societa") String societa);
 	
 	@Query(nativeQuery = true, value="select * from [dbo].[VWdashboardFatture]")

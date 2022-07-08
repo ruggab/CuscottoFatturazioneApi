@@ -47,8 +47,15 @@ public class TipologiaCorrispettiviServiceImpl implements TipologiaCorrispettivi
     private DateUtils dateUtils = new DateUtils();
     
 	@Override
-	public List<TipologiaCorrispettivi> getTipologiaCorrispettivi() {
-		return tipologiaCorrispettiviRepository.getTipologiaCorrispettivi();
+	public List<TipologiaCorrispettivi> getTipologiaCorrispettivi(Boolean soloAttivi) {
+		
+		List<TipologiaCorrispettivi> corrispettivi = new ArrayList<TipologiaCorrispettivi>();
+		if(soloAttivi)
+			corrispettivi=tipologiaCorrispettiviRepository.getActiveTipologiaCorrispettivi();
+		else
+			corrispettivi=tipologiaCorrispettiviRepository.getTipologiaCorrispettivi();
+		
+		return corrispettivi;
 	}
 
 	@Override

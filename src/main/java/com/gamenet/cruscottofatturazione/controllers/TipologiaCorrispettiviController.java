@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -29,9 +30,9 @@ public class TipologiaCorrispettiviController {
 	
 	
 	@GetMapping("/getTipologiaCorrispettiviList")
-	public List<TipologiaCorrispettivi> getUserList() 
+	public List<TipologiaCorrispettivi> getCorrispettiviList(@RequestParam(value ="onlyActive" ) Boolean soloAttivi) 
 	{
-		return tipologiaCorrispettiviService.getTipologiaCorrispettivi();
+		return tipologiaCorrispettiviService.getTipologiaCorrispettivi(soloAttivi);
 	}
 	
 	@PostMapping("/getTipologiaCorrispettiviById")

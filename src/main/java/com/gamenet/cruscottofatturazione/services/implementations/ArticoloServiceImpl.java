@@ -51,8 +51,15 @@ public class ArticoloServiceImpl implements ArticoloService
 	private final DettaglioFatturaService dettaglioFatturaService;
 
 	@Override
-	public List<Articolo> getArticoli() {
-		return articoloRepository.getArticoli();
+	public List<Articolo> getArticoli(Boolean soloAttivi) {
+
+		List<Articolo> articoli = new ArrayList<>();
+		if(soloAttivi)
+			articoli =articoloRepository.getActiveArticoli();
+		else
+			articoli=articoloRepository.getArticoli();
+
+		return  articoli ;
 	}
 
 	@Override

@@ -14,6 +14,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -25,6 +28,7 @@ import com.gamenet.cruscottofatturazione.context.SortUtils;
 import com.gamenet.cruscottofatturazione.entities.DettaglioFattura;
 import com.gamenet.cruscottofatturazione.entities.Fattura;
 import com.gamenet.cruscottofatturazione.entities.StatoFatturaLog;
+import com.gamenet.cruscottofatturazione.entities.User;
 import com.gamenet.cruscottofatturazione.models.Cliente;
 import com.gamenet.cruscottofatturazione.models.ListFilter;
 import com.gamenet.cruscottofatturazione.models.ListSort;
@@ -32,7 +36,9 @@ import com.gamenet.cruscottofatturazione.models.PagedListFilterAndSort;
 import com.gamenet.cruscottofatturazione.models.response.FattureListOverview;
 import com.gamenet.cruscottofatturazione.repositories.ClienteRepository;
 import com.gamenet.cruscottofatturazione.repositories.FatturaRepository;
+import com.gamenet.cruscottofatturazione.repositories.RoleRepository;
 import com.gamenet.cruscottofatturazione.repositories.StatoFatturaLogRepository;
+import com.gamenet.cruscottofatturazione.repositories.UserRepository;
 import com.gamenet.cruscottofatturazione.services.interfaces.ApplicationLogsService;
 import com.gamenet.cruscottofatturazione.services.interfaces.DettaglioFatturaService;
 import com.gamenet.cruscottofatturazione.services.interfaces.FatturaService;
@@ -47,6 +53,7 @@ public class FatturaServiceImpl implements FatturaService
 	private final FatturaRepository fatturaRepository;
 	private final StatoFatturaLogRepository statoFatturaLogRepository;
 	private final ClienteRepository clienteRepository;
+	private final UserRepository userRepository;
 	private Logger log = LoggerFactory.getLogger(getClass());
 	private final ApplicationLogsService appService;
 	private final Environment env;
@@ -142,6 +149,10 @@ public class FatturaServiceImpl implements FatturaService
 			if(fattura.getId()!=null) {
 				//recupero la fattura dal db
 				fatturaSaved = fatturaRepository.findById(fattura.getId()).orElse(new Fattura());
+				
+				if(!fatturaSaved.getStatoFattura().equals(StatoFattura.IN_COMPILAZIONE.getKey()) || !fatturaSaved.getStatoFattura().equals(StatoFattura.RIFIUTATA.getKey()) )
+					throw new Exception("la fattura con id: "+fattura.getId()+ " non puo essere modificata perche non è nello stato "+StatoFattura.DA_APPROVARE.getValue()+" o "+StatoFattura.RIFIUTATA.getValue());
+				
 				//ed elimino i dettagli vecchi
 				if(fatturaSaved.getListaDettaglioFattura()!=null) {
 					for (DettaglioFattura dettaglioFatturaSaved : fatturaSaved.getListaDettaglioFattura()) {
@@ -272,12 +283,33 @@ public class FatturaServiceImpl implements FatturaService
 				appService.insertLog("debug", "FattureService", "getFattureDataTable", "Object: " + requestPrint, "", "getFattureDataTable");
 			}
 
+			
+			
+			boolean isAprrovatore=getCurrentUser().getRuoloUtente().getName().equals("Approvatore");
+			
 			jsonMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
 
 			PagedListFilterAndSort model = jsonMapper.treeToValue(payload, PagedListFilterAndSort.class);
 
 			if (model.getFilters() == null)
 				model.setFilters(new ArrayList<>());
+			
+
+			if(isAprrovatore) {
+				ListFilter soloDaApprovareFilter = model.getFilters().stream().filter(f -> f.getName().equals("statoFattura"))
+						.findAny()
+						.orElse(null);
+
+				if(soloDaApprovareFilter!=null) {
+					model.getFilters().remove(soloDaApprovareFilter);
+				}
+				ListFilter soloDaApprovare= new ListFilter();
+				soloDaApprovare.setName("statoFattura");
+				soloDaApprovare.setOperator("eq");
+				soloDaApprovare.setValue(StatoFattura.DA_APPROVARE.getKey());
+				model.getFilters().add(soloDaApprovare);
+			}
+
 
 			Specification<com.gamenet.cruscottofatturazione.entities.Fattura> spec = new QuerySpecification<>();
 
@@ -348,6 +380,12 @@ public class FatturaServiceImpl implements FatturaService
 		return response;
 	}
 
+	private User getCurrentUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userdetails= (UserDetails) authentication.getPrincipal();
+		return userRepository.findByUsername(userdetails.getUsername());
+	}
+
 	@Override
 	public Boolean rifiutaFattura(Integer idFattura, String utenteUpdate) {
 		try {
@@ -412,6 +450,9 @@ public class FatturaServiceImpl implements FatturaService
 
 			Fattura fattura=fatturaRepository.findById(idFattura).orElse(null);
 			if(fattura!=null) {
+				
+				if(!fattura.getStatoFattura().equals(StatoFattura.DA_APPROVARE.getKey()))
+					throw new Exception("la fattura con id: "+fattura.getId()+ " non puo essere approvata perche non è nello stato "+StatoFattura.DA_APPROVARE.getValue());
 
 				fattura.setStatoFattura(StatoFattura.VALIDATA.getKey());
 				fatturaRepository.save(fattura);

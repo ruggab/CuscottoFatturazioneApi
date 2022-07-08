@@ -8,7 +8,7 @@ import com.gamenet.cruscottofatturazione.models.response.TipologiaCorrispettiviL
 
 public interface TipologiaCorrispettiviService {
 
-	List<TipologiaCorrispettivi> getTipologiaCorrispettivi();
+	List<TipologiaCorrispettivi> getTipologiaCorrispettivi(Boolean soloAttivi);
 	TipologiaCorrispettivi getTipologiaCorrispettiviById(Integer articoloId);
 	Boolean saveTipologiaCorrispettivi(TipologiaCorrispettivi tipologiaCorrispettivi, String utenteUpdate);
 	Boolean deleteTipologiaCorrispettivi(Integer idEntity, String utenteUpdate);
