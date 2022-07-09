@@ -14,7 +14,9 @@ public class DettaglioFattura {
 	private Integer idFattura;
 	private Integer progressivoRiga;
 	private String codiceArticolo;
+	private String descrizioneArticolo;
 	private String codiceCorrispettivo;
+	private String descrizioneCorrispettivo;
 	private Double importo;
 	private String note;
 	private String idMessaggio;

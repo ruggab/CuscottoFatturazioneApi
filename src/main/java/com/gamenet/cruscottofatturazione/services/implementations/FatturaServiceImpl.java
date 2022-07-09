@@ -1,8 +1,10 @@
 package com.gamenet.cruscottofatturazione.services.implementations;
 
+import java.beans.Beans;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -25,19 +27,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gamenet.cruscottofatturazione.Enum.StatoFattura;
 import com.gamenet.cruscottofatturazione.context.QuerySpecification;
 import com.gamenet.cruscottofatturazione.context.SortUtils;
+import com.gamenet.cruscottofatturazione.entities.Articolo;
 import com.gamenet.cruscottofatturazione.entities.DettaglioFattura;
 import com.gamenet.cruscottofatturazione.entities.Fattura;
 import com.gamenet.cruscottofatturazione.entities.StatoFatturaLog;
+import com.gamenet.cruscottofatturazione.entities.TipologiaCorrispettivi;
 import com.gamenet.cruscottofatturazione.entities.User;
 import com.gamenet.cruscottofatturazione.models.Cliente;
 import com.gamenet.cruscottofatturazione.models.ListFilter;
 import com.gamenet.cruscottofatturazione.models.ListSort;
 import com.gamenet.cruscottofatturazione.models.PagedListFilterAndSort;
 import com.gamenet.cruscottofatturazione.models.response.FattureListOverview;
+import com.gamenet.cruscottofatturazione.repositories.ArticoloRepository;
 import com.gamenet.cruscottofatturazione.repositories.ClienteRepository;
 import com.gamenet.cruscottofatturazione.repositories.FatturaRepository;
 import com.gamenet.cruscottofatturazione.repositories.RoleRepository;
 import com.gamenet.cruscottofatturazione.repositories.StatoFatturaLogRepository;
+import com.gamenet.cruscottofatturazione.repositories.TipologiaCorrispettiviRepository;
 import com.gamenet.cruscottofatturazione.repositories.UserRepository;
 import com.gamenet.cruscottofatturazione.services.interfaces.ApplicationLogsService;
 import com.gamenet.cruscottofatturazione.services.interfaces.DettaglioFatturaService;
@@ -54,6 +60,8 @@ public class FatturaServiceImpl implements FatturaService
 	private final StatoFatturaLogRepository statoFatturaLogRepository;
 	private final ClienteRepository clienteRepository;
 	private final UserRepository userRepository;
+	private final ArticoloRepository articoloRepository;
+	private final TipologiaCorrispettiviRepository tipologiaCorrispettiviRepository;
 	private Logger log = LoggerFactory.getLogger(getClass());
 	private final ApplicationLogsService appService;
 	private final Environment env;
@@ -82,8 +90,37 @@ public class FatturaServiceImpl implements FatturaService
 
 
 	@Override
-	public Fattura getFatturaById(Integer fatturaId) {
-		return fatturaRepository.findById(fatturaId).orElse(null);
+	public  com.gamenet.cruscottofatturazione.models.Fattura getFatturaById(Integer fatturaId) {
+		
+		Fattura fattura = fatturaRepository.findById(fatturaId).orElse(null);
+				
+		com.gamenet.cruscottofatturazione.models.Fattura fatturaModel= new com.gamenet.cruscottofatturazione.models.Fattura();
+		Cliente clienteReturn= new Cliente();
+		if(fattura!=null) {
+			
+			BeanUtils.copyProperties(fattura, fatturaModel);
+			BeanUtils.copyProperties(fattura.getCliente(),clienteReturn);
+			//dettaglioFattura
+			List<com.gamenet.cruscottofatturazione.models.DettaglioFattura> dettaglioFatturaModelList=new ArrayList<>();
+			
+			
+			for (DettaglioFattura dettaglioFattura : fattura.getListaDettaglioFattura()) {
+				com.gamenet.cruscottofatturazione.models.DettaglioFattura dettaglioFatturaModel = new com.gamenet.cruscottofatturazione.models.DettaglioFattura();
+				Articolo articolo = articoloRepository.getArticoloByCodice(dettaglioFattura.getCodiceArticolo());
+				TipologiaCorrispettivi corrispettivo=tipologiaCorrispettiviRepository.getTipologiaByCodice(dettaglioFattura.getCodiceCorrispettivo());
+				BeanUtils.copyProperties(dettaglioFattura, dettaglioFatturaModel);
+				if(articolo!=null)
+					dettaglioFatturaModel.setDescrizioneArticolo(articolo.getDescrizione());
+				if(corrispettivo!=null)
+					dettaglioFatturaModel.setDescrizioneCorrispettivo(corrispettivo.getDescrizione());
+				dettaglioFatturaModelList.add(dettaglioFatturaModel);
+				
+			}
+			fatturaModel.setCliente(clienteReturn);
+			fatturaModel.setListaDettaglioFattura(dettaglioFatturaModelList);
+		}
+		
+		return fatturaModel;
 	}
 
 
@@ -150,8 +187,8 @@ public class FatturaServiceImpl implements FatturaService
 				//recupero la fattura dal db
 				fatturaSaved = fatturaRepository.findById(fattura.getId()).orElse(new Fattura());
 				
-				if(!fatturaSaved.getStatoFattura().equals(StatoFattura.IN_COMPILAZIONE.getKey()) || !fatturaSaved.getStatoFattura().equals(StatoFattura.RIFIUTATA.getKey()) )
-					throw new Exception("la fattura con id: "+fattura.getId()+ " non puo essere modificata perche non è nello stato "+StatoFattura.DA_APPROVARE.getValue()+" o "+StatoFattura.RIFIUTATA.getValue());
+				if(!(fatturaSaved.getStatoFattura().equals(StatoFattura.IN_COMPILAZIONE.getKey()) || fatturaSaved.getStatoFattura().equals(StatoFattura.RIFIUTATA.getKey())) )
+					throw new Exception("la fattura con id: "+fattura.getId()+ " non puo essere modificata perche non è nello stato "+StatoFattura.IN_COMPILAZIONE.getValue()+" o "+StatoFattura.RIFIUTATA.getValue());
 				
 				//ed elimino i dettagli vecchi
 				if(fatturaSaved.getListaDettaglioFattura()!=null) {
@@ -210,6 +247,15 @@ public class FatturaServiceImpl implements FatturaService
 				//imposto il model del dettaglio di ritorno e l'aggiungo alla lista
 				com.gamenet.cruscottofatturazione.models.DettaglioFattura dettaglioFatturaRet= new com.gamenet.cruscottofatturazione.models.DettaglioFattura();
 				BeanUtils.copyProperties(detFattura, dettaglioFatturaRet);
+				
+				Articolo articolo = articoloRepository.getArticoloByCodice(dettaglioFattura.getCodiceArticolo());
+				TipologiaCorrispettivi corrispettivo=tipologiaCorrispettiviRepository.getTipologiaByCodice(dettaglioFattura.getCodiceCorrispettivo());
+
+				if(articolo!=null)
+					dettaglioFatturaRet.setDescrizioneArticolo(articolo.getDescrizione());
+				if(corrispettivo!=null)
+					dettaglioFatturaRet.setDescrizioneCorrispettivo(corrispettivo.getDescrizione());
+				
 				dettagliFatturaReturn.add(dettaglioFatturaRet);
 				fatturaSaved.getListaDettaglioFattura().add(detFattura);
 				progressivo++;

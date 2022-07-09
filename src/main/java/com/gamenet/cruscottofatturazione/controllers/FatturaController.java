@@ -44,10 +44,10 @@ public class FatturaController {
 	}
 	
 	@PostMapping("/getFatturaById")
-	public Fattura getFatturaById(@RequestBody Integer fatturaId) 
+	public com.gamenet.cruscottofatturazione.models.Fattura getFatturaById(@RequestBody Integer fatturaId) 
 	{
 		
-		Fattura fattura=fatturaService.getFatturaById(fatturaId);
+		com.gamenet.cruscottofatturazione.models.Fattura fattura=fatturaService.getFatturaById(fatturaId);
 		
 		return fattura;
 	}
