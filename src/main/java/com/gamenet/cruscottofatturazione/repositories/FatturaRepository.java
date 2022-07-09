@@ -21,5 +21,11 @@ public interface FatturaRepository extends CrudRepository<Fattura, Integer>, Jpa
 	
 	@Query(value="SELECT * FROM (SELECT TOP(10) * FROM [dbo].[fattura] where societa=:societa order by data_fattura desc) as a order by a.data_fattura asc",nativeQuery=true)
 	public List<Fattura> getLast10DayFattureBySocieta(@Param("societa") String societa);
+	
+	@Query(value="SELECT * FROM (SELECT TOP(10) * FROM [dbo].[fattura] where societa=:societa and stato_fattura=:stato order by data_fattura desc) as a order by a.data_fattura asc",nativeQuery=true)
+	public List<Fattura> getLast10DayFattureBySocieta(@Param("societa") String societa,@Param("stato") String stato);
+
+	@Query(value="SELECT * FROM [dbo].[fattura] where societa=:societa and stato_fattura=:stato",nativeQuery=true)
+	public List<Fattura> getFattureBySocietaAndStato(@Param("societa") String societa,@Param("stato") String stato);
 
 }

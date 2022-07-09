@@ -76,8 +76,14 @@ public class FatturaServiceImpl implements FatturaService
 
 	@Override
 	public List<com.gamenet.cruscottofatturazione.models.Fattura> getFatture(String societa) {
-		List<Fattura> fatture = fatturaRepository.getFattureBySocieta(societa);
+		boolean isAprrovatore=getCurrentUser().getRuoloUtente().getName().equals("Approvatore");
+		List<Fattura> fatture = new ArrayList<>();
+		if(isAprrovatore)
+			fatture = fatturaRepository.getFattureBySocietaAndStato(societa,StatoFattura.DA_APPROVARE.getKey());
+		else
+			fatture = fatturaRepository.getFattureBySocieta(societa);
 
+		
 		List<com.gamenet.cruscottofatturazione.models.Fattura> fattureRet= new ArrayList<>();
 		for (Fattura fattura : fatture) {
 			com.gamenet.cruscottofatturazione.models.Fattura fatRet= new com.gamenet.cruscottofatturazione.models.Fattura();
@@ -291,7 +297,14 @@ public class FatturaServiceImpl implements FatturaService
 
 	@Override
 	public List<com.gamenet.cruscottofatturazione.models.Fattura> getLastTenFatturaBySocieta(String codiceSocieta) {
-		List<Fattura> last10DayFattureBySocieta = fatturaRepository.getLast10DayFattureBySocieta(codiceSocieta);
+		List<Fattura> last10DayFattureBySocieta = new ArrayList<>();
+		
+		boolean isAprrovatore=getCurrentUser().getRuoloUtente().getName().equals("Approvatore");
+		if(isAprrovatore)
+			last10DayFattureBySocieta = fatturaRepository.getLast10DayFattureBySocieta(codiceSocieta,StatoFattura.DA_APPROVARE.getKey());
+		else
+			last10DayFattureBySocieta = fatturaRepository.getLast10DayFattureBySocieta(codiceSocieta);
+		
 
 		List<com.gamenet.cruscottofatturazione.models.Fattura> last10DayFattureBySocietaReturn= new ArrayList<>();
 
