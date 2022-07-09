@@ -87,7 +87,10 @@ public class FatturaServiceImpl implements FatturaService
 		List<com.gamenet.cruscottofatturazione.models.Fattura> fattureRet= new ArrayList<>();
 		for (Fattura fattura : fatture) {
 			com.gamenet.cruscottofatturazione.models.Fattura fatRet= new com.gamenet.cruscottofatturazione.models.Fattura();
+			Cliente cliente = new Cliente();
 			BeanUtils.copyProperties(fattura, fatRet);
+			BeanUtils.copyProperties(fattura.getCliente(), cliente);
+			fatRet.setCliente(cliente);
 			fattureRet.add(fatRet);
 		}
 
@@ -310,7 +313,10 @@ public class FatturaServiceImpl implements FatturaService
 
 		for (Fattura fattura : last10DayFattureBySocieta) {
 			com.gamenet.cruscottofatturazione.models.Fattura fattRet= new com.gamenet.cruscottofatturazione.models.Fattura();
+			Cliente cliente = new Cliente();
 			BeanUtils.copyProperties(fattura, fattRet);
+			BeanUtils.copyProperties(fattura.getCliente(), cliente);
+			fattRet.setCliente(cliente);
 			last10DayFattureBySocietaReturn.add(fattRet);
 
 		}
