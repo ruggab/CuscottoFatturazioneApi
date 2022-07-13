@@ -925,7 +925,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[],\"sort\":[]}",
+							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[{\"name\":\"statoFattura\",\"operator\":\"in\",\"value\":null,\"valueList\":[\"R\",\"V\"]}],\"sort\":[]}",
 							"options": {
 								"raw": {
 									"language": "json"
