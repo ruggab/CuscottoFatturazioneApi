@@ -154,6 +154,41 @@
 					"response": []
 				},
 				{
+					"name": "getClienti",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/cliente/getClienti?codiceSocieta=soc2",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"cliente",
+								"getClienti"
+							],
+							"query": [
+								{
+									"key": "codiceSocieta",
+									"value": "soc2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "getClienteByCodiceCliente",
 					"request": {
 						"auth": {
@@ -208,7 +243,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"cliente\" :{\r\n\t\t\"codiceCliente\":\"123321\",\r\n\t\t\"societa\":\"soc2\",\r\n\t\t\"ragioneSociale\":\"cliente 123321\",\r\n\t\t\"codiceFiscale\":\"pyhnh8876rte5\",\r\n\t\t\"partitaIva\":\"12345678951\",\r\n\t\t\"nazionalita\":\"IT\",\r\n\t\t\"sedeLegale\":\"Milano\",\r\n\t\t\"appartieneGruppoIva\":\"X\",\r\n\t\t\"codiceDestinatarioFatturazione\":\"225874\",\r\n\t\t\"modalitaPagamento\":\"30 gg\",\r\n\t\t\"condizioniPagamento\":\"ass\"\r\n\t}\r\n}\r\n\r\n",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"cliente\" :{\r\n\t\t\"codiceCliente\":\"444444\",\r\n\t\t\"societa\":\"soc2\",\r\n\t\t\"ragioneSociale\":null,\r\n\t\t\"codiceFiscale\":null,\r\n\t\t\"partitaIva\":null,\r\n\t\t\"nazionalita\":null,\r\n\t\t\"sedeLegale\":null,\r\n\t\t\"appartieneGruppoIva\":null,\r\n\t\t\"codiceDestinatarioFatturazione\":null,\r\n\t\t\"modalitaPagamento\":null,\r\n\t\t\"condizioniPagamento\":null\r\n\t}\r\n}\r\n\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -438,7 +473,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"utenteUpdate\":\"Diego Capone\",\r\n\t\"articolo\" :{\r\n\t\t\"codiceArticolo\":\"225\",\r\n\t\t\"descrizione\":\"articolo 225\",\r\n\t\t\"dataValidita\":\"2022-12-27T00:00:00.000+00:00\"\r\n\t}\r\n}",
+							"raw": "{\r\n    \"utenteUpdate\":\"Diego Capone\",\r\n\t\"articolo\" :{\r\n\t\t\"codiceArticolo\":\"111\",\r\n\t\t\"descrizione\":\"articolo 111\",\r\n\t\t\"dataValidita\":\"2050-12-27T00:00:00.000+00:00\"\r\n\t}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -476,7 +511,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"idEntity\" :3\r\n}",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"idEntity\" :7\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -630,7 +665,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"utenteUpdate\":\"Diego Capone\",\r\n\t\"tipologiaCorrispettivi\" :{\r\n        \"id\":-1,\r\n\t\t\"codiceCorrispettivo\":\"131\",\r\n\t\t\"descrizione\":\"corrispettivo 111\",\r\n\t\t\"dataValidita\":\"2022-12-27T00:00:00.000+00:00\"\r\n\t}\r\n}",
+							"raw": "{\r\n    \"utenteUpdate\":\"Diego Capone\",\r\n\t\"tipologiaCorrispettivi\" :{\r\n        \r\n\t\t\"codiceCorrispettivo\":\"555\",\r\n\t\t\"descrizione\":\"corrispettivo 555\",\r\n\t\t\"dataValidita\":\"2022-12-27T00:00:00.000+00:00\"\r\n\t}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -890,7 +925,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[{\"name\":\"statoFattura\",\"operator\":\"eq\",\"value\":\"R\",\"valueList\":null}],\"sort\":[]}",
+							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[],\"sort\":[]}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -898,7 +933,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8083/fattura/getFattureDataTable",
+							"raw": "localhost:8083/fattura/getFattureDataTable?codiceSocieta=soc4",
 							"host": [
 								"localhost"
 							],
@@ -912,6 +947,10 @@
 									"key": "codice_societa",
 									"value": "soc4",
 									"disabled": true
+								},
+								{
+									"key": "codiceSocieta",
+									"value": "soc4"
 								}
 							]
 						}
@@ -1515,7 +1554,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTczMDkxNDMsImlhdCI6MTY1NzI3OTE0MywidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.8AM9Y10y7abBU6eopLEg7hNlIgkkwPm-9M8OlTyEoTo"
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTc3NjAwNjIsImlhdCI6MTY1NzczMDA2MiwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.1OKeRtDAjTViDHGR0FJ05fAvbd7bokg8NtENs-pyEmc"
 		}
 	]
 }

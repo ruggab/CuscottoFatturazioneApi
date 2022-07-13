@@ -3,8 +3,6 @@ package com.gamenet.cruscottofatturazione.controllers;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +16,7 @@ import com.gamenet.cruscottofatturazione.entities.Articolo;
 import com.gamenet.cruscottofatturazione.models.request.ArticoloSaveRequest;
 import com.gamenet.cruscottofatturazione.models.request.DeleteRequest;
 import com.gamenet.cruscottofatturazione.models.response.ArticoliListOverview;
+import com.gamenet.cruscottofatturazione.models.response.SaveResponse;
 import com.gamenet.cruscottofatturazione.services.interfaces.ArticoloService;
 
 import lombok.RequiredArgsConstructor;
@@ -45,7 +44,7 @@ public class ArticoloController {
 	}
 	
 	@PostMapping("/saveArticolo")
-	public Boolean saveArticolo(@RequestBody ArticoloSaveRequest articoloReq) 
+	public SaveResponse saveArticolo(@RequestBody ArticoloSaveRequest articoloReq) 
 	{
 		return articoloService.saveArticolo(articoloReq.getArticolo(), articoloReq.getUtenteUpdate());
 	}

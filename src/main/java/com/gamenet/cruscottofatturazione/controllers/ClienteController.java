@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.gamenet.cruscottofatturazione.entities.Cliente;
 import com.gamenet.cruscottofatturazione.models.request.ClienteSaveRequest;
 import com.gamenet.cruscottofatturazione.models.request.DeleteClienteRequest;
+import com.gamenet.cruscottofatturazione.models.response.ClienteAutoComplete;
 import com.gamenet.cruscottofatturazione.models.response.ClientiListOverview;
 import com.gamenet.cruscottofatturazione.services.interfaces.ClienteService;
 
@@ -40,6 +41,12 @@ public class ClienteController {
 	public List<Cliente> getClientiListBySocieta(@PathParam(value ="codiceSocieta" ) String codiceSocieta) 
 	{
 		return clienteService.getClienti(codiceSocieta);
+	}
+	
+	@GetMapping("/getClienti")
+	public List<ClienteAutoComplete> getActiveClientiListBySocieta(@PathParam(value ="codiceSocieta" ) String codiceSocieta) 
+	{
+		return clienteService.getActiveClienti(codiceSocieta);
 	}
 	
 	@PostMapping("/getClienteByCodiceCliente")

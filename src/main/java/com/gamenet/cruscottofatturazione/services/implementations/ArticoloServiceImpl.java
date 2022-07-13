@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.env.Environment;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,18 +22,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gamenet.cruscottofatturazione.context.QuerySpecification;
 import com.gamenet.cruscottofatturazione.context.SortUtils;
 import com.gamenet.cruscottofatturazione.entities.Articolo;
-import com.gamenet.cruscottofatturazione.entities.DettaglioFattura;
 import com.gamenet.cruscottofatturazione.models.ListFilter;
 import com.gamenet.cruscottofatturazione.models.ListSort;
 import com.gamenet.cruscottofatturazione.models.PagedListFilterAndSort;
-import com.gamenet.cruscottofatturazione.models.User;
 import com.gamenet.cruscottofatturazione.models.response.ArticoliListOverview;
-import com.gamenet.cruscottofatturazione.models.response.UtentiListOverview;
+import com.gamenet.cruscottofatturazione.models.response.SaveResponse;
 import com.gamenet.cruscottofatturazione.repositories.ArticoloRepository;
 import com.gamenet.cruscottofatturazione.services.interfaces.ApplicationLogsService;
 import com.gamenet.cruscottofatturazione.services.interfaces.ArticoloService;
 import com.gamenet.cruscottofatturazione.services.interfaces.DettaglioFatturaService;
-import com.gamenet.cruscottofatturazione.services.interfaces.FatturaService;
 import com.gamenet.cruscottofatturazione.utils.DateUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -69,10 +67,10 @@ public class ArticoloServiceImpl implements ArticoloService
 
 
 	@Override
-	public Boolean saveArticolo(Articolo articolo, String utenteUpdate) {
+	public SaveResponse saveArticolo(Articolo articolo, String utenteUpdate) {
 		this.log.info("ArticoloService: saveArticolo -> START");
 		appService.insertLog("info", "ArticoloService", "saveArticolo", "START", "", "saveArticolo");
-
+		SaveResponse response = new SaveResponse();
 		try
 		{	
 			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
@@ -94,6 +92,7 @@ public class ArticoloServiceImpl implements ArticoloService
 			}
 
 			articoloRepository.save(articolo);
+			response.setEsito(true);
 
 		}
 		catch (Exception e)
@@ -103,12 +102,20 @@ public class ArticoloServiceImpl implements ArticoloService
 			appService.insertLog("error", "ArticoloService", "saveArticolo", "Exception", stackTrace, "saveArticolo");
 
 			e.printStackTrace();
-			return false;
+			response.setEsito(false);
+			
+			if(e instanceof DataIntegrityViolationException ) {
+				response.setErrore("codice Articolo gia presente!");
+			}
+			else
+				response.setErrore(e.getMessage());
 		}
 
 		this.log.info("ArticoloService: saveArticolo -> SUCCESSFULLY END");
 		appService.insertLog("info", "ArticoloService", "saveArticolo", "SUCCESSFULLY END", "", "saveArticolo");
-		return true;
+		
+		
+		return response;
 	}
 
 

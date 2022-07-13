@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.gamenet.cruscottofatturazione.entities.TipologiaCorrispettivi;
 import com.gamenet.cruscottofatturazione.models.request.DeleteRequest;
 import com.gamenet.cruscottofatturazione.models.request.TipologiaCorrispettiviSaveRequest;
+import com.gamenet.cruscottofatturazione.models.response.SaveResponse;
 import com.gamenet.cruscottofatturazione.models.response.TipologiaCorrispettiviListOverview;
 import com.gamenet.cruscottofatturazione.services.interfaces.TipologiaCorrispettiviService;
 
@@ -42,7 +43,7 @@ public class TipologiaCorrispettiviController {
 	}
 	
 	@PostMapping("/saveTipologiaCorrispettivi")
-	public Boolean saveTipologiaCorrispettivo(@RequestBody TipologiaCorrispettiviSaveRequest clienteReq) 
+	public SaveResponse saveTipologiaCorrispettivo(@RequestBody TipologiaCorrispettiviSaveRequest clienteReq) 
 	{
 		return tipologiaCorrispettiviService.saveTipologiaCorrispettivi(clienteReq.getTipologiaCorrispettivi(), clienteReq.getUtenteUpdate());
 	}

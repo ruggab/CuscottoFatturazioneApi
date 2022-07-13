@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.gamenet.cruscottofatturazione.entities.Cliente;
+import com.gamenet.cruscottofatturazione.models.response.ClienteAutoComplete;
 
 @Repository
 public interface ClienteRepository extends CrudRepository<Cliente, String> , JpaSpecificationExecutor<Cliente> {
@@ -25,6 +26,9 @@ public interface ClienteRepository extends CrudRepository<Cliente, String> , Jpa
 	
 	@Query(value="SELECT * FROM [dbo].[cliente] where codice_cliente= :codiceCliente",nativeQuery=true)
 	public Cliente findByCodiceCliente(@Param("codiceCliente") String codiceCliente);
+
+	@Query(value="SELECT *  FROM [dbo].[cliente] c where societa= :codiceSocieta",nativeQuery=true)
+	public List<Cliente> getActiveClientiBySocieta(@Param("codiceSocieta") String codiceSocieta);
 	
 
 }

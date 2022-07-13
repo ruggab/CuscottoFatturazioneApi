@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.env.Environment;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -24,7 +25,7 @@ import com.gamenet.cruscottofatturazione.entities.TipologiaCorrispettivi;
 import com.gamenet.cruscottofatturazione.models.ListFilter;
 import com.gamenet.cruscottofatturazione.models.ListSort;
 import com.gamenet.cruscottofatturazione.models.PagedListFilterAndSort;
-import com.gamenet.cruscottofatturazione.models.response.ArticoliListOverview;
+import com.gamenet.cruscottofatturazione.models.response.SaveResponse;
 import com.gamenet.cruscottofatturazione.models.response.TipologiaCorrispettiviListOverview;
 import com.gamenet.cruscottofatturazione.repositories.TipologiaCorrispettiviRepository;
 import com.gamenet.cruscottofatturazione.services.interfaces.ApplicationLogsService;
@@ -64,10 +65,12 @@ public class TipologiaCorrispettiviServiceImpl implements TipologiaCorrispettivi
 	}
 	
 	@Override
-	public Boolean saveTipologiaCorrispettivi(TipologiaCorrispettivi tipologiaCorrispettivi, String utenteUpdate) {
+	public SaveResponse saveTipologiaCorrispettivi(TipologiaCorrispettivi tipologiaCorrispettivi, String utenteUpdate) {
     	this.log.info("TipologiaCorrispettiviService: saveTipologiaCorrispettivi -> START");
     	appService.insertLog("info", "TipologiaCorrispettiviService", "saveTipologiaCorrispettivi", "START", "", "saveTipologiaCorrispettivi");
 
+    	SaveResponse response = new SaveResponse();
+    	
     	try
 		{	
     		if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
@@ -89,7 +92,7 @@ public class TipologiaCorrispettiviServiceImpl implements TipologiaCorrispettivi
     		}
     		
     		tipologiaCorrispettiviRepository.save(tipologiaCorrispettivi);
-    		
+    		response.setEsito(true);
 		}
 		catch (Exception e)
 		{
@@ -98,12 +101,16 @@ public class TipologiaCorrispettiviServiceImpl implements TipologiaCorrispettivi
 			appService.insertLog("error", "TipologiaCorrispettiviService", "saveTipologiaCorrispettivi", "Exception", stackTrace, "saveTipologiaCorrispettivi");
 			
 	        e.printStackTrace();
-	        return false;
+	        if(e instanceof DataIntegrityViolationException ) {
+				response.setErrore("codice Corrispettivo gia presente!");
+			}
+			else
+				response.setErrore(e.getMessage());
 		}
     	
     	this.log.info("TipologiaCorrispettiviService: saveTipologiaCorrispettivi -> SUCCESSFULLY END");
     	appService.insertLog("info", "TipologiaCorrispettiviService", "saveTipologiaCorrispettivi", "SUCCESSFULLY END", "", "saveTipologiaCorrispettivi");
-    	return true;
+    	return response;
 	}
 	
 	

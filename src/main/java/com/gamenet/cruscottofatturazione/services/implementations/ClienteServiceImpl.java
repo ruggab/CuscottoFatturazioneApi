@@ -24,6 +24,7 @@ import com.gamenet.cruscottofatturazione.entities.Cliente;
 import com.gamenet.cruscottofatturazione.models.ListFilter;
 import com.gamenet.cruscottofatturazione.models.ListSort;
 import com.gamenet.cruscottofatturazione.models.PagedListFilterAndSort;
+import com.gamenet.cruscottofatturazione.models.response.ClienteAutoComplete;
 import com.gamenet.cruscottofatturazione.models.response.ClientiListOverview;
 import com.gamenet.cruscottofatturazione.repositories.ClienteRepository;
 import com.gamenet.cruscottofatturazione.services.interfaces.ApplicationLogsService;
@@ -51,6 +52,17 @@ public class ClienteServiceImpl implements ClienteService
 	public List<Cliente> getClienti(String codiceSocieta) {
 		return clienteRepository.getClientiBySocieta(codiceSocieta);
 	}
+	
+	@Override
+	public List<ClienteAutoComplete> getActiveClienti(String codiceSocieta) {
+		List<ClienteAutoComplete> listClienti= new ArrayList<>();
+		List<Cliente> clienti=  clienteRepository.getActiveClientiBySocieta(codiceSocieta);
+		for (Cliente cliente : clienti) {
+			listClienti.add(new ClienteAutoComplete(cliente.getCodiceCliente(), cliente.getRagioneSociale(), cliente.getPartitaIva()));
+		}
+		return listClienti;
+	}
+	
 
 	@Override
 	public Cliente getClienteById(String codiceCliente) {

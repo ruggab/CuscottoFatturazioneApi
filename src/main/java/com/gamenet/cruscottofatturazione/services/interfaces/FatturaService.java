@@ -15,7 +15,7 @@ public interface FatturaService {
 	Boolean saveFattura(Fattura fattura, String utenteUpdate);
 	com.gamenet.cruscottofatturazione.models.Fattura saveFatturaConDettagli(com.gamenet.cruscottofatturazione.models.Fattura fattura, String utenteUpdate);
 	List<com.gamenet.cruscottofatturazione.models.Fattura> getFatture(String codiceSocieta);
-	FattureListOverview getFattureDataTable(JsonNode payload);
+	FattureListOverview getFattureDataTable(JsonNode payload,String codiceSocieta);
 	Boolean rifiutaFattura(Integer idFattura, String utenteUpdate);
 	Boolean inoltraFattura(Integer idFattura, String utenteUpdate);
 	Boolean validaFattura(Integer idFattura, String utenteUpdate);

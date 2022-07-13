@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamenet.cruscottofatturazione.entities.Cliente;
+import com.gamenet.cruscottofatturazione.models.response.ClienteAutoComplete;
 import com.gamenet.cruscottofatturazione.models.response.ClientiListOverview;
 
 public interface ClienteService {
@@ -14,6 +15,7 @@ public interface ClienteService {
 	Boolean deleteCliente(String codiceCliente, String utenteUpdate);
 	List<Cliente> getClienti(String codiceSocieta);
 	ClientiListOverview getClientiDataTable(JsonNode payload);
+	List<ClienteAutoComplete> getActiveClienti(String codiceSocieta);
 
 	
 

@@ -93,7 +93,7 @@ public class FatturaController {
 	@PostMapping("/getFattureDataTable")
 	public FattureListOverview getFattureDataTable(@RequestBody JsonNode payload,@PathParam(value ="codiceSocieta" ) String codiceSocieta)
 	{
-		return fatturaService.getFattureDataTable(payload);
+		return fatturaService.getFattureDataTable(payload,codiceSocieta);
 	}
 	
 //	@PostMapping("/deleteFattura")

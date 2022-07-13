@@ -330,7 +330,7 @@ public class FatturaServiceImpl implements FatturaService
 
 	/***** DATA TABLE LIST *****/
 	@Override
-	public FattureListOverview getFattureDataTable(JsonNode payload)
+	public FattureListOverview getFattureDataTable(JsonNode payload,String codiceSocieta)
 	{
 		this.log.info("FattureService: getFattureDataTable -> START");
 		appService.insertLog("info", "FattureService", "getFattureDataTable", "START", "", "getFattureDataTable");
@@ -358,6 +358,14 @@ public class FatturaServiceImpl implements FatturaService
 
 			if (model.getFilters() == null)
 				model.setFilters(new ArrayList<>());
+			
+			
+			//filtro societa
+			ListFilter filtroSocieta= new ListFilter();
+			filtroSocieta.setName("societa");
+			filtroSocieta.setOperator("eq");
+			filtroSocieta.setValue(codiceSocieta);
+			model.getFilters().add(filtroSocieta);
 			
 
 			if(isAprrovatore) {
