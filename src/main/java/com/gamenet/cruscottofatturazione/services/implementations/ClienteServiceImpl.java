@@ -26,6 +26,7 @@ import com.gamenet.cruscottofatturazione.models.ListSort;
 import com.gamenet.cruscottofatturazione.models.PagedListFilterAndSort;
 import com.gamenet.cruscottofatturazione.models.response.ClienteAutoComplete;
 import com.gamenet.cruscottofatturazione.models.response.ClientiListOverview;
+import com.gamenet.cruscottofatturazione.models.response.SaveResponse;
 import com.gamenet.cruscottofatturazione.repositories.ClienteRepository;
 import com.gamenet.cruscottofatturazione.services.interfaces.ApplicationLogsService;
 import com.gamenet.cruscottofatturazione.services.interfaces.ClienteService;
@@ -70,10 +71,57 @@ public class ClienteServiceImpl implements ClienteService
 	}
 
 	@Override
-	public Boolean saveCliente(Cliente cliente, String utenteUpdate) {
+	public SaveResponse updateCliente(Cliente cliente, String utenteUpdate) {
+    	this.log.info("ClienteService: updateCliente -> START");
+    	appService.insertLog("info", "ClienteService", "updateCliente", "START", "", "updateCliente");
+    	SaveResponse response = new SaveResponse();
+    	try
+		{	
+    		if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
+			{
+		    	String requestPrint = jsonMapper.writeValueAsString(cliente);
+		    	this.log.debug("ProspectService: saveCliente -> Object: " + requestPrint);
+		    	appService.insertLog("debug", "ProspectService", "updateCliente", "Object: " + requestPrint, "", "updateCliente");
+			}
+    		
+    		Cliente clienteDb= clienteRepository.findById(cliente.getCodiceCliente()).orElse(null);
+    		if(clienteDb==null) {
+    			response.setEsito(false);
+    			response.setErrore("cliente non trovato!");
+    			
+    		}
+    		else
+    		{
+    			cliente.setLast_mod_user(utenteUpdate);
+    			cliente.setLast_mod_date(new Date());
+    			response.setEsito(true);
+    		}
+    		if(response.getEsito()==true)
+    			clienteRepository.save(cliente);
+    		
+		}
+		catch (Exception e)
+		{
+    		String stackTrace = ExceptionUtils.getStackTrace(e);
+    		this.log.error("ClienteService: updateCliente -> " + stackTrace);
+			appService.insertLog("error", "ClienteService", "updateCliente", "Exception", stackTrace, "updateCliente");
+			
+	        e.printStackTrace();
+	        response.setEsito(false);
+	        response.setErrore(e.getMessage());
+		}
+    	
+    	this.log.info("ClienteService: saveCliente -> SUCCESSFULLY END");
+    	appService.insertLog("info", "ClienteService", "saveCliente", "SUCCESSFULLY END", "", "saveCliente");
+    	return response;
+	}
+	
+	
+	@Override
+	public SaveResponse saveCliente(Cliente cliente, String utenteUpdate) {
     	this.log.info("ClienteService: saveCliente -> START");
     	appService.insertLog("info", "ClienteService", "saveCliente", "START", "", "saveCliente");
-
+    	SaveResponse response = new SaveResponse();
     	try
 		{	
     		if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
@@ -88,15 +136,18 @@ public class ClienteServiceImpl implements ClienteService
     		if(clienteDb==null) {
     			cliente.setCreate_date(new Date());
     			cliente.setCreate_user(utenteUpdate);
+    			response.setEsito(true);
     		}
     		else
     		{
-    			cliente.setLast_mod_user(utenteUpdate);
-    			cliente.setLast_mod_date(new Date());
-    			
+    			response.setEsito(false);
+    			response.setErrore("Codice cliente gia' presente!");
+    			this.log.error("ClienteService: saveCliente -> " + "codice cliente gia' presente!");
     		}
     		
-    		clienteRepository.save(cliente);
+    		if(response.getEsito()==true)
+    			clienteRepository.save(cliente);
+    		
     		
 		}
 		catch (Exception e)
@@ -106,12 +157,13 @@ public class ClienteServiceImpl implements ClienteService
 			appService.insertLog("error", "ClienteService", "saveCliente", "Exception", stackTrace, "saveCliente");
 			
 	        e.printStackTrace();
-	        return false;
+	        response.setEsito(false);
+	        response.setErrore(e.getMessage());
 		}
     	
     	this.log.info("ClienteService: saveCliente -> SUCCESSFULLY END");
     	appService.insertLog("info", "ClienteService", "saveCliente", "SUCCESSFULLY END", "", "saveCliente");
-    	return true;
+    	return response;
 	}
 
 	@Override

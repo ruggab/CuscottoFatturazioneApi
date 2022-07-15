@@ -243,7 +243,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"cliente\" :{\r\n\t\t\"codiceCliente\":\"444444\",\r\n\t\t\"societa\":\"soc2\",\r\n\t\t\"ragioneSociale\":null,\r\n\t\t\"codiceFiscale\":null,\r\n\t\t\"partitaIva\":null,\r\n\t\t\"nazionalita\":null,\r\n\t\t\"sedeLegale\":null,\r\n\t\t\"appartieneGruppoIva\":null,\r\n\t\t\"codiceDestinatarioFatturazione\":null,\r\n\t\t\"modalitaPagamento\":null,\r\n\t\t\"condizioniPagamento\":null\r\n\t}\r\n}\r\n\r\n",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"cliente\" :{\r\n\t\t\"codiceCliente\":\"12345\",\r\n\t\t\"societa\":\"soc2\",\r\n\t\t\"ragioneSociale\":null,\r\n\t\t\"codiceFiscale\":null,\r\n\t\t\"partitaIva\":null,\r\n\t\t\"nazionalita\":null,\r\n\t\t\"sedeLegale\":null,\r\n\t\t\"appartieneGruppoIva\":null,\r\n\t\t\"codiceDestinatarioFatturazione\":null,\r\n\t\t\"modalitaPagamento\":null,\r\n\t\t\"condizioniPagamento\":null\r\n\t}\r\n}\r\n\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -259,6 +259,44 @@
 							"path": [
 								"cliente",
 								"saveCliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateCliente",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"cliente\" :{\r\n\t\t\"codiceCliente\":\"12345\",\r\n\t\t\"societa\":\"soc2\",\r\n\t\t\"ragioneSociale\":null,\r\n\t\t\"codiceFiscale\":null,\r\n\t\t\"partitaIva\":null,\r\n\t\t\"nazionalita\":null,\r\n\t\t\"sedeLegale\":null,\r\n\t\t\"appartieneGruppoIva\":null,\r\n\t\t\"codiceDestinatarioFatturazione\":null,\r\n\t\t\"modalitaPagamento\":null,\r\n\t\t\"condizioniPagamento\":null\r\n\t}\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/cliente/updateCliente",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"cliente",
+								"updateCliente"
 							]
 						}
 					},
@@ -1554,7 +1592,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTc3NjAwNjIsImlhdCI6MTY1NzczMDA2MiwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.1OKeRtDAjTViDHGR0FJ05fAvbd7bokg8NtENs-pyEmc"
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTc5NDA4MTQsImlhdCI6MTY1NzkxMDgxNCwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.TqnOTQ4Po8XuWQKg_33NEv4-5AxsALCJsSXTAnAJ538"
 		}
 	]
 }

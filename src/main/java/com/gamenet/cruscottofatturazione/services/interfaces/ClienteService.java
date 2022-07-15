@@ -6,12 +6,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.gamenet.cruscottofatturazione.entities.Cliente;
 import com.gamenet.cruscottofatturazione.models.response.ClienteAutoComplete;
 import com.gamenet.cruscottofatturazione.models.response.ClientiListOverview;
+import com.gamenet.cruscottofatturazione.models.response.SaveResponse;
 
 public interface ClienteService {
 
 	List<Cliente> getClienti();
 	Cliente getClienteById(String codiceCliente);
-	Boolean saveCliente(Cliente cliente, String utenteUpdate);
+	SaveResponse saveCliente(Cliente cliente, String utenteUpdate);
+	SaveResponse updateCliente(Cliente cliente, String utenteUpdate);
 	Boolean deleteCliente(String codiceCliente, String utenteUpdate);
 	List<Cliente> getClienti(String codiceSocieta);
 	ClientiListOverview getClientiDataTable(JsonNode payload);
