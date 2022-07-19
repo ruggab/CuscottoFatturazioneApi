@@ -18,6 +18,7 @@ import com.gamenet.cruscottofatturazione.entities.StatoFatturaLog;
 import com.gamenet.cruscottofatturazione.models.request.FatturaActionRequest;
 import com.gamenet.cruscottofatturazione.models.request.FatturaSaveRequest;
 import com.gamenet.cruscottofatturazione.models.response.FattureListOverview;
+import com.gamenet.cruscottofatturazione.models.response.SaveResponseFattura;
 import com.gamenet.cruscottofatturazione.services.interfaces.FatturaService;
 
 import lombok.RequiredArgsConstructor;
@@ -59,7 +60,7 @@ public class FatturaController {
 	}
 	
 	@PostMapping("/saveFattura")
-	public com.gamenet.cruscottofatturazione.models.Fattura saveFattura(@RequestBody FatturaSaveRequest fatturaReq) 
+	public SaveResponseFattura saveFattura(@RequestBody FatturaSaveRequest fatturaReq) 
 	{
 		return fatturaService.saveFatturaConDettagli(fatturaReq.getFattura(), fatturaReq.getUtenteUpdate());
 	}

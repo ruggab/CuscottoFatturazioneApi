@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -38,6 +39,8 @@ import com.gamenet.cruscottofatturazione.models.ListFilter;
 import com.gamenet.cruscottofatturazione.models.ListSort;
 import com.gamenet.cruscottofatturazione.models.PagedListFilterAndSort;
 import com.gamenet.cruscottofatturazione.models.response.FattureListOverview;
+import com.gamenet.cruscottofatturazione.models.response.SaveResponse;
+import com.gamenet.cruscottofatturazione.models.response.SaveResponseFattura;
 import com.gamenet.cruscottofatturazione.repositories.ArticoloRepository;
 import com.gamenet.cruscottofatturazione.repositories.ClienteRepository;
 import com.gamenet.cruscottofatturazione.repositories.FatturaRepository;
@@ -177,10 +180,12 @@ public class FatturaServiceImpl implements FatturaService
 	}
 
 	@Override
-	public com.gamenet.cruscottofatturazione.models.Fattura saveFatturaConDettagli(com.gamenet.cruscottofatturazione.models.Fattura fattura, String utenteUpdate) {
+	public SaveResponseFattura saveFatturaConDettagli(com.gamenet.cruscottofatturazione.models.Fattura fattura, String utenteUpdate) {
 		this.log.info("FatturaService: saveFatturaConDettagli -> START");
 		appService.insertLog("info", "FatturaService", "saveFatturaConDettagli", "START", "", "saveFatturaConDettagli");
 
+		SaveResponseFattura saveResponse = new SaveResponseFattura();
+		
 		//inizializzo i models di ritorno
 		com.gamenet.cruscottofatturazione.models.Fattura fatturaReturn= new com.gamenet.cruscottofatturazione.models.Fattura();
 		List<com.gamenet.cruscottofatturazione.models.DettaglioFattura> dettagliFatturaReturn = new ArrayList<>();
@@ -188,8 +193,19 @@ public class FatturaServiceImpl implements FatturaService
 		com.gamenet.cruscottofatturazione.entities.Cliente clienteSaved=clienteRepository.findByCodiceCliente(fattura.getCliente().getCodiceCliente());
 		//inizializzo un oggetto Fattura entity
 		Fattura fatturaSaved=new Fattura();
+		
+		
 		try
 		{	
+			//check dettagli
+			String erroreDettagliFattura=checkArticoliCorrispettivi(fattura.getListaDettaglioFattura());
+			if(!erroreDettagliFattura.equals("")) {
+				saveResponse.setErrore(erroreDettagliFattura);
+				saveResponse.setEsito(false);
+				saveResponse.setFattura(null);
+				return saveResponse;
+			}
+			
 			boolean isNew=false;
 			//se sono in update 
 			if(fattura.getId()!=null) {
@@ -232,6 +248,8 @@ public class FatturaServiceImpl implements FatturaService
 			//ricalcolo progressivi e importo 
 			int progressivo=1;
 			Double importoFattura=0.0;
+			
+		
 			//leggo i dettagli dal model
 			for(com.gamenet.cruscottofatturazione.models.DettaglioFattura dettaglioFattura:fattura.getListaDettaglioFattura()) {
 
@@ -290,12 +308,73 @@ public class FatturaServiceImpl implements FatturaService
 			appService.insertLog("error", "FatturaService", "saveFatturaConDettagli", "Exception", stackTrace, "saveFatturaConDettagli");
 
 			e.printStackTrace();
-			return null;
+			
+			saveResponse.setErrore(e.getMessage());
+			saveResponse.setEsito(false);
+			saveResponse.setFattura(null);
+			return saveResponse;
 		}
 
 		this.log.info("FatturaService: saveFatturaConDettagli -> SUCCESSFULLY END");
 		appService.insertLog("info", "FatturaService", "saveFatturaConDettagli", "SUCCESSFULLY END", "", "saveFatturaConDettagli");
-		return fatturaReturn;
+		saveResponse.setErrore(null);
+		saveResponse.setEsito(true);
+		saveResponse.setFattura(fatturaReturn);
+		
+		
+		return saveResponse;
+	}
+
+	private String checkArticoliCorrispettivi(List<com.gamenet.cruscottofatturazione.models.DettaglioFattura> listaDettaglioFattura) {
+		int maxSizeCorrispettivi=2;
+		String errore="";
+		LinkedHashMap<String, List<String>> articoloCorrispettivoMap = new  LinkedHashMap<String, List<String>>();
+		LinkedHashMap<String, String> articoloCorrispettivoDuplicateMap = new  LinkedHashMap<String, String>();
+
+		
+		
+		//check doppia coppia articolo-corrispettivo
+		for (com.gamenet.cruscottofatturazione.models.DettaglioFattura dettaglioFattura : listaDettaglioFattura) {
+			if(articoloCorrispettivoMap.containsKey(dettaglioFattura.getCodiceArticolo()) && articoloCorrispettivoMap.get(dettaglioFattura.getCodiceArticolo()).contains(dettaglioFattura.getCodiceCorrispettivo())) {
+				articoloCorrispettivoDuplicateMap.put(dettaglioFattura.getCodiceArticolo(), dettaglioFattura.getCodiceCorrispettivo());
+			}
+			else {
+				List<String> corrispettivi = new ArrayList<>();
+				if(articoloCorrispettivoMap.containsKey(dettaglioFattura.getCodiceArticolo()))
+					corrispettivi=articoloCorrispettivoMap.get(dettaglioFattura.getCodiceArticolo());
+
+				corrispettivi.add(dettaglioFattura.getCodiceCorrispettivo());
+				articoloCorrispettivoMap.put(dettaglioFattura.getCodiceArticolo(),corrispettivi);
+			}
+
+		}
+		
+		
+		if(!articoloCorrispettivoDuplicateMap.isEmpty()) {
+			errore+="Attenzione, sono stati inserite piu di una corrispondenza per le seguenti coppie di codiceArticolo - codiceCorrispettivo:<br>";
+			for( String articolo : articoloCorrispettivoDuplicateMap.keySet()) {
+				errore+=articolo+" - "+articoloCorrispettivoDuplicateMap.get(articolo)+"<br>";
+			}
+			
+		}
+		
+		//check piu corrispettivi per articolo
+		List<String> articoliOverCorrispettivi = new ArrayList<>();
+		if(!articoloCorrispettivoMap.isEmpty()) {
+			for( String articolo : articoloCorrispettivoMap.keySet()) {
+				if(articoloCorrispettivoMap.get(articolo).size()>maxSizeCorrispettivi)
+					articoliOverCorrispettivi.add(articolo);
+
+			}
+		}
+		
+		if(articoliOverCorrispettivi.size()>0) {
+			errore+="<br> Attenzione Per i seguenti codici articolo sono stati inseriti piu' di "+maxSizeCorrispettivi +" codici corrispettivo previsti :<br>";
+			errore+= String.join(", ", articoliOverCorrispettivi);
+		}
+
+
+		return errore;
 	}
 
 	@Override
