@@ -351,10 +351,15 @@ public class FatturaServiceImpl implements FatturaService
 		
 		
 		if(!articoloCorrispettivoDuplicateMap.isEmpty()) {
-			errore+="Attenzione, sono stati inserite piu di una corrispondenza per le seguenti coppie di codiceArticolo - codiceCorrispettivo:<br>";
+			errore+="Attenzione, per i seguenti articoli è stato inserito lo stesso corrispettivo: ";
+//			errore+="Attenzione, sono stati inserite piu di una corrispondenza per le seguenti coppie di codiceArticolo - codiceCorrispettivo:<br>";
+//			for( String articolo : articoloCorrispettivoDuplicateMap.keySet()) {
+//				errore+=articolo+" - "+articoloCorrispettivoDuplicateMap.get(articolo)+"<br>";
+//			}
 			for( String articolo : articoloCorrispettivoDuplicateMap.keySet()) {
-				errore+=articolo+" - "+articoloCorrispettivoDuplicateMap.get(articolo)+"<br>";
+				errore+=articolo+", ";
 			}
+			errore = errore.substring(0, errore.length() - 2);
 			
 		}
 		
