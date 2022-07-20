@@ -326,7 +326,7 @@ public class FatturaServiceImpl implements FatturaService
 	}
 
 	private String checkArticoliCorrispettivi(List<com.gamenet.cruscottofatturazione.models.DettaglioFattura> listaDettaglioFattura) {
-		int maxSizeCorrispettivi=2;
+		//int maxSizeCorrispettivi=2;
 		String errore="";
 		LinkedHashMap<String, List<String>> articoloCorrispettivoMap = new  LinkedHashMap<String, List<String>>();
 		LinkedHashMap<String, String> articoloCorrispettivoDuplicateMap = new  LinkedHashMap<String, String>();
@@ -359,19 +359,19 @@ public class FatturaServiceImpl implements FatturaService
 		}
 		
 		//check piu corrispettivi per articolo
-		List<String> articoliOverCorrispettivi = new ArrayList<>();
-		if(!articoloCorrispettivoMap.isEmpty()) {
-			for( String articolo : articoloCorrispettivoMap.keySet()) {
-				if(articoloCorrispettivoMap.get(articolo).size()>maxSizeCorrispettivi)
-					articoliOverCorrispettivi.add(articolo);
-
-			}
-		}
-		
-		if(articoliOverCorrispettivi.size()>0) {
-			errore+="<br> Attenzione Per i seguenti codici articolo sono stati inseriti piu' di "+maxSizeCorrispettivi +" codici corrispettivo previsti :<br>";
-			errore+= String.join(", ", articoliOverCorrispettivi);
-		}
+//		List<String> articoliOverCorrispettivi = new ArrayList<>();
+//		if(!articoloCorrispettivoMap.isEmpty()) {
+//			for( String articolo : articoloCorrispettivoMap.keySet()) {
+//				if(articoloCorrispettivoMap.get(articolo).size()>maxSizeCorrispettivi)
+//					articoliOverCorrispettivi.add(articolo);
+//
+//			}
+//		}
+//		
+//		if(articoliOverCorrispettivi.size()>0) {
+//			errore+="<br> Attenzione Per i seguenti codici articolo sono stati inseriti piu' di "+maxSizeCorrispettivi +" codici corrispettivo previsti :<br>";
+//			errore+= String.join(", ", articoliOverCorrispettivi);
+//		}
 
 
 		return errore;
