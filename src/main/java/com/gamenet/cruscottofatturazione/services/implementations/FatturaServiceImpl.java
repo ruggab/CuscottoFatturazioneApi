@@ -252,7 +252,9 @@ public class FatturaServiceImpl implements FatturaService
 		
 			//leggo i dettagli dal model
 			for(com.gamenet.cruscottofatturazione.models.DettaglioFattura dettaglioFattura:fattura.getListaDettaglioFattura()) {
-
+				if (dettaglioFattura.getImporto() == null) {
+					dettaglioFattura.setImporto(0D);
+				}
 				//creo un entity per ogni dettaglio
 				DettaglioFattura detFattura= new DettaglioFattura();
 				//aggiorno i dati dal model
@@ -267,6 +269,7 @@ public class FatturaServiceImpl implements FatturaService
 				detFattura.setCreate_date(new Date());
 				detFattura.setCreate_user(utenteUpdate);
 				//incremento l'importo della fattura
+				
 				importoFattura+=dettaglioFattura.getImporto();
 				//salvo l'entity del dettaglio 
 				detFattura=dettaglioFatturaService.saveDettaglioFattura(detFattura, utenteUpdate);
@@ -351,10 +354,15 @@ public class FatturaServiceImpl implements FatturaService
 		
 		
 		if(!articoloCorrispettivoDuplicateMap.isEmpty()) {
-			errore+="Attenzione, sono stati inserite piu di una corrispondenza per le seguenti coppie di codiceArticolo - codiceCorrispettivo:<br>";
+			errore+="Attenzione, per i seguenti articoli è stato inserito lo stesso corrispettivo: ";
+//			errore+="Attenzione, sono stati inserite piu di una corrispondenza per le seguenti coppie di codiceArticolo - codiceCorrispettivo:<br>";
+//			for( String articolo : articoloCorrispettivoDuplicateMap.keySet()) {
+//				errore+=articolo+" - "+articoloCorrispettivoDuplicateMap.get(articolo)+"<br>";
+//			}
 			for( String articolo : articoloCorrispettivoDuplicateMap.keySet()) {
-				errore+=articolo+" - "+articoloCorrispettivoDuplicateMap.get(articolo)+"<br>";
+				errore+=articolo+", ";
 			}
+			errore = errore.substring(0, errore.length() - 2);
 			
 		}
 		
