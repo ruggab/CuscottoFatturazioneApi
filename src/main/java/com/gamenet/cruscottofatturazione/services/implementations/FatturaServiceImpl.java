@@ -252,7 +252,9 @@ public class FatturaServiceImpl implements FatturaService
 		
 			//leggo i dettagli dal model
 			for(com.gamenet.cruscottofatturazione.models.DettaglioFattura dettaglioFattura:fattura.getListaDettaglioFattura()) {
-
+				if (dettaglioFattura.getImporto() == null) {
+					dettaglioFattura.setImporto(0D);
+				}
 				//creo un entity per ogni dettaglio
 				DettaglioFattura detFattura= new DettaglioFattura();
 				//aggiorno i dati dal model
@@ -267,6 +269,7 @@ public class FatturaServiceImpl implements FatturaService
 				detFattura.setCreate_date(new Date());
 				detFattura.setCreate_user(utenteUpdate);
 				//incremento l'importo della fattura
+				
 				importoFattura+=dettaglioFattura.getImporto();
 				//salvo l'entity del dettaglio 
 				detFattura=dettaglioFatturaService.saveDettaglioFattura(detFattura, utenteUpdate);
