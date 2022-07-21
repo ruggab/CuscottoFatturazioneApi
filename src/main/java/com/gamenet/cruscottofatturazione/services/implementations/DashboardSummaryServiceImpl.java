@@ -221,26 +221,33 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 		return result;
 	}
 
-
-	//	public static void main(String[] args) {
-	//		DashboardSummaryServiceImpl dashboardSummaryServiceImpl= new DashboardSummaryServiceImpl(null, null, null, null, null, null);
-	//		
-	//		int a=0;
-	//		int b=10;
-	//		System.out.println(dashboardSummaryServiceImpl.percent(a, b));
-	//	}
-	//	
+//
+//		public static void main(String[] args) {
+//			DashboardSummaryServiceImpl dashboardSummaryServiceImpl= new DashboardSummaryServiceImpl(null, null, null, null, null, null);
+//			
+//			int a=1;
+//			int b=10000;
+//			System.out.println(dashboardSummaryServiceImpl.percent(a, b));
+//		}
+		
 	
 	
 	private double percent(double a, double b)
 	{
 		double result = 0;
 
-		if(b==0) {
-			result=(-100.0);
+		if(a==b) {
+			result=0;
+			return result;
 		}
 		if(a==0) {
-			result=100.0;
+			result=b;
+			return result;
+		}
+		
+		if(b==0) {
+			result=-a;
+			return result;
 		}
 		
 		if(a!=0 || b!=0){
@@ -348,17 +355,17 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 		return result;
 	}
 	
-	public static void main(String[] args) {
-		Calendar cal = Calendar.getInstance();
-        for(int i = 0 ; i < 11;i++){
-            cal.set(Calendar.YEAR, 2022);
-            cal.set(Calendar.DAY_OF_MONTH, 1);
-            cal.set(Calendar.MONTH, i);
-            int maxWeeknumber = cal.getActualMaximum(Calendar.WEEK_OF_MONTH);
-            // Month value starts from 0 to 11 for Jan to Dec
-           System.out.println("For Month : "+ i + " Num Week :: " + maxWeeknumber); 
-        }
-	}
+//	public static void main(String[] args) {
+//		Calendar cal = Calendar.getInstance();
+//        for(int i = 0 ; i < 11;i++){
+//            cal.set(Calendar.YEAR, 2022);
+//            cal.set(Calendar.DAY_OF_MONTH, 1);
+//            cal.set(Calendar.MONTH, i);
+//            int maxWeeknumber = cal.getActualMaximum(Calendar.WEEK_OF_MONTH);
+//            // Month value starts from 0 to 11 for Jan to Dec
+//           System.out.println("For Month : "+ i + " Num Week :: " + maxWeeknumber); 
+//        }
+//	}
 
 
 	@Override
