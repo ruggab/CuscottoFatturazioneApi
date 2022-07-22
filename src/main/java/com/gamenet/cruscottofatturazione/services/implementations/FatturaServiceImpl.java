@@ -2,11 +2,14 @@ package com.gamenet.cruscottofatturazione.services.implementations;
 
 import java.beans.Beans;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
@@ -197,13 +200,25 @@ public class FatturaServiceImpl implements FatturaService
 		
 		try
 		{	
-			//check dettagli
+			
+			
+			//check dettagli - importi <=0
+			String erroreImportoDettagliFattura=checkImportiDettaglio(fattura.getListaDettaglioFattura());
+			if(!erroreImportoDettagliFattura.equals("")) {
+				throw new Exception(erroreImportoDettagliFattura);
+			}
+			
+			//check dettagli - articoli corrispettivi
 			String erroreDettagliFattura=checkArticoliCorrispettivi(fattura.getListaDettaglioFattura());
 			if(!erroreDettagliFattura.equals("")) {
-				saveResponse.setErrore(erroreDettagliFattura);
-				saveResponse.setEsito(false);
-				saveResponse.setFattura(null);
-				return saveResponse;
+				throw new Exception(erroreDettagliFattura);
+			}
+			
+			
+			//check articoli non validi
+			String erroreArticoloNonValidoDettagliFattura=checkArticoliNonValidiDettaglio(fattura.getListaDettaglioFattura());
+			if(!erroreArticoloNonValidoDettagliFattura.equals("")) {
+				throw new Exception(erroreArticoloNonValidoDettagliFattura);
 			}
 			
 			boolean isNew=false;
@@ -328,6 +343,34 @@ public class FatturaServiceImpl implements FatturaService
 		return saveResponse;
 	}
 
+	private String checkArticoliNonValidiDettaglio(	List<com.gamenet.cruscottofatturazione.models.DettaglioFattura> listaDettaglioFattura) {
+		String errore="";
+		
+		 List<String> codiciArticoli = listaDettaglioFattura.stream().map(com.gamenet.cruscottofatturazione.models.DettaglioFattura::getCodiceArticolo).collect(Collectors.toList());
+		
+		List<String> articoliNonValidi= articoloRepository.findArticoliNonValidi(codiciArticoli);
+		 
+		 if(!articoliNonValidi.isEmpty()) {
+			 errore="Attenzione sono stati inseriti i seguenti articoli non piu validi: ";
+			 errore+=String.join(", ", articoliNonValidi);
+			 errore+=" -  Si prega di rimuoverli prima di continuare";
+		 }
+		 
+		 return errore;
+	}
+
+	private String checkImportiDettaglio(List<com.gamenet.cruscottofatturazione.models.DettaglioFattura> listaDettaglioFattura) {
+		String errore="";
+		
+		 List<com.gamenet.cruscottofatturazione.models.DettaglioFattura> dettagliImportiNonValidi = listaDettaglioFattura.stream().filter(d->d.getImporto()<=0).collect(Collectors.toList());
+		
+		 if(!dettagliImportiNonValidi.isEmpty()) {
+			 errore="Attenzione sono stati inseriti importi negativi o uguali a 0";
+		 }
+		 
+		 return errore;
+	}
+
 	private String checkArticoliCorrispettivi(List<com.gamenet.cruscottofatturazione.models.DettaglioFattura> listaDettaglioFattura) {
 		//int maxSizeCorrispettivi=2;
 		String errore="";
@@ -447,6 +490,18 @@ public class FatturaServiceImpl implements FatturaService
 			model.getFilters().add(filtroSocieta);
 			
 
+			//ordina per data fattura desc di default:
+			ListSort sortDataFattura = model.getSort().stream().filter(f -> f.getName().equals("dataFattura"))
+					.findAny()
+					.orElse(null);
+			
+			if(sortDataFattura==null) {
+				sortDataFattura= new ListSort();
+				sortDataFattura.setName("dataFattura");
+				sortDataFattura.setType("DESC");
+				model.getSort().add(sortDataFattura);
+			}
+			
 			if(isAprrovatore) {
 				ListFilter soloDaApprovareFilter = model.getFilters().stream().filter(f -> f.getName().equals("statoFattura"))
 						.findAny()
@@ -566,9 +621,10 @@ public class FatturaServiceImpl implements FatturaService
 	}
 
 	@Override
-	public Boolean inoltraFattura(Integer idFattura, String utenteUpdate) {
+	public SaveResponse inoltraFattura(Integer idFattura, String utenteUpdate) {
+		SaveResponse saveResponse = new SaveResponse();
 		try {
-
+			saveResponse.setEsito(true);
 
 			this.log.info("FattureService: inoltraFattura -> START");
 			appService.insertLog("info", "FattureService", "inoltraFattura", "START", "", "inoltraFattura");
@@ -576,50 +632,83 @@ public class FatturaServiceImpl implements FatturaService
 			Fattura fattura=fatturaRepository.findById(idFattura).orElse(null);
 			if(fattura!=null) {
 
+				String erroreArticoliNonValidi=checkArticoliNonValidiDettaglio(getDettagliFatturaModel(fattura));
+				if(!erroreArticoliNonValidi.equals(""))
+					throw new Exception(erroreArticoliNonValidi);
+				
 				fattura.setStatoFattura(StatoFattura.DA_APPROVARE.getKey());
 				fatturaRepository.save(fattura);
 				insertLogStatoFattura(fattura.getId(),utenteUpdate,StatoFattura.DA_APPROVARE.getKey());
-				return true;
+				saveResponse.setEsito(true);
 			}
-			else
-				return false;
+			else {
+				
+				saveResponse.setEsito(false);
+				saveResponse.setErrore("fattura non trovata");
+				
+			}
 		} catch (Exception e) {
 			String stackTrace = ExceptionUtils.getStackTrace(e);
 			this.log.error("FattureService: inoltraFattura -> " + stackTrace);
 			appService.insertLog("error", "FattureService", "inoltraFattura", "Exception", stackTrace, "inoltraFattura");
 
-			return false;
+			saveResponse.setEsito(false);
+			saveResponse.setErrore(e.getMessage());
 		}
+		return saveResponse;
 	}
 
 	@Override
-	public Boolean validaFattura(Integer idFattura, String utenteUpdate) {
+	public SaveResponse validaFattura(Integer idFattura, String utenteUpdate) {
+		SaveResponse saveResponse = new SaveResponse();
 		try {
 
+			saveResponse.setEsito(true);
 
 			this.log.info("FattureService: validaFattura -> START");
 			appService.insertLog("info", "FattureService", "validaFattura", "START", "", "validaFattura");
 
 			Fattura fattura=fatturaRepository.findById(idFattura).orElse(null);
 			if(fattura!=null) {
+
+
 				
+				String erroreArticoliNonValidi=checkArticoliNonValidiDettaglio(getDettagliFatturaModel(fattura));
+				if(!erroreArticoliNonValidi.equals(""))
+					throw new Exception(erroreArticoliNonValidi);
+
 				if(!fattura.getStatoFattura().equals(StatoFattura.DA_APPROVARE.getKey()))
 					throw new Exception("la fattura con id: "+fattura.getId()+ " non puo essere approvata perche non è nello stato "+StatoFattura.DA_APPROVARE.getValue());
 
 				fattura.setStatoFattura(StatoFattura.VALIDATA.getKey());
 				fatturaRepository.save(fattura);
 				insertLogStatoFattura(fattura.getId(),utenteUpdate,StatoFattura.VALIDATA.getKey());
-				return true;
+				saveResponse.setEsito(true);
 			}
-			else
-				return false;
+			else {
+
+				saveResponse.setEsito(false);
+				saveResponse.setErrore("fattura non trovata");
+			}
 		} catch (Exception e) {
 			String stackTrace = ExceptionUtils.getStackTrace(e);
 			this.log.error("FattureService: validaFattura -> " + stackTrace);
 			appService.insertLog("error", "FattureService", "validaFattura", "Exception", stackTrace, "validaFattura");
-
-			return false;
+			saveResponse.setEsito(false);
+			saveResponse.setErrore(e.getMessage());
 		}
+		
+		return saveResponse;
+	}
+
+	private List<com.gamenet.cruscottofatturazione.models.DettaglioFattura>  getDettagliFatturaModel(Fattura fattura) {
+		List<com.gamenet.cruscottofatturazione.models.DettaglioFattura> listaDettaglioFattura= new ArrayList<>();
+		for (DettaglioFattura dettaglioFattura : fattura.getListaDettaglioFattura()) {
+			com.gamenet.cruscottofatturazione.models.DettaglioFattura detFattura= new com.gamenet.cruscottofatturazione.models.DettaglioFattura();
+			BeanUtils.copyProperties(dettaglioFattura, detFattura);
+			listaDettaglioFattura.add(detFattura);
+		}
+		return listaDettaglioFattura;
 	}
 
 	private boolean insertLogStatoFattura(Integer idFattura,String utenteUpdate,String statofattura) {

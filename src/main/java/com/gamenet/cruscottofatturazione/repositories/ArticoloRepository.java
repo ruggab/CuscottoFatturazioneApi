@@ -21,6 +21,9 @@ public interface ArticoloRepository extends CrudRepository<Articolo, Integer>, J
 	
 	@Query(value="SELECT * FROM [dbo].[articolo] a where a.codice_articolo = :codiceArticolo ",nativeQuery=true)
 	public Articolo getArticoloByCodice(@Param("codiceArticolo") String codiceArticolo);
+
+	@Query(value="SELECT a.codice_articolo FROM [dbo].[articolo] a where a.codice_articolo in (:codiciArticoli) and a.data_validita < GETDATE()",nativeQuery=true)
+	public List<String> findArticoliNonValidi(@Param("codiciArticoli") List<String> codiciArticoli);
 	
 
 }

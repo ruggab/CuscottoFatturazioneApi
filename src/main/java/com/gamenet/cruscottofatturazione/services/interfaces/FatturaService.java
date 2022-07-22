@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.gamenet.cruscottofatturazione.entities.Fattura;
 import com.gamenet.cruscottofatturazione.entities.StatoFatturaLog;
 import com.gamenet.cruscottofatturazione.models.response.FattureListOverview;
+import com.gamenet.cruscottofatturazione.models.response.SaveResponse;
 import com.gamenet.cruscottofatturazione.models.response.SaveResponseFattura;
 
 public interface FatturaService {
@@ -18,8 +19,8 @@ public interface FatturaService {
 	List<com.gamenet.cruscottofatturazione.models.Fattura> getFatture(String codiceSocieta);
 	FattureListOverview getFattureDataTable(JsonNode payload,String codiceSocieta);
 	Boolean rifiutaFattura(Integer idFattura, String utenteUpdate);
-	Boolean inoltraFattura(Integer idFattura, String utenteUpdate);
-	Boolean validaFattura(Integer idFattura, String utenteUpdate);
+	SaveResponse inoltraFattura(Integer idFattura, String utenteUpdate);
+	SaveResponse validaFattura(Integer idFattura, String utenteUpdate);
 	List<StatoFatturaLog> getLogStatoFattura(Integer idFattura);
 
 }
