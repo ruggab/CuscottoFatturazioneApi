@@ -241,14 +241,10 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 			return result;
 		}
 		if(a==0) {
-			result=b;
+			result=100.0;
 			return result;
 		}
 		
-		if(b==0) {
-			result=-a;
-			return result;
-		}
 		
 		if(a!=0 || b!=0){
 			result =  (((b - a) * 100) / a);
