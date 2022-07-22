@@ -435,7 +435,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[{\"name\":\"codiceArticolo\",\"operator\":\"lke\",\"value\":\"223\",\"valueList\":null}],\"sort\":[]}",
+							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[{\"name\":\"dataValidita\",\"operator\":\"lt\",\"value\":\"2022-07-08\",\"valueList\":null}],\"sort\":[]}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -549,7 +549,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"idEntity\" :7\r\n}",
+							"raw": "{\r\n\"utenteUpdate\":\"Diego Capone\",\r\n\t\"idEntity\" :3\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -963,7 +963,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[{\"name\":\"statoFattura\",\"operator\":\"in\",\"value\":null,\"valueList\":[\"R\",\"V\"]}],\"sort\":[]}",
+							"raw": "{\"index\":0,\"pagesize\":25,\"filters\":[],\"sort\":[]}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1012,7 +1012,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \r\n    \"fattura\":{\r\n        \r\n        \"societa\": \"soc4\",\r\n        \"dataFattura\": \"2022-06-30T00:00:00.000+00:00\",\r\n        \"tipologiaFattura\": \"FA\",\r\n        \"cliente\": {\r\n            \"codiceCliente\": \"1234567892\",\r\n            \"societa\": \"soc4\",\r\n            \"ragioneSociale\": \"rag soc4\",\r\n            \"codiceFiscale\": \"oiugfr56f4frewy\",\r\n            \"partitaIva\": \"12345678911\",\r\n            \"nazionalita\": \"IT\",\r\n            \"sedeLegale\": \"Napoli\",\r\n            \"appartieneGruppoIva\": \"X\",\r\n            \"codiceDestinatarioFatturazione\": \"587895\",\r\n            \"modalitaPagamento\": \"33\",\r\n            \"condizioniPagamento\": \"33\",\r\n            \"create_user\": \"Diego Capone\",\r\n            \"create_date\": \"2022-06-28T13:50:39.507+00:00\",\r\n            \"last_mod_user\": null,\r\n            \"last_mod_date\": null\r\n        },\r\n        \"importo\": 2302.3,\r\n        \"statoFattura\": \"\",\r\n        \"esitoInvio\": null,\r\n        \"dataInvioFlusso\": null,\r\n        \"listaDettaglioFattura\": [\r\n            {\r\n                \"id\": 39,\r\n                \"idFattura\": 26,\r\n                \"progressivoRiga\": 1,\r\n                \"codiceArticolo\": \"126\",\r\n                \"codiceCorrispettivo\": \"1\",\r\n                \"importo\": 355.65,\r\n                \"note\": \"test\",\r\n                \"idMessaggio\": null,\r\n                \"descrizioneMessaggio\": null,\r\n                \"create_user\": \"Diego Capone\",\r\n                \"create_date\": \"2022-06-30T15:26:22.760+00:00\",\r\n                \"last_mod_user\": \"Diego Capone\",\r\n                \"last_mod_date\": \"2022-06-30T15:26:22.757+00:00\"\r\n            },\r\n            {\r\n                \"id\": 40,\r\n                \"idFattura\": 26,\r\n                \"progressivoRiga\": 2,\r\n                \"codiceArticolo\": \"125\",\r\n                \"codiceCorrispettivo\": \"1\",\r\n                \"importo\": 2000.35,\r\n                \"note\": \"test\",\r\n                \"idMessaggio\": null,\r\n                \"descrizioneMessaggio\": null,\r\n                \"create_user\": \"Diego Capone\",\r\n                \"create_date\": \"2022-06-30T15:26:22.777+00:00\",\r\n                \"last_mod_user\": \"Diego Capone\",\r\n                \"last_mod_date\": \"2022-06-30T15:26:22.767+00:00\"\r\n            },\r\n            {\r\n                \"id\": 41,\r\n                \"idFattura\": 26,\r\n                \"progressivoRiga\": 3,\r\n                \"codiceArticolo\": \"123\",\r\n                \"codiceCorrispettivo\": \"1\",\r\n                \"importo\": 755.65,\r\n                \"note\": \"test\",\r\n                \"idMessaggio\": null,\r\n                \"descrizioneMessaggio\": null,\r\n                \"create_user\": \"Diego Capone\",\r\n                \"create_date\": \"2022-06-30T15:26:22.783+00:00\",\r\n                \"last_mod_user\": \"Diego Capone\",\r\n                \"last_mod_date\": \"2022-06-30T15:26:22.783+00:00\"\r\n            },\r\n            {\r\n                \"id\": 42,\r\n                \"idFattura\": 26,\r\n                \"progressivoRiga\": 4,\r\n                \"codiceArticolo\": \"127\",\r\n                \"codiceCorrispettivo\": \"1\",\r\n                \"importo\": 665.65,\r\n                \"note\": \"test\",\r\n                \"idMessaggio\": null,\r\n                \"descrizioneMessaggio\": null,\r\n                \"create_user\": \"Diego Capone\",\r\n                \"create_date\": \"2022-06-30T15:26:22.793+00:00\",\r\n                \"last_mod_user\": \"Diego Capone\",\r\n                \"last_mod_date\": \"2022-06-30T15:26:22.790+00:00\"\r\n            }\r\n        ],\r\n        \"create_user\": \"Diego Capone\",\r\n        \"create_date\": \"2022-06-28T13:52:15.947+00:00\",\r\n        \"last_mod_user\": \"Diego Capone\",\r\n        \"last_mod_date\": \"2022-06-30T15:26:22.797+00:00\"\r\n    }\r\n\r\n}",
+							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \r\n    \"fattura\":{\r\n\r\n        \"societa\": \"soc4\",\r\n        \"dataFattura\": \"2022-07-09T00:00:00.000+00:00\",\r\n        \"tipologiaFattura\": \"FA\",\r\n        \"cliente\": {\r\n            \"codiceCliente\": \"1234567892\",\r\n            \"societa\": \"soc4\",\r\n            \"ragioneSociale\": \"rag soc4\",\r\n            \"codiceFiscale\": \"oiugfr56f4frewy\",\r\n            \"partitaIva\": \"12345678911\",\r\n            \"nazionalita\": \"IT\",\r\n            \"sedeLegale\": \"Napoli\",\r\n            \"appartieneGruppoIva\": \"X\",\r\n            \"codiceDestinatarioFatturazione\": \"587895\",\r\n            \"modalitaPagamento\": \"33\",\r\n            \"condizioniPagamento\": \"33\",\r\n            \"create_user\": \"Diego Capone\",\r\n            \"create_date\": \"2022-06-28T13:50:39.507+00:00\",\r\n            \"last_mod_user\": null,\r\n            \"last_mod_date\": null\r\n        },\r\n        \"importo\": 2302.3,\r\n        \"statoFattura\": \"\",\r\n        \"esitoInvio\": null,\r\n        \"dataInvioFlusso\": null,\r\n        \"listaDettaglioFattura\": [\r\n            {\r\n                \"id\": 39,\r\n                \"idFattura\": 26,\r\n                \"progressivoRiga\": 1,\r\n                \"codiceArticolo\": \"126\",\r\n                \"codiceCorrispettivo\": \"1\",\r\n                \"importo\": 0,\r\n                \"note\": \"test\",\r\n                \"idMessaggio\": null,\r\n                \"descrizioneMessaggio\": null,\r\n                \"create_user\": \"Diego Capone\",\r\n                \"create_date\": \"2022-06-30T15:26:22.760+00:00\",\r\n                \"last_mod_user\": \"Diego Capone\",\r\n                \"last_mod_date\": \"2022-06-30T15:26:22.757+00:00\"\r\n            },\r\n            {\r\n                \"id\": 40,\r\n                \"idFattura\": 26,\r\n                \"progressivoRiga\": 2,\r\n                \"codiceArticolo\": \"126\",\r\n                \"codiceCorrispettivo\": \"2\",\r\n                \"importo\": 0,\r\n                \"note\": \"test\",\r\n                \"idMessaggio\": null,\r\n                \"descrizioneMessaggio\": null,\r\n                \"create_user\": \"Diego Capone\",\r\n                \"create_date\": \"2022-06-30T15:26:22.777+00:00\",\r\n                \"last_mod_user\": \"Diego Capone\",\r\n                \"last_mod_date\": \"2022-06-30T15:26:22.767+00:00\"\r\n            },\r\n            {\r\n                \"id\": 41,\r\n                \"idFattura\": 26,\r\n                \"progressivoRiga\": 3,\r\n                \"codiceArticolo\": \"126\",\r\n                \"codiceCorrispettivo\": \"3\",\r\n                \"importo\": 755.65,\r\n                \"note\": \"test\",\r\n                \"idMessaggio\": null,\r\n                \"descrizioneMessaggio\": null,\r\n                \"create_user\": \"Diego Capone\",\r\n                \"create_date\": \"2022-06-30T15:26:22.783+00:00\",\r\n                \"last_mod_user\": \"Diego Capone\",\r\n                \"last_mod_date\": \"2022-06-30T15:26:22.783+00:00\"\r\n            },\r\n            {\r\n                \"id\": 42,\r\n                \"idFattura\": 26,\r\n                \"progressivoRiga\": 4,\r\n                \"codiceArticolo\": \"127\",\r\n                \"codiceCorrispettivo\": \"1\",\r\n                \"importo\": 665.65,\r\n                \"note\": \"test\",\r\n                \"idMessaggio\": null,\r\n                \"descrizioneMessaggio\": null,\r\n                \"create_user\": \"Diego Capone\",\r\n                \"create_date\": \"2022-06-30T15:26:22.793+00:00\",\r\n                \"last_mod_user\": \"Diego Capone\",\r\n                \"last_mod_date\": \"2022-06-30T15:26:22.790+00:00\"\r\n            }\r\n        ],\r\n        \"create_user\": \"Diego Capone\",\r\n        \"create_date\": \"2022-06-28T13:52:15.947+00:00\",\r\n        \"last_mod_user\": \"Diego Capone\",\r\n        \"last_mod_date\": \"2022-06-30T15:26:22.797+00:00\"\r\n    }\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1050,7 +1050,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \"idFattura\":36\r\n}",
+							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \"idFattura\":51\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1088,7 +1088,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \"idFattura\":36\r\n}",
+							"raw": "{\r\n \"utenteUpdate\":\"Diego Capone\",\r\n \"idFattura\":51\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1592,7 +1592,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTc5NDA4MTQsImlhdCI6MTY1NzkxMDgxNCwidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.TqnOTQ4Po8XuWQKg_33NEv4-5AxsALCJsSXTAnAJ538"
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NTg1Mzc1MzMsImlhdCI6MTY1ODUwNzUzMywidXNlcm5hbWUiOiJkLmNhcG9uZS5leHRAd2ViZWFyaXQuY29tIn0.23DOGxWVUNWIqYqIh29saszzAzZY5p_7h_VrXeyDfcs"
 		}
 	]
 }
