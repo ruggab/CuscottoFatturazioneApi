@@ -1,6 +1,8 @@
 package com.gamenet.cruscottofatturazione.models.sap.request;
 
-import java.util.List;
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +13,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DatiContabiliRequest {
+public class DatiContabiliRequest  implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
-	List<Item> item;
+	@JsonProperty("IT_CFA_INPUT")
+	IT_CFA_INPUT IT_CFA_INPUT;
 }

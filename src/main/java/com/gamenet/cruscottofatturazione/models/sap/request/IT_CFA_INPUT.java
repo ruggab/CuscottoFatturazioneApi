@@ -1,6 +1,7 @@
-package com.gamenet.cruscottofatturazione.models.sap.response;
+package com.gamenet.cruscottofatturazione.models.sap.request;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -13,13 +14,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DatiContabiliResponse  implements Serializable{
+public class IT_CFA_INPUT implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@JsonProperty("ES_RETURN")
-	ES_RETURN ES_RETURN;
-	@JsonProperty("ET_CFA_OUTPUT")
-	ET_CFA_OUTPUT ET_CFA_OUTPUT;
+	@JsonProperty("item")
+	List<Item> item;
 }

@@ -52,6 +52,7 @@ import com.gamenet.cruscottofatturazione.models.response.FattureListOverview;
 import com.gamenet.cruscottofatturazione.models.response.SaveResponse;
 import com.gamenet.cruscottofatturazione.models.response.SaveResponseFattura;
 import com.gamenet.cruscottofatturazione.models.sap.request.DatiContabiliRequest;
+import com.gamenet.cruscottofatturazione.models.sap.request.IT_CFA_INPUT;
 import com.gamenet.cruscottofatturazione.models.sap.request.Item;
 import com.gamenet.cruscottofatturazione.models.sap.response.DatiContabiliResponse;
 import com.gamenet.cruscottofatturazione.repositories.ArticoloRepository;
@@ -741,7 +742,11 @@ public class FatturaServiceImpl implements FatturaService
 			SimpleDateFormat simpleDateFormatFattura= new SimpleDateFormat("yyyyMMdd");
 			String dataFlusso=simpleDateFormatFattura.format(new Date());
 			DatiContabiliRequest datiContabiliRequest = new DatiContabiliRequest();
-			datiContabiliRequest.setItem(new ArrayList<>());
+			
+			IT_CFA_INPUT IT_CFA_INPUT = new IT_CFA_INPUT();
+			IT_CFA_INPUT.setItem(new ArrayList<>());
+			
+			
 			
 			List<DettaglioFattura> dettaglioFatturaList =new ArrayList<>(fattura.getListaDettaglioFattura());
 			
@@ -755,8 +760,10 @@ public class FatturaServiceImpl implements FatturaService
 				item.setKUNNR(fattura.getCliente().getCodiceCliente());
 				item.setTIPO_CORRISPETTIVO(dettaglioFattura.getCodiceCorrispettivo());
 				item.setTIPO_OPERAZIONE(fattura.getTipologiaFattura());
-				datiContabiliRequest.getItem().add(item);
+				IT_CFA_INPUT.getItem().add(item);
 			}
+			
+			datiContabiliRequest.setIT_CFA_INPUT(IT_CFA_INPUT);
 			
 			ResponseEntity<DatiContabiliResponse> response = restTemplate.postForEntity(urlFatturaServiceSap, datiContabiliRequest, DatiContabiliResponse.class);
 			this.log.info("ResponseCode: "+response .getStatusCode().toString());
