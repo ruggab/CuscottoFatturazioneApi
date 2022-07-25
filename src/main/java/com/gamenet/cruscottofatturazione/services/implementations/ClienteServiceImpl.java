@@ -14,9 +14,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -200,7 +205,13 @@ public class ClienteServiceImpl implements ClienteService
 
 
 		try {
-			ResponseEntity<CustomerResponse> customerResponse=	restTemplate.postForEntity(urlCustomerServiceSap, request, CustomerResponse.class);
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+
+			HttpEntity<CustomerRequest> entityRequest = new HttpEntity<CustomerRequest>(request, headers);
+			
+			ResponseEntity<CustomerResponse> customerResponse=	restTemplate.postForEntity(urlCustomerServiceSap, entityRequest, CustomerResponse.class);
 			this.log.info("ResponseCode: "+customerResponse.getStatusCode().toString());
 			if(customerResponse.getStatusCode().equals(HttpStatus.OK)) {
 
