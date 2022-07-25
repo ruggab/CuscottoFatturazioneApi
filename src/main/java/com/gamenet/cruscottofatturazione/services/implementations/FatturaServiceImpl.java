@@ -1,6 +1,7 @@
 package com.gamenet.cruscottofatturazione.services.implementations;
 
 import java.beans.Beans;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -15,19 +16,25 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gamenet.cruscottofatturazione.Enum.EsitoSap;
 import com.gamenet.cruscottofatturazione.Enum.StatoFattura;
 import com.gamenet.cruscottofatturazione.context.QuerySpecification;
 import com.gamenet.cruscottofatturazione.context.SortUtils;
@@ -44,6 +51,9 @@ import com.gamenet.cruscottofatturazione.models.PagedListFilterAndSort;
 import com.gamenet.cruscottofatturazione.models.response.FattureListOverview;
 import com.gamenet.cruscottofatturazione.models.response.SaveResponse;
 import com.gamenet.cruscottofatturazione.models.response.SaveResponseFattura;
+import com.gamenet.cruscottofatturazione.models.sap.request.DatiContabiliRequest;
+import com.gamenet.cruscottofatturazione.models.sap.request.Item;
+import com.gamenet.cruscottofatturazione.models.sap.response.DatiContabiliResponse;
 import com.gamenet.cruscottofatturazione.repositories.ArticoloRepository;
 import com.gamenet.cruscottofatturazione.repositories.ClienteRepository;
 import com.gamenet.cruscottofatturazione.repositories.FatturaRepository;
@@ -73,6 +83,10 @@ public class FatturaServiceImpl implements FatturaService
 	private final Environment env;
 	private ObjectMapper jsonMapper = new ObjectMapper();
 
+	@Value("${sap.url.fatture.service}")
+    private String urlFatturaServiceSap;
+    private final RestTemplate restTemplate;
+	
 	private final DettaglioFatturaService dettaglioFatturaService;
 
 	@Override
@@ -681,8 +695,25 @@ public class FatturaServiceImpl implements FatturaService
 					throw new Exception("la fattura con id: "+fattura.getId()+ " non puo essere approvata perche non è nello stato "+StatoFattura.DA_APPROVARE.getValue());
 
 				fattura.setStatoFattura(StatoFattura.VALIDATA.getKey());
-				fatturaRepository.save(fattura);
+				fattura=fatturaRepository.save(fattura);
 				insertLogStatoFattura(fattura.getId(),utenteUpdate,StatoFattura.VALIDATA.getKey());
+				
+				//sap
+				
+				if (validaFatturaSap(fattura))
+				{
+					fattura.setStatoFattura(StatoFattura.VALIDATA_DA_SAP.getKey());
+					fattura.setDataInvioFlusso(new Date());
+					fattura=fatturaRepository.save(fattura);
+					insertLogStatoFattura(fattura.getId(),utenteUpdate,StatoFattura.VALIDATA_DA_SAP.getKey());
+				}else {
+					fattura.setStatoFattura(StatoFattura.RIGETTATA_DA_SAP.getKey());
+					fattura.setDataInvioFlusso(new Date());
+					fattura=fatturaRepository.save(fattura);
+					insertLogStatoFattura(fattura.getId(),utenteUpdate,StatoFattura.RIGETTATA_DA_SAP.getKey());
+				}
+					
+				
 				saveResponse.setEsito(true);
 			}
 			else {
@@ -699,6 +730,62 @@ public class FatturaServiceImpl implements FatturaService
 		}
 		
 		return saveResponse;
+	}
+
+	private boolean validaFatturaSap(Fattura fattura) {
+		this.log.info("FatturaService: validaFatturaSap -> START");
+    	appService.insertLog("info", "FatturaService", "validaFatturaSap", "START", "", "validaFatturaSap");
+		Boolean esito=true;
+		try {
+			
+			SimpleDateFormat simpleDateFormatFattura= new SimpleDateFormat("yyyyMMdd");
+			String dataFlusso=simpleDateFormatFattura.format(new Date());
+			DatiContabiliRequest datiContabiliRequest = new DatiContabiliRequest();
+			datiContabiliRequest.setItem(new ArrayList<>());
+			
+			List<DettaglioFattura> dettaglioFatturaList =new ArrayList<>(fattura.getListaDettaglioFattura());
+			
+			for (DettaglioFattura dettaglioFattura : dettaglioFatturaList) {
+				Item item = new Item();
+				item.setDATA_FLUSSO(dataFlusso);
+				item.setARTICOLO(dettaglioFattura.getCodiceArticolo());
+				item.setBUKRS(fattura.getSocieta());
+				item.setID_FATTURA(fattura.getId().toString());
+				item.setIMP_IMPONIBILE(dettaglioFattura.getImporto().toString());
+				item.setKUNNR(fattura.getCliente().getCodiceCliente());
+				item.setTIPO_CORRISPETTIVO(dettaglioFattura.getCodiceCorrispettivo());
+				item.setTIPO_OPERAZIONE(fattura.getTipologiaFattura());
+				datiContabiliRequest.getItem().add(item);
+			}
+			
+			ResponseEntity<DatiContabiliResponse> response = restTemplate.postForEntity(urlFatturaServiceSap, datiContabiliRequest, DatiContabiliResponse.class);
+			this.log.info("ResponseCode: "+response .getStatusCode().toString());
+			if(response.getStatusCode().equals(HttpStatus.OK)) {
+
+				this.log.info("FatturaService: validaFatturaSap -> esito: " + response.getBody().getES_RETURN().getESITO() +" - idMessaggio: " + response.getBody().getES_RETURN().getIDMESSAGGIO()+ " - message: "+response.getBody().getES_RETURN().getDESCRIZIONE());
+				
+				
+				if (!response.getBody().getES_RETURN().getESITO().equals(EsitoSap.SUCCESSO.getValue())){
+					esito=false;
+				}
+				
+			}
+			else {
+				throw new Exception("errore durante l'invocazione dei servizi SAP: "+response.getStatusCode().toString());
+			}
+		
+		
+		} catch (Throwable e) {
+			String stackTrace = ExceptionUtils.getStackTrace(e);
+    		this.log.error("FatturaService: validaFatturaSap -> " + stackTrace);
+			appService.insertLog("error", "FatturaService", "validaFatturaSap", "Exception", stackTrace, "validaFatturaSap");
+			esito= false;
+		}
+		
+		this.log.info("FatturaService: validaFatturaSap -> SUCCESSFULLY END");
+    	appService.insertLog("info", "FatturaService", "validaFatturaSap", "SUCCESSFULLY END", "", "validaFatturaSap");
+		
+		return esito;
 	}
 
 	private List<com.gamenet.cruscottofatturazione.models.DettaglioFattura>  getDettagliFatturaModel(Fattura fattura) {

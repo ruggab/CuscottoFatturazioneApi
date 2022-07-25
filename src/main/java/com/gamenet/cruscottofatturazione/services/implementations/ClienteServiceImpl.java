@@ -8,16 +8,21 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gamenet.cruscottofatturazione.Enum.EsitoSap;
 import com.gamenet.cruscottofatturazione.context.QuerySpecification;
 import com.gamenet.cruscottofatturazione.context.SortUtils;
 import com.gamenet.cruscottofatturazione.entities.Cliente;
@@ -27,6 +32,10 @@ import com.gamenet.cruscottofatturazione.models.PagedListFilterAndSort;
 import com.gamenet.cruscottofatturazione.models.response.ClienteAutoComplete;
 import com.gamenet.cruscottofatturazione.models.response.ClientiListOverview;
 import com.gamenet.cruscottofatturazione.models.response.SaveResponse;
+import com.gamenet.cruscottofatturazione.models.response.SaveResponseCliente;
+import com.gamenet.cruscottofatturazione.models.sap.request.CustomerRequest;
+import com.gamenet.cruscottofatturazione.models.sap.response.CustomerResponse;
+import com.gamenet.cruscottofatturazione.models.sap.response.E_CUSTOMER_DATA;
 import com.gamenet.cruscottofatturazione.repositories.ClienteRepository;
 import com.gamenet.cruscottofatturazione.services.interfaces.ApplicationLogsService;
 import com.gamenet.cruscottofatturazione.services.interfaces.ClienteService;
@@ -37,12 +46,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ClienteServiceImpl implements ClienteService
 {
-	
-    private final ClienteRepository clienteRepository;
+	@Value("${sap.url.customer.service}")
+    private String urlCustomerServiceSap;
+	private final ClienteRepository clienteRepository;
     private Logger log = LoggerFactory.getLogger(getClass());
     private final ApplicationLogsService appService;
     private final Environment env;
     private ObjectMapper jsonMapper = new ObjectMapper();
+    private final RestTemplate restTemplate;
     
 	@Override
 	public List<Cliente> getClienti() {
@@ -118,10 +129,10 @@ public class ClienteServiceImpl implements ClienteService
 	
 	
 	@Override
-	public SaveResponse saveCliente(Cliente cliente, String utenteUpdate) {
+	public SaveResponseCliente saveCliente(Cliente cliente, String utenteUpdate) {
     	this.log.info("ClienteService: saveCliente -> START");
     	appService.insertLog("info", "ClienteService", "saveCliente", "START", "", "saveCliente");
-    	SaveResponse response = new SaveResponse();
+    	SaveResponseCliente response = new SaveResponseCliente();
     	try
 		{	
     		if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
@@ -131,9 +142,19 @@ public class ClienteServiceImpl implements ClienteService
 		    	appService.insertLog("debug", "ProspectService", "saveCliente", "Object: " + requestPrint, "", "saveCliente");
 			}
     		
+    		
+    		if(cliente.getCodiceCliente()==null)
+    			throw new Exception("il codice cliente e' obbligatorio!");
+    		
+    		if(cliente.getSocieta()==null)
+    			throw new Exception("il codice societa' e' obbligatorio!");
+    		
     		Cliente clienteDb= clienteRepository.findById(cliente.getCodiceCliente()).orElse(null);
         	
     		if(clienteDb==null) {
+    			
+    			getClienteDaSap(cliente);
+    			
     			cliente.setCreate_date(new Date());
     			cliente.setCreate_user(utenteUpdate);
     			response.setEsito(true);
@@ -145,8 +166,13 @@ public class ClienteServiceImpl implements ClienteService
     			this.log.error("ClienteService: saveCliente -> " + "codice cliente gia' presente!");
     		}
     		
-    		if(response.getEsito()==true)
-    			clienteRepository.save(cliente);
+    		if(response.getEsito()==true) {
+    			
+    			cliente=clienteRepository.save(cliente);
+    			com.gamenet.cruscottofatturazione.models.Cliente clienteReturn= new com.gamenet.cruscottofatturazione.models.Cliente();
+    			BeanUtils.copyProperties(cliente, clienteReturn);
+    			response.setCliente(clienteReturn);
+    		}
     		
     		
 		}
@@ -160,10 +186,60 @@ public class ClienteServiceImpl implements ClienteService
 	        response.setEsito(false);
 	        response.setErrore(e.getMessage());
 		}
-    	
+
     	this.log.info("ClienteService: saveCliente -> SUCCESSFULLY END");
     	appService.insertLog("info", "ClienteService", "saveCliente", "SUCCESSFULLY END", "", "saveCliente");
     	return response;
+	}
+
+	private void getClienteDaSap(Cliente cliente) throws Exception {
+		
+		this.log.info("ClienteService: getClienteDaSap -> START");
+    	appService.insertLog("info", "ClienteService", "getClienteDaSap", "START", "", "getClienteDaSap");
+		CustomerRequest request = new CustomerRequest(cliente.getCodiceCliente(),cliente.getSocieta());
+
+
+		try {
+			ResponseEntity<CustomerResponse> customerResponse=	restTemplate.postForEntity(urlCustomerServiceSap, request, CustomerResponse.class);
+			this.log.info("ResponseCode: "+customerResponse.getStatusCode().toString());
+			if(customerResponse.getStatusCode().equals(HttpStatus.OK)) {
+
+
+				E_CUSTOMER_DATA customerSap= customerResponse.getBody().getE_CUSTOMER_DATA();
+			
+				this.log.info("ClienteService: getClienteDaSap -> esito: " + customerSap.getESITO() +" - idMessaggio: " + customerSap.getIDMESSAGGIO()+ " - message: "+customerSap.getDESCRIZIONE());
+				
+				if(customerSap.getESITO().equals(EsitoSap.SUCCESSO.getValue())) {
+					cliente.setRagioneSociale(customerSap.getNAME());
+					cliente.setCodiceFiscale(customerSap.getSTCD1());
+					cliente.setPartitaIva(customerSap.getSTCD2());
+					cliente.setNazionalita(customerSap.getLAND1());
+					cliente.setSedeLegale(customerSap.getADDRESS());
+					cliente.setAppartieneGruppoIva(customerSap.getZGIVA());
+					cliente.setCodiceDestinatarioFatturazione(customerSap.getSTCD4());
+					cliente.setModalitaPagamento(customerSap.getZWELS());
+					cliente.setCondizioniPagamento(customerSap.getZTERM());
+				}
+
+				else {
+					
+					throw new Exception("Non è stato possibile acquisire il cliente.");
+				}
+
+			}else {
+				throw new Exception("Non è stato possibile acquisire il cliente.");
+			}
+		} catch (Throwable e) {
+			String stackTrace = ExceptionUtils.getStackTrace(e);
+    		this.log.error("ClienteService: getClienteDaSap -> " + stackTrace);
+			appService.insertLog("error", "ClienteService", "getClienteDaSap", "Exception", stackTrace, "getClienteDaSap");
+			
+			throw new Exception("Non è stato possibile acquisire il cliente");
+		} 
+		
+		this.log.info("ClienteService: getClienteDaSap -> SUCCESSFULLY END");
+    	appService.insertLog("info", "ClienteService", "getClienteDaSap", "SUCCESSFULLY END", "", "getClienteDaSap");
+
 	}
 
 	@Override

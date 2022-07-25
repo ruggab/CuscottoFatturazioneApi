@@ -20,6 +20,7 @@ import com.gamenet.cruscottofatturazione.models.request.DeleteClienteRequest;
 import com.gamenet.cruscottofatturazione.models.response.ClienteAutoComplete;
 import com.gamenet.cruscottofatturazione.models.response.ClientiListOverview;
 import com.gamenet.cruscottofatturazione.models.response.SaveResponse;
+import com.gamenet.cruscottofatturazione.models.response.SaveResponseCliente;
 import com.gamenet.cruscottofatturazione.services.interfaces.ClienteService;
 
 import lombok.RequiredArgsConstructor;
@@ -58,7 +59,7 @@ public class ClienteController {
 	}
 	
 	@PostMapping("/saveCliente")
-	public SaveResponse saveCliente(@RequestBody ClienteSaveRequest clienteReq) 
+	public SaveResponseCliente saveCliente(@RequestBody ClienteSaveRequest clienteReq) 
 	{
 		return clienteService.saveCliente(clienteReq.getCliente(), clienteReq.getUtenteUpdate());
 	}

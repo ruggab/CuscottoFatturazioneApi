@@ -1,0 +1,146 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0",
+    "title" : "Summary about the new REST service.",
+    "description" : "Summary about the new REST service."
+  },
+  "host" : "localhost:18021",
+  "basePath" : "/",
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/client_dc" : {
+      "post" : {
+        "description" : "",
+        "operationId" : "post-client_dc",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "description" : "",
+          "schema" : {
+            "$ref" : "#/definitions/RfcRequest"
+          },
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "a RfcResponse to be returned",
+            "schema" : {
+              "$ref" : "#/definitions/RfcResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "item" : {
+      "type" : "object",
+      "properties" : {
+        "DATA_FLUSSO" : {
+          "type" : "string",
+          "maxLength" : 8
+        },
+        "TIPO_OPERAZIONE" : {
+          "type" : "string",
+          "maxLength" : 2
+        },
+        "ID_FATTURA" : {
+          "type" : "string",
+          "maxLength" : 10
+        },
+        "KUNNR" : {
+          "type" : "string",
+          "maxLength" : 10
+        },
+        "BUKRS" : {
+          "type" : "string",
+          "maxLength" : 4
+        },
+        "ARTICOLO" : {
+          "type" : "string",
+          "maxLength" : 3
+        },
+        "TIPO_CORRISPETTIVO" : {
+          "type" : "string",
+          "maxLength" : 3
+        },
+        "NOTE" : {
+          "type" : "string",
+          "maxLength" : 30
+        },
+        "IMP_IMPONIBILE" : {
+          "type" : "string",
+          "maxLength" : 14
+        },
+        "ID_TIBCO" : {
+          "type" : "string",
+          "maxLength" : 10
+        }
+      }
+    },
+    "ES_RETURN" : {
+      "type" : "object",
+      "properties" : {
+        "ESITO" : {
+          "type" : "string",
+          "maxLength" : 1
+        },
+        "IDMESSAGGIO" : {
+          "type" : "string",
+          "maxLength" : 3
+        },
+        "DESCRIZIONE" : {
+          "type" : "string",
+          "maxLength" : 150
+        }
+      }
+    },
+    "RfcRequest" : {
+      "type" : "object",
+      "required" : [ "IT_CFA_INPUT" ],
+      "properties" : {
+        "IT_CFA_INPUT" : {
+          "$ref" : "#/definitions/IT_CFA_INPUT"
+        }
+      }
+    },
+    "ET_CFA_OUTPUT" : {
+      "type" : "object",
+      "properties" : {
+        "item" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/item",
+            "uniqueItems" : false
+          }
+        }
+      }
+    },
+    "RfcResponse" : {
+      "type" : "object",
+      "properties" : {
+        "ES_RETURN" : {
+          "$ref" : "#/definitions/ES_RETURN"
+        },
+        "ET_CFA_OUTPUT" : {
+          "$ref" : "#/definitions/ET_CFA_OUTPUT"
+        }
+      }
+    },
+    "IT_CFA_INPUT" : {
+      "type" : "object",
+      "properties" : {
+        "item" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/item",
+            "uniqueItems" : false
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0",
+    "title" : "Summary about the new REST service.",
+    "description" : "Summary about the new REST service."
+  },
+  "host" : "localhost:18020",
+  "basePath" : "/",
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/service_clienti" : {
+      "post" : {
+        "description" : "",
+        "operationId" : "post-service_clienti",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "description" : "",
+          "schema" : {
+            "$ref" : "#/definitions/RfcRequest"
+          },
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "a RfcResponse to be returned",
+            "schema" : {
+              "$ref" : "#/definitions/RfcResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "E_CUSTOMER_DATA" : {
+      "type" : "object",
+      "properties" : {
+        "KUNNR" : {
+          "type" : "string",
+          "maxLength" : 10
+        },
+        "BUKRS" : {
+          "type" : "string",
+          "maxLength" : 4
+        },
+        "NAME" : {
+          "type" : "string",
+          "maxLength" : 70
+        },
+        "STCD1" : {
+          "type" : "string",
+          "maxLength" : 16
+        },
+        "STCD2" : {
+          "type" : "string",
+          "maxLength" : 11
+        },
+        "LAND1" : {
+          "type" : "string",
+          "maxLength" : 3
+        },
+        "ADDRESS" : {
+          "type" : "string",
+          "maxLength" : 85
+        },
+        "ZGIVA" : {
+          "type" : "string",
+          "maxLength" : 1
+        },
+        "STCD4" : {
+          "type" : "string",
+          "maxLength" : 18
+        },
+        "ZWELS" : {
+          "type" : "string",
+          "maxLength" : 10
+        },
+        "ZTERM" : {
+          "type" : "string",
+          "maxLength" : 4
+        },
+        "ESITO" : {
+          "type" : "string",
+          "maxLength" : 1
+        },
+        "IDMESSAGGIO" : {
+          "type" : "string",
+          "maxLength" : 3
+        },
+        "DESCRIZIONE" : {
+          "type" : "string",
+          "maxLength" : 220
+        }
+      }
+    },
+    "RfcRequest" : {
+      "type" : "object",
+      "properties" : {
+        "I_BUKRS" : {
+          "type" : "string",
+          "maxLength" : 4
+        },
+        "I_KUNNR" : {
+          "type" : "string",
+          "maxLength" : 10
+        }
+      }
+    },
+    "RfcResponse" : {
+      "type" : "object",
+      "properties" : {
+        "E_CUSTOMER_DATA" : {
+          "$ref" : "#/definitions/E_CUSTOMER_DATA"
+        }
+      }
+    }
+  }
+}

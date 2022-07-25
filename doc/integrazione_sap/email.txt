@@ -1,0 +1,55 @@
+Ciao Gabriele,
+
+il cliente ha appena terminato gli sviluppi delle interfacce Sap per il Cruscotto Fatture.
+
+ 
+
+Ti anticipo un po’ di cose via mail, poi se lunedì hai disponibilità per una call ne parliamo insieme e ci organizziamo. Io sono impegnata solo dalle 11 alle 13. Per il resto degli orari dimmi tu quando preferisci. Se non ci sei lunedì, magari fammi sapere le tue disponibilità in settimana.
+
+ 
+
+Ci hanno messo a disposizione 2 servizi web Rest per:
+
+ 
+
+1.           http://TIBCO-DEV.gamenet.psm:18020/service_client    (Interfaccia invio dati anagrafici clienti)
+
+2.           http://TIBCO-DEV.gamenet.psm:18021/client_dc  (Interfaccia acquisizione dati di contabilizzazione)
+
+ 
+
+Di seguito lo swagger per poter effettuare le prove
+
+ 
+
+http://tibco-dev.gamenet.psm:7777/Cruscotto_Fatturazione.application/
+
+ 
+
+Inoltre, hanno anche terminato lo sviluppo per le altre due interfacce per cui dovremmo implementare i relativi servizi REST.
+
+ 
+
+3.           ZINTAFC_F01C   Interfaccia invio esito fatturazione
+
+4.           ZINTAFC_F01D  Interfaccia invio esito SdI
+
+ 
+
+In allegato gli schemi xsd di Sap per i servizi che dovremmo sviluppare noi e i descrittori json dei servizi che hanno sviluppato loro.
+
+ 
+
+Per ora i punti 3 e 4 non li prendiamo in considerazione.
+
+ 
+
+Per adesso vediamo solo i primi 2.
+
+ 
+
+Resto a disposizione e in attesa di tue.
+
+ 
+
+Grazie mille e a presto.
