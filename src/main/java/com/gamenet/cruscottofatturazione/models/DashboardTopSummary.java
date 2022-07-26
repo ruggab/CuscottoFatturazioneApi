@@ -20,7 +20,7 @@ public class DashboardTopSummary
 	private Date dataFattureConvalidate;
 
 	private Integer fattureRifiutate;
-	private Double importoFattureRifiutate;
+	private Integer totaleFatture;
 
 	private Double totaleImportoFatture;
 	private Date dataImportoFatture;

@@ -64,11 +64,13 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 
 		Iterable<VWDashboardTopSummary> dashList;
 
+		
 
 		dashList = dashboardTopRepository.getVWDashboardTopSummaryBySocieta(codiceSocieta);
 
 		try
 		{	
+			Integer totaleFatture=0;
 			Double importoTotale = 0.0;
 			Integer fattureEmesse=0;
 			for(VWDashboardTopSummary item: dashList)
@@ -86,13 +88,14 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 				switch (item.getStatoFattura()) {
 				case "R":
 
-					result.setImportoFattureRifiutate(item.getImporto());
+					totaleFatture+=item.getNumero();
 					result.setFattureRifiutate(item.getNumero());
 					break;
 
 				case "V":
 					importoTotale+=item.getImporto();
 					result.setFattureConvalidate(item.getNumero());
+					totaleFatture+=item.getNumero();
 					break;	
 
 				case "D":
@@ -105,6 +108,10 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 					break;
 
 				case "I":
+					break;
+					
+				case "S":
+					totaleFatture+=item.getNumero();
 					break;
 
 				default:
@@ -119,7 +126,8 @@ public class DashboardSummaryServiceImpl implements DashboardSummaryService {
 			result.setDataFattureEmesse(new Date());
 			result.setFattureEmesse(fattureEmesse);
 			result.setDataFattureConvalidate(new Date());
-
+			result.setTotaleFatture(totaleFatture);
+			
 			if(env.getProperty("cruscottofatturazione.mode.debug").equals("true"))
 			{
 				String responsePrint = jsonMapper.writeValueAsString(result);

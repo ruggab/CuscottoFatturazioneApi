@@ -686,7 +686,6 @@ public class FatturaServiceImpl implements FatturaService
 			Fattura fattura=fatturaRepository.findById(idFattura).orElse(null);
 			if(fattura!=null) {
 
-
 				
 				String erroreArticoliNonValidi=checkArticoliNonValidiDettaglio(getDettagliFatturaModel(fattura));
 				if(!erroreArticoliNonValidi.equals(""))
@@ -700,8 +699,17 @@ public class FatturaServiceImpl implements FatturaService
 				insertLogStatoFattura(fattura.getId(),utenteUpdate,StatoFattura.VALIDATA.getKey());
 				
 				//sap
+				boolean esitoSap=false;
+				try {
+					esitoSap = validaFatturaSap(fattura);
+				} catch (Exception e) {
+					fattura.setStatoFattura(StatoFattura.DA_APPROVARE.getKey());
+					fattura=fatturaRepository.save(fattura);
+					insertLogStatoFattura(fattura.getId(),utenteUpdate,StatoFattura.DA_APPROVARE.getKey());
+					throw new Exception("errore durante l'invocazione dei servizi SAP");
+				}
 				
-				if (validaFatturaSap(fattura))
+				if (esitoSap)
 				{
 					fattura.setStatoFattura(StatoFattura.VALIDATA_DA_SAP.getKey());
 					fattura.setDataInvioFlusso(new Date());
@@ -733,7 +741,7 @@ public class FatturaServiceImpl implements FatturaService
 		return saveResponse;
 	}
 
-	private boolean validaFatturaSap(Fattura fattura) {
+	private boolean validaFatturaSap(Fattura fattura) throws Exception {
 		this.log.info("FatturaService: validaFatturaSap -> START");
     	appService.insertLog("info", "FatturaService", "validaFatturaSap", "START", "", "validaFatturaSap");
 		Boolean esito=true;
@@ -786,7 +794,7 @@ public class FatturaServiceImpl implements FatturaService
 			String stackTrace = ExceptionUtils.getStackTrace(e);
     		this.log.error("FatturaService: validaFatturaSap -> " + stackTrace);
 			appService.insertLog("error", "FatturaService", "validaFatturaSap", "Exception", stackTrace, "validaFatturaSap");
-			esito= false;
+			throw new Exception("errore durante l'invocazione dei servizi SAP");
 		}
 		
 		this.log.info("FatturaService: validaFatturaSap -> SUCCESSFULLY END");
