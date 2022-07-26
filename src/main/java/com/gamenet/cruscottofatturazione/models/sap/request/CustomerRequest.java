@@ -20,7 +20,7 @@ public class CustomerRequest implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@JsonProperty("I_BUKRS")
-	String I_BUKRS; //cliente
+	String I_BUKRS; //Societa
 	@JsonProperty("I_KUNNR")
-	String I_KUNNR; //societa
+	String I_KUNNR; //Cliente
 }
