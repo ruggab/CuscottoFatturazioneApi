@@ -201,7 +201,7 @@ public class ClienteServiceImpl implements ClienteService
 		
 		this.log.info("ClienteService: getClienteDaSap -> START");
     	appService.insertLog("info", "ClienteService", "getClienteDaSap", "START", "", "getClienteDaSap");
-		CustomerRequest request = new CustomerRequest(cliente.getCodiceCliente(),cliente.getSocieta());
+		CustomerRequest request = new CustomerRequest(cliente.getSocieta(),cliente.getCodiceCliente());
 
 
 		try {
