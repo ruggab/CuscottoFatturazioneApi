@@ -242,7 +242,7 @@ public class FatturaServiceImpl implements FatturaService
 				//recupero la fattura dal db
 				fatturaSaved = fatturaRepository.findById(fattura.getId()).orElse(new Fattura());
 				
-				if(!(fatturaSaved.getStatoFattura().equals(StatoFattura.IN_COMPILAZIONE.getKey()) || fatturaSaved.getStatoFattura().equals(StatoFattura.RIFIUTATA.getKey())) )
+				if(!(fatturaSaved.getStatoFattura().equals(StatoFattura.IN_COMPILAZIONE.getKey()) || fatturaSaved.getStatoFattura().equals(StatoFattura.RIFIUTATA.getKey()) || fatturaSaved.getStatoFattura().equals(StatoFattura.RIGETTATA_DA_SAP.getKey())) )
 					throw new Exception("la fattura con id: "+fattura.getId()+ " non puo essere modificata perche non è nello stato "+StatoFattura.IN_COMPILAZIONE.getValue()+" o "+StatoFattura.RIFIUTATA.getValue());
 				
 				//ed elimino i dettagli vecchi
