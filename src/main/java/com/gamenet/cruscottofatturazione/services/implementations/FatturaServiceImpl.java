@@ -721,11 +721,13 @@ public class FatturaServiceImpl implements FatturaService
 					fattura.setDataInvioFlusso(new Date());
 					fattura=fatturaRepository.save(fattura);
 					insertLogStatoFattura(fattura.getId(),utenteUpdate,StatoFattura.VALIDATA_DA_SAP.getKey());
+					saveResponse.setMessage("Fattura Validata da SAP");
 				}else {
 					fattura.setStatoFattura(StatoFattura.RIGETTATA_DA_SAP.getKey());
 					fattura.setDataInvioFlusso(new Date());
 					fattura=fatturaRepository.save(fattura);
 					insertLogStatoFattura(fattura.getId(),utenteUpdate,StatoFattura.RIGETTATA_DA_SAP.getKey());
+					saveResponse.setMessage("Fattura Rigettata da SAP");
 				}
 					
 				
